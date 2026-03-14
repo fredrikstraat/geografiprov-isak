@@ -1217,6 +1217,7 @@ const appState = {
   availableTtsVoices: [],
   ttsStatusTone: "muted",
   ttsStatusMessage: "Kontrollerar uppläsningstjänst...",
+  ttsLastError: "",
   ttsAudio: null,
   ttsAudioUrl: null,
   ttsPlayToken: 0,
@@ -4049,27 +4050,48 @@ async function fetchTtsBlob(text, options = {}) {
     return { audioBlob, chosenVoice };
   }
 
-  const response = await fetch("/api/tts", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "audio/wav"
-    },
-    body: JSON.stringify({
-      text,
-      voice: chosenVoice,
-      instructions: buildSpeechInstructions(options.kind)
-    })
-  });
+  const requestPayload = {
+    text,
+    voice: chosenVoice,
+    instructions: buildSpeechInstructions(options.kind)
+  };
 
-  if (!response.ok) {
-    const errorPayload = await response.json().catch(() => ({}));
-    throw new Error(errorPayload.error || "OpenAI TTS request failed");
+  let lastError = null;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch("/api/tts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "audio/wav"
+        },
+        body: JSON.stringify(requestPayload)
+      });
+
+      if (!response.ok) {
+        const errorPayload = await response.json().catch(() => ({}));
+        const message = errorPayload.details || errorPayload.error || "OpenAI TTS request failed";
+        if (attempt === 0 && (response.status === 429 || response.status >= 500)) {
+          await new Promise((resolve) => window.setTimeout(resolve, 900));
+          lastError = new Error(message);
+          continue;
+        }
+        throw new Error(message);
+      }
+
+      audioBlob = await response.blob();
+      appState.ttsCache.set(cacheKey, audioBlob);
+      return { audioBlob, chosenVoice };
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      if (attempt === 0) {
+        await new Promise((resolve) => window.setTimeout(resolve, 900));
+        continue;
+      }
+    }
   }
 
-  audioBlob = await response.blob();
-  appState.ttsCache.set(cacheKey, audioBlob);
-  return { audioBlob, chosenVoice };
+  throw lastError || new Error("OpenAI TTS request failed");
 }
 
 function getAudioBlobDuration(audioBlob) {
@@ -4110,17 +4132,10 @@ function getWarmupText() {
 function getWarmupTexts() {
   const visibleTracks = getVisibleListenTracks();
   const currentTrack = visibleTracks.find((track) => track.id === appState.listenTrackId);
-  const compareTrack = visibleTracks.find((track) => track.id === "track-compare");
-  const texts = [currentTrack, compareTrack]
-    .filter(Boolean)
-    .map((track) => getListenTrackPresentation(track).speechText);
-
-  const comparisonText = buildComparisonSpeechText();
-  if (comparisonText) {
-    texts.push(comparisonText);
+  if (!currentTrack) {
+    return [];
   }
-
-  return [...new Set(texts.filter(Boolean))];
+  return [getListenTrackPresentation(currentTrack).speechText].filter(Boolean);
 }
 
 function scheduleTtsWarmup() {
@@ -4138,19 +4153,19 @@ function scheduleTtsWarmup() {
       return;
     }
 
-    for (const [index, text] of warmupTexts.entries()) {
-      const chunks = splitTextForTts(text).slice(0, index === 0 ? 2 : 1);
+    for (const text of warmupTexts) {
+      const chunks = splitTextForTts(text).slice(0, 1);
       try {
         for (const chunk of chunks) {
           await fetchTtsBlob(chunk, {
-            kind: index === warmupTexts.length - 1 ? "comparison" : "lesson"
+            kind: "lesson"
           });
         }
       } catch (error) {
         console.warn("Could not warm TTS cache", error);
       }
     }
-  }, 180);
+  }, 1200);
 }
 
 function setTtsStatus(message, tone = "muted") {
@@ -4183,6 +4198,7 @@ async function hydrateTtsStatus() {
     appState.availableTtsVoices = Array.isArray(payload.availableVoices)
       ? payload.availableVoices
       : [];
+    appState.ttsLastError = "";
     scheduleTtsWarmup();
 
     if (appState.ttsAvailable) {
@@ -4195,6 +4211,7 @@ async function hydrateTtsStatus() {
     }
   } catch (error) {
     appState.ttsAvailable = false;
+    appState.ttsLastError = error instanceof Error ? error.message : String(error);
     setTtsStatus(
       "Kunde inte nå den lokala TTS-servern. Appen använder webbläsarröst just nu.",
       "warning"
@@ -4366,14 +4383,17 @@ async function speakText(text, options = {}) {
 
   if (appState.ttsAvailable) {
     try {
+      appState.ttsLastError = "";
       await speakWithOpenAi(text, options);
       return;
     } catch (error) {
-      console.warn("OpenAI TTS failed, falling back to browser voice", error);
+      appState.ttsLastError = error instanceof Error ? error.message : String(error);
+      console.warn("OpenAI TTS failed", error);
       setTtsStatus(
-        "OpenAI-uppläsning misslyckades. Appen faller tillbaka till webbläsarröst.",
-        "warning"
+        "OpenAI-rösten svarade inte just nu. Försök igen om ett par sekunder.",
+        "error"
       );
+      return;
     }
   }
 
