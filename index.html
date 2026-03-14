@@ -122,7 +122,7 @@
         <div class="section-heading">
           <div>
             <p class="panel-label">Quiz</p>
-            <h2>Snabb kontroll med forklaring efter varje svar</h2>
+            <h2>Snabb kontroll med förklaring efter varje svar</h2>
           </div>
           <button class="ghost" id="restart-quiz">Ny runda</button>
         </div>
@@ -238,9 +238,15 @@
         </div>
 
         <div class="writing-layout">
-          <aside class="writing-sidebar" id="writing-prompt-list"></aside>
-
           <div class="writing-main">
+            <article class="study-card writing-picker-card">
+              <p class="panel-label">Välj en fråga</p>
+              <label class="notes-label" for="writing-prompt-select">
+                En skrivfråga i taget hjälper dig att hålla fokus.
+              </label>
+              <select id="writing-prompt-select"></select>
+            </article>
+
             <article class="study-card">
               <p class="panel-label">Fråga i fokus</p>
               <h3 id="writing-title"></h3>

@@ -261,7 +261,6 @@ h3 {
 .progress-card,
 .lesson-card,
 .guided-card,
-.writing-sidebar button,
 .grading-chip {
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.78);
@@ -359,6 +358,39 @@ h3 {
   margin-bottom: 0.35rem;
 }
 
+.guided-countdown {
+  display: inline-grid;
+  gap: 0.1rem;
+  margin-bottom: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 18px;
+  background: rgba(31, 42, 48, 0.05);
+  border: 1px solid rgba(31, 42, 48, 0.08);
+}
+
+.guided-countdown.is-running {
+  background: rgba(15, 124, 130, 0.08);
+  border-color: rgba(15, 124, 130, 0.18);
+}
+
+.guided-countdown.is-finished {
+  background: rgba(200, 106, 67, 0.12);
+  border-color: rgba(200, 106, 67, 0.22);
+  box-shadow: 0 0 0 3px rgba(200, 106, 67, 0.08);
+}
+
+.guided-countdown-label,
+.guided-countdown-note {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.guided-countdown-value {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  line-height: 1;
+}
+
 .guided-step-meta {
   flex-wrap: wrap;
   margin-bottom: 0.45rem;
@@ -399,6 +431,15 @@ h3 {
   font-size: 1rem;
 }
 
+.guided-progress-shell {
+  margin-top: 0.15rem;
+}
+
+.guided-progress-shell.is-finished .progress-bar-fill {
+  background: linear-gradient(90deg, #c86a43, #e0b04b);
+  box-shadow: 0 0 0 3px rgba(200, 106, 67, 0.08);
+}
+
 .guided-actions {
   flex-wrap: wrap;
   margin-top: 0.75rem;
@@ -430,7 +471,6 @@ body.lesson-focus .writing-layout {
 }
 
 body.lesson-focus .listen-list,
-body.lesson-focus .writing-sidebar,
 body.lesson-focus #restart-quiz,
 body.lesson-focus .sample-answer-header button,
 body.lesson-focus #clear-writing-answer,
@@ -469,10 +509,6 @@ body.lesson-focus.focus-step-quiz #panel-quiz .section-heading {
 body.lesson-focus.focus-step-compare #panel-compare .compare-controls,
 body.lesson-focus.focus-step-compare #panel-compare .sample-answer,
 body.lesson-focus.focus-step-compare #panel-compare .notes-card {
-  display: none !important;
-}
-
-body.lesson-focus.focus-step-writing #panel-writing .writing-sidebar {
   display: none !important;
 }
 
@@ -537,35 +573,21 @@ body.lesson-focus.focus-step-writing #panel-writing .writing-main {
 }
 
 .writing-layout {
-  display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  gap: 1rem;
-}
-
-.writing-sidebar {
-  display: grid;
-  gap: 0.7rem;
-  align-self: start;
-}
-
-.writing-sidebar button {
-  padding: 1rem;
-  text-align: left;
-}
-
-.writing-sidebar button.active {
-  background: var(--navy);
-  color: #fff;
-  border-color: transparent;
+  display: block;
 }
 
 .writing-main {
   display: grid;
   gap: 1rem;
+  max-width: 860px;
 }
 
 .writing-actions {
   margin-top: 0.9rem;
+}
+
+.writing-picker-card {
+  gap: 0.75rem;
 }
 
 .grading-card {
@@ -767,6 +789,10 @@ body.lesson-focus.focus-step-writing #panel-writing .writing-main {
   gap: 0.7rem;
 }
 
+.drill-submit {
+  min-height: 48px;
+}
+
 .drill-input {
   width: 100%;
   border: 1px solid var(--line);
@@ -785,6 +811,15 @@ body.lesson-focus.focus-step-writing #panel-writing .writing-main {
   margin-top: 0.8rem;
   padding-top: 0.8rem;
   border-top: 1px dashed rgba(31, 42, 48, 0.12);
+}
+
+.drill-answer-slot {
+  height: 118px;
+  overflow: auto;
+}
+
+.drill-answer-slot:not(.is-visible) {
+  color: var(--muted);
 }
 
 .drill-feedback {

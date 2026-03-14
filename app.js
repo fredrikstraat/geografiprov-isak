@@ -355,7 +355,7 @@ const continents = [
     memoryHook:
       "Tänk på Antarktis som is, kyla, forskning och ingen permanent befolkning.",
     countries: [],
-    keyPlaces: ["Sodra ishavet", "Sydpolen", "Inlandsis"],
+    keyPlaces: ["Södra ishavet", "Sydpolen", "Inlandsis"],
     cLevel:
       "För C räcker det ofta att kunna förklara hur det extrema klimatet gör att få människor kan bo där och att världsdelen mest används för forskning.",
     audio:
@@ -408,7 +408,7 @@ const drillCollections = {
       id: "hav-1",
       front: "Stilla havet",
       back:
-        "Varldens storsta ocean. Ligger mellan Asien/Oceanien och Nord-/Sydamerika."
+        "Världens största ocean. Ligger mellan Asien/Oceanien och Nord-/Sydamerika."
     },
     {
       id: "hav-2",
@@ -427,7 +427,7 @@ const drillCollections = {
     },
     {
       id: "hav-5",
-      front: "Sodra ishavet",
+      front: "Södra ishavet",
       back: "Omgiver Antarktis."
     }
   ],
@@ -435,7 +435,7 @@ const drillCollections = {
     {
       id: "berg-1",
       front: "Himalaya",
-      back: "Ligger i Asien. Har finns Mount Everest."
+      back: "Ligger i Asien. Här finns Mount Everest."
     },
     {
       id: "berg-2",
@@ -460,7 +460,7 @@ const drillCollections = {
     {
       id: "berg-6",
       front: "Uralbergen",
-      back: "Brukar anvandas som granser mellan Europa och Asien."
+      back: "Brukar användas som gräns mellan Europa och Asien."
     }
   ],
   floder: [
@@ -487,7 +487,7 @@ const drillCollections = {
     {
       id: "flod-5",
       front: "Yangtze",
-      back: "Lang flod i Kina i Asien."
+      back: "Lång flod i Kina i Asien."
     },
     {
       id: "flod-6",
@@ -514,7 +514,7 @@ const drillCollections = {
     {
       id: "region-4",
       front: "Centralamerika",
-      back: "Omrade mellan Nordamerika och Sydamerika."
+      back: "Område mellan Nordamerika och Sydamerika."
     },
     {
       id: "region-5",
@@ -1193,6 +1193,7 @@ const appState = {
   guidedLessonId: null,
   guidedStepIndex: 0,
   guidedStepRemaining: 0,
+  guidedStepTotalSeconds: 0,
   guidedStepRunning: false,
   guidedStepDone: false,
   guidedStepInterval: null,
@@ -1242,7 +1243,7 @@ const appState = {
 };
 
 const drillCategoryNames = {
-  hav: "Vardshav",
+  hav: "Världshav",
   berg: "Bergskedjor",
   floder: "Floder",
   regioner: "Regioner",
@@ -1434,6 +1435,27 @@ function guidedSupportText(step) {
   return messages[step?.action?.type] || "Isak, jobba i lugn takt och gå vidare när du känner dig klar.";
 }
 
+function estimateSpeechDuration(text) {
+  const words = String(text || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+  return Math.max(18, Math.round((words / 125) * 60));
+}
+
+function syncGuidedListenDuration(seconds) {
+  if (!guidedLesson() || guidedStep()?.action?.type !== "listen") {
+    return;
+  }
+
+  const totalSeconds = Math.max(1, Math.ceil(seconds));
+  appState.guidedStepTotalSeconds = totalSeconds;
+  appState.guidedStepRemaining = totalSeconds;
+  appState.guidedStepRunning = true;
+  appState.guidedStepDone = false;
+  renderLessonCoach();
+}
+
 function guidedActionLabel(step) {
   const labels = {
     learn: "Öppna läsningen",
@@ -1518,6 +1540,7 @@ function startGuidedLesson(lessonId) {
   appState.guidedStepIndex = 0;
   appState.guidedStepDone = false;
   appState.guidedStepRunning = false;
+  appState.guidedStepTotalSeconds = lesson.steps[0].minutes * 60;
   appState.guidedStepRemaining = lesson.steps[0].minutes * 60;
   appState.selectedLessonId = lesson.id;
   startGuidedStepTimer({ syncContent: true });
@@ -1532,6 +1555,7 @@ function startGuidedStepTimer(options = {}) {
 
   clearGuidedStepTimer();
   if (!appState.guidedStepRemaining || appState.guidedStepDone) {
+    appState.guidedStepTotalSeconds = step.minutes * 60;
     appState.guidedStepRemaining = step.minutes * 60;
     appState.guidedStepDone = false;
   }
@@ -1577,6 +1601,7 @@ function resetGuidedStepTimer() {
   clearGuidedStepTimer();
   appState.guidedStepRunning = false;
   appState.guidedStepDone = false;
+  appState.guidedStepTotalSeconds = step.minutes * 60;
   appState.guidedStepRemaining = step.minutes * 60;
   renderLessonCoach();
 }
@@ -1606,6 +1631,7 @@ function nextGuidedStep() {
   }
 
   appState.guidedStepIndex = nextIndex;
+  appState.guidedStepTotalSeconds = lesson.steps[nextIndex].minutes * 60;
   appState.guidedStepRemaining = lesson.steps[nextIndex].minutes * 60;
   appState.guidedStepRunning = false;
   appState.guidedStepDone = false;
@@ -1617,6 +1643,7 @@ function endGuidedLesson() {
   appState.guidedLessonId = null;
   appState.guidedStepIndex = 0;
   appState.guidedStepRemaining = 0;
+  appState.guidedStepTotalSeconds = 0;
   appState.guidedStepRunning = false;
   appState.guidedStepDone = false;
   renderLessonCoach();
@@ -1703,7 +1730,8 @@ function renderLessonCoach() {
       )
     : 0;
 
-  const timerPercent = step ? progressPercent(step.minutes * 60 - appState.guidedStepRemaining, step.minutes * 60) : 0;
+  const activeStepTotal = lessonIsActive ? appState.guidedStepTotalSeconds || step.minutes * 60 : step.minutes * 60;
+  const timerPercent = step ? progressPercent(activeStepTotal - appState.guidedStepRemaining, activeStepTotal) : 0;
   const encouragement =
     lessonIsComplete
       ? `Fantastiskt jobbat, Isak. Lektionen är klar.`
@@ -1713,6 +1741,20 @@ function renderLessonCoach() {
           ? `En sak i taget. Följ steget framför dig.`
           : `Vi tar det lugnt och tydligt, ett steg i taget.`;
   const finishEarlyLabel = guidedCompleteLabel(step);
+  const timerStateClass = lessonIsComplete
+    ? "is-finished"
+    : appState.guidedStepDone
+      ? "is-finished"
+      : appState.guidedStepRunning
+        ? "is-running"
+        : "";
+  const timerStatus = lessonIsComplete
+    ? "Lektion klar"
+    : appState.guidedStepDone
+      ? "Tiden är ute"
+      : lessonIsActive
+        ? "Tid kvar"
+        : "Planerad tid";
   const primaryAction = lessonIsComplete
     ? `<button class="primary" id="start-guided-lesson">Starta nästa lektion</button>`
     : appState.guidedStepDone
@@ -1744,7 +1786,13 @@ function renderLessonCoach() {
           <div class="guided-step-meta">
             <span>Steg ${lessonIsActive ? Math.min(appState.guidedStepIndex + 1, lesson.steps.length) : 1} av ${lesson.steps.length}</span>
             <span>${step.mode} · ${step.minutes} min</span>
-            <span class="guided-timer-inline">${lessonIsActive ? formatTimer(appState.guidedStepRemaining) : formatTimer(step.minutes * 60)}</span>
+          </div>
+          <div class="guided-countdown ${timerStateClass}">
+            <span class="guided-countdown-label">${timerStatus}</span>
+            <strong class="guided-countdown-value">${lessonIsActive ? formatTimer(appState.guidedStepRemaining) : formatTimer(step.minutes * 60)}</strong>
+            <span class="guided-countdown-note">
+              ${lessonIsActive && step.action.type === "listen" ? "Följer uppläsningen" : "Fokusstöd"}
+            </span>
           </div>
           <h3 class="guided-step-title">${lessonIsComplete ? "Lektion klar" : step.description}</h3>
           <p>
@@ -1756,7 +1804,7 @@ function renderLessonCoach() {
                   : "När du trycker start öppnas första momentet direkt och steg-timern börjar av sig själv."
             }
           </p>
-          <div class="progress-bar-shell">
+          <div class="progress-bar-shell guided-progress-shell ${timerStateClass}">
             <span class="progress-bar-fill" style="width: ${lessonIsActive ? timerPercent : 0}%"></span>
           </div>
           <p class="microcopy progress-note">
@@ -1874,7 +1922,7 @@ function buildContinentStudyContent(continent) {
   return {
     html: `
     <div>
-      <p class="panel-label">Varldsdel i fokus</p>
+      <p class="panel-label">Världsdel i fokus</p>
       <h2>${continent.name}</h2>
       <p>${continent.intro}</p>
     </div>
@@ -1967,22 +2015,22 @@ function renderDrillGrid() {
               placeholder="Skriv svaret här"
               ${isRevealed ? "disabled" : ""}
             />
-            <button class="ghost" type="submit" ${isRevealed ? "disabled" : ""}>Vänd kort och rätta</button>
+            <button class="ghost drill-submit" type="submit" ${isRevealed ? "disabled" : ""}>Vänd kort och rätta</button>
           </form>
-          ${
-            isRevealed
-              ? `
-                <div class="answer-text">
+          <div class="answer-text drill-answer-slot ${isRevealed ? "is-visible" : ""}">
+            ${
+              isRevealed
+                ? `
                   <p class="drill-feedback ${result?.isCorrect ? "is-correct" : "is-wrong"}">
                     ${result?.isCorrect ? "Rätt jobbat, Isak." : "Bra försök, Isak."}
                   </p>
                   <p class="microcopy">Du skrev: ${result?.userAnswer ? escapeHtml(result.userAnswer) : "inget svar"}</p>
                   <p><strong>Rätt svar:</strong> ${item.front}</p>
                   <p class="microcopy">${item.back}</p>
-                </div>
-              `
-              : ""
-          }
+                `
+                : `<p class="microcopy">Skriv ditt svar och vänd sedan kortet för att rätta.</p>`
+            }
+          </div>
         </article>
       `;
     })
@@ -2186,23 +2234,23 @@ function buildQuizBank() {
     {
       prompt: "Vilket hav ligger mellan Afrika, Asien och Australien?",
       answer: "Indiska oceanen",
-      options: shuffle(["Indiska oceanen", "Atlanten", "Sodra ishavet", "Norra ishavet"]),
+      options: shuffle(["Indiska oceanen", "Atlanten", "Södra ishavet", "Norra ishavet"]),
       explanation: "Indiska oceanen ligger mellan Afrika, Asien och Australien.",
-      category: "Vardshav"
+      category: "Världshav"
     },
     {
       prompt: "Vilket hav är störst i världen?",
       answer: "Stilla havet",
-      options: shuffle(["Stilla havet", "Atlanten", "Indiska oceanen", "Sodra ishavet"]),
+      options: shuffle(["Stilla havet", "Atlanten", "Indiska oceanen", "Södra ishavet"]),
       explanation: "Stilla havet är världens största ocean.",
-      category: "Vardshav"
+      category: "Världshav"
     },
     {
       prompt: "Vilket hav omger Antarktis?",
-      answer: "Sodra ishavet",
-      options: shuffle(["Sodra ishavet", "Atlanten", "Stilla havet", "Norra ishavet"]),
-      explanation: "Sodra ishavet ligger runt Antarktis.",
-      category: "Vardshav"
+      answer: "Södra ishavet",
+      options: shuffle(["Södra ishavet", "Atlanten", "Stilla havet", "Norra ishavet"]),
+      explanation: "Södra ishavet ligger runt Antarktis.",
+      category: "Världshav"
     }
   ];
 
@@ -2213,21 +2261,21 @@ function buildQuizBank() {
       options: shuffle(continentNamePool.filter((item) => item !== "Antarktis")),
       explanation:
         "Afrika sträcker sig över flera klimatzoner och har både regnskog vid ekvatorn och torra ökenområden.",
-      category: "Varldsdelar"
+      category: "Världsdelar"
     },
     {
       prompt: "Vilken världsdel är störst till ytan?",
       answer: "Asien",
       options: shuffle(["Asien", "Afrika", "Europa", "Nordamerika"]),
       explanation: "Asien är världens största världsdel.",
-      category: "Varldsdelar"
+      category: "Världsdelar"
     },
     {
       prompt: "Vilken världsdel används mest för forskning eftersom klimatet är extremt?",
       answer: "Antarktis",
       options: shuffle(["Antarktis", "Europa", "Oceanien", "Sydamerika"]),
       explanation: "Antarktis har ingen permanent befolkning och används mest för forskning.",
-      category: "Varldsdelar"
+      category: "Världsdelar"
     }
   ];
 
@@ -2679,14 +2727,13 @@ function updateComparisonSelection(source, nextValue) {
 }
 
 function renderWritingPrompts() {
-  const list = document.querySelector("#writing-prompt-list");
-  list.innerHTML = writingPrompts
+  const select = document.querySelector("#writing-prompt-select");
+  select.innerHTML = writingPrompts
     .map(
       (prompt) => `
-        <button class="${prompt.id === appState.selectedWritingPromptId ? "active" : ""}" data-writing-prompt="${prompt.id}">
-          <strong>${prompt.title}</strong>
-          <span class="microcopy">${prompt.target}-nivå med fakta, förklaringar och exempel.</span>
-        </button>
+        <option value="${prompt.id}" ${prompt.id === appState.selectedWritingPromptId ? "selected" : ""}>
+          ${prompt.title}
+        </option>
       `
     )
     .join("");
@@ -2703,6 +2750,7 @@ function renderWritingPanel() {
     .map((point) => `<li>${point}</li>`)
     .join("");
   document.querySelector("#writing-answer").value = savedDraft;
+  document.querySelector("#writing-prompt-select").value = prompt.id;
   renderGradingResult();
 }
 
@@ -2943,6 +2991,22 @@ function buildTtsCacheKey(text, options = {}) {
   return `${voice}::${options.kind || "lesson"}::${text}`;
 }
 
+function waitForAudioMetadata(audioElement) {
+  return new Promise((resolve) => {
+    if (Number.isFinite(audioElement.duration) && audioElement.duration > 0) {
+      resolve(audioElement.duration);
+      return;
+    }
+
+    const handleLoadedMetadata = () => {
+      audioElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      resolve(audioElement.duration);
+    };
+
+    audioElement.addEventListener("loadedmetadata", handleLoadedMetadata, { once: true });
+  });
+}
+
 async function fetchTtsBlob(text, options = {}) {
   const chosenVoice = options.voice || appState.ttsVoice || "alloy";
   const cacheKey = buildTtsCacheKey(text, { ...options, voice: chosenVoice });
@@ -3091,6 +3155,7 @@ function speakWithBrowser(text) {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "sv-SE";
   utterance.rate = 0.95;
+  syncGuidedListenDuration(estimateSpeechDuration(text));
 
   const voices = window.speechSynthesis.getVoices();
   const swedishVoice = voices.find((voice) => voice.lang.toLowerCase().startsWith("sv"));
@@ -3129,6 +3194,8 @@ async function speakWithOpenAi(text, options = {}) {
     appState.ttsAudio = audioElement;
     appState.ttsAudioUrl = URL.createObjectURL(audioBlob);
     audioElement.src = appState.ttsAudioUrl;
+    const duration = await waitForAudioMetadata(audioElement);
+    syncGuidedListenDuration(duration);
 
     audioElement.onended = () => {
       setTtsStatus("OpenAI-röst redo.", "ready");
@@ -3301,12 +3368,8 @@ function bindEvents() {
     renderStats();
   });
 
-  document.querySelector("#writing-prompt-list").addEventListener("click", (event) => {
-    const button = event.target.closest("[data-writing-prompt]");
-    if (!button) {
-      return;
-    }
-    appState.selectedWritingPromptId = button.dataset.writingPrompt;
+  document.querySelector("#writing-prompt-select").addEventListener("change", (event) => {
+    appState.selectedWritingPromptId = event.target.value;
     appState.gradingResult = null;
     renderWritingPanel();
   });
