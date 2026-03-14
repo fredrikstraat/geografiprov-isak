@@ -1222,6 +1222,7 @@ const appState = {
   ttsAudioUrl: null,
   ttsPlayToken: 0,
   ttsCache: new Map(),
+  ttsPendingRequests: new Map(),
   ttsWarmupTimer: null,
   bookImages: [],
   imageUrls: []
@@ -4050,48 +4051,62 @@ async function fetchTtsBlob(text, options = {}) {
     return { audioBlob, chosenVoice };
   }
 
+  const pendingRequest = appState.ttsPendingRequests.get(cacheKey);
+  if (pendingRequest) {
+    return pendingRequest;
+  }
+
   const requestPayload = {
     text,
     voice: chosenVoice,
     instructions: buildSpeechInstructions(options.kind)
   };
 
-  let lastError = null;
-  for (let attempt = 0; attempt < 2; attempt += 1) {
-    try {
-      const response = await fetch("/api/tts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "audio/wav"
-        },
-        body: JSON.stringify(requestPayload)
-      });
+  const requestPromise = (async () => {
+    let lastError = null;
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      try {
+        const response = await fetch("/api/tts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "audio/wav"
+          },
+          body: JSON.stringify(requestPayload)
+        });
 
-      if (!response.ok) {
-        const errorPayload = await response.json().catch(() => ({}));
-        const message = errorPayload.details || errorPayload.error || "OpenAI TTS request failed";
-        if (attempt === 0 && (response.status === 429 || response.status >= 500)) {
+        if (!response.ok) {
+          const errorPayload = await response.json().catch(() => ({}));
+          const message = errorPayload.details || errorPayload.error || "OpenAI TTS request failed";
+          if (attempt === 0 && (response.status === 429 || response.status >= 500)) {
+            await new Promise((resolve) => window.setTimeout(resolve, 900));
+            lastError = new Error(message);
+            continue;
+          }
+          throw new Error(message);
+        }
+
+        audioBlob = await response.blob();
+        appState.ttsCache.set(cacheKey, audioBlob);
+        return { audioBlob, chosenVoice };
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error(String(error));
+        if (attempt === 0) {
           await new Promise((resolve) => window.setTimeout(resolve, 900));
-          lastError = new Error(message);
           continue;
         }
-        throw new Error(message);
-      }
-
-      audioBlob = await response.blob();
-      appState.ttsCache.set(cacheKey, audioBlob);
-      return { audioBlob, chosenVoice };
-    } catch (error) {
-      lastError = error instanceof Error ? error : new Error(String(error));
-      if (attempt === 0) {
-        await new Promise((resolve) => window.setTimeout(resolve, 900));
-        continue;
       }
     }
-  }
 
-  throw lastError || new Error("OpenAI TTS request failed");
+    throw lastError || new Error("OpenAI TTS request failed");
+  })();
+
+  appState.ttsPendingRequests.set(cacheKey, requestPromise);
+  try {
+    return await requestPromise;
+  } finally {
+    appState.ttsPendingRequests.delete(cacheKey);
+  }
 }
 
 function getAudioBlobDuration(audioBlob) {

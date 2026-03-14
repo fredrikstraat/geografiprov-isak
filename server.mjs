@@ -110,6 +110,10 @@ const server = createServer(async (request, response) => {
         });
       }
 
+      console.log(
+        `[tts] request voice=${requestedVoice} chars=${text.length} instructions=${instructions.length}`
+      );
+
       const upstreamResponse = await fetch("https://api.openai.com/v1/audio/speech", {
         method: "POST",
         headers: {
@@ -128,6 +132,7 @@ const server = createServer(async (request, response) => {
 
       if (!upstreamResponse.ok) {
         const errorText = await upstreamResponse.text();
+        console.error(`[tts] upstream_error status=${upstreamResponse.status} details=${errorText}`);
         return sendJson(response, upstreamResponse.status, {
           error: "OpenAI TTS misslyckades.",
           details: errorText
