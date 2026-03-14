@@ -2636,11 +2636,9 @@ function buildContinentStudyContent(continent) {
     const dimension = continent.dimensions[area.key];
     return [
       `${area.label}.`,
-      `Att tänka på: ${area.prompt}`,
       `I ${continent.name} ser man att ${dimension.summary.toLowerCase()}.`,
-      `Det är viktigt därför att ${dimension.reason.toLowerCase()}.`,
-      `Nyckelord som hjälper dig att minnas är ${humanJoin(dimension.tags)}.`,
-      `Ett tydligt sätt att säga det är att ${continent.name} hänger ihop genom ${areaExamplesText(continent, area)}.`
+      `Det hänger ihop med att ${dimension.reason.toLowerCase()}.`,
+      `Tänk på ${areaExamplesText(continent, area)}.`
     ].join(" ");
   });
 
@@ -2685,14 +2683,11 @@ function buildContinentStudyContent(continent) {
     </div>
   `,
     speechText: [
-      `${continent.name}. ${continent.intro}`,
-      `Först bygger vi förståelsen i tre steg. Vad? Fånga de viktigaste fakta om ${continent.name}. Varför? Lyssna efter hur läge, klimat och natur påverkar människor. Exempel? Lägg märke till tydliga exempel som du kan använda senare när du jämför.`,
-      `Nu kommer en lugn genomgång område för område. Försök inte minnas allt på en gång. Lyssna efter huvudidén först och ta sedan stöd av nyckelorden på skärmen.`,
-      `Nu tar vi områdena ett i taget.`,
+      `${continent.name}. Vi tar en kort genomgång med det viktigaste du behöver kunna.`,
       ...speechSections,
-      `Exempel att namnge i ${continent.name}: ${continent.keyPlaces.join(", ")}.`,
+      `Exempel att namnge i ${continent.name}: ${continent.keyPlaces.slice(0, 4).join(", ")}.`,
       `Minnesknep: ${continent.memoryHook}`,
-      `Bra jobbat Isak. Nu har du hört en längre genomgång av ${continent.name}, och nästa steg blir lättare när du jämför världsdelarna.`
+      `Bra jobbat Isak. Nu är du redo för nästa steg.`
     ].join(" ")
   };
 }
@@ -4017,12 +4012,11 @@ function buildComparisonSpeechText() {
   return [
     `Din guide för att jämföra ${first.name} och ${second.name}.`,
     "Bygg svaret i tre steg: vad, varför och exempel.",
-    "Nu går vi kort och tydligt område för område.",
     ...rows.map(
       (row) =>
-        `${row.label}. ${first.name} har ${row.first}, medan ${second.name} har ${row.second}. Det hänger ihop med att ${row.firstName} ${row.firstReason.toLowerCase()}, medan ${row.secondName} ${row.secondReason.toLowerCase()}. Tänk till exempel på ${row.firstExamples} och ${row.secondExamples}.`
+        `${row.label}. ${first.name} har ${row.first}, medan ${second.name} har ${row.second}. Det beror på att ${row.firstName} ${row.firstReason.toLowerCase()}, medan ${row.secondName} ${row.secondReason.toLowerCase()}. Tänk på ${row.firstExamples} och ${row.secondExamples}.`
     ),
-    `Nu har du hört jämförelsen. När du skriver kan du börja med vad som skiljer sig, sedan förklara varför, och till sist ge exempel.`
+    `När du skriver börjar du med vad som skiljer sig, sedan varför, och sist exempel.`
   ].join(" ");
 }
 
@@ -4139,48 +4133,11 @@ function getAudioBlobDuration(audioBlob) {
   });
 }
 
-function getWarmupText() {
-  const currentTrack = listenTracks.find((track) => track.id === appState.listenTrackId) || listenTracks[0];
-  return currentTrack ? getListenTrackPresentation(currentTrack).speechText : "";
-}
-
-function getWarmupTexts() {
-  const visibleTracks = getVisibleListenTracks();
-  const currentTrack = visibleTracks.find((track) => track.id === appState.listenTrackId);
-  if (!currentTrack) {
-    return [];
-  }
-  return [getListenTrackPresentation(currentTrack).speechText].filter(Boolean);
-}
-
 function scheduleTtsWarmup() {
-  if (!appState.ttsAvailable) {
-    return;
-  }
-
   if (appState.ttsWarmupTimer) {
     clearTimeout(appState.ttsWarmupTimer);
+    appState.ttsWarmupTimer = null;
   }
-
-  appState.ttsWarmupTimer = window.setTimeout(async () => {
-    const warmupTexts = getWarmupTexts();
-    if (!warmupTexts.length) {
-      return;
-    }
-
-    for (const text of warmupTexts) {
-      const chunks = splitTextForTts(text).slice(0, 1);
-      try {
-        for (const chunk of chunks) {
-          await fetchTtsBlob(chunk, {
-            kind: "lesson"
-          });
-        }
-      } catch (error) {
-        console.warn("Could not warm TTS cache", error);
-      }
-    }
-  }, 1200);
 }
 
 function setTtsStatus(message, tone = "muted") {
@@ -4214,8 +4171,6 @@ async function hydrateTtsStatus() {
       ? payload.availableVoices
       : [];
     appState.ttsLastError = "";
-    scheduleTtsWarmup();
-
     if (appState.ttsAvailable) {
       setTtsStatus("OpenAI-röst aktiv.", "ready");
     } else {
