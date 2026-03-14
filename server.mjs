@@ -1,8 +1,9 @@
 import { createServer } from "node:http";
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,6 +29,7 @@ const OPENAI_TTS_VOICES = [
   "shimmer",
   "verse"
 ];
+const TTS_CACHE_DIR = process.env.TTS_CACHE_DIR || path.join("/tmp", "geografiprov-tts-cache");
 const OPENAI_TTS_INSTRUCTIONS =
   process.env.OPENAI_TTS_INSTRUCTIONS ||
   "Speak in Swedish with a warm, encouraging tone for a 12-year-old student. Keep the pacing calm, the pronunciation clear, and the intonation lively enough to hold attention without sounding rushed.";
@@ -114,6 +116,28 @@ const server = createServer(async (request, response) => {
         `[tts] request voice=${requestedVoice} chars=${text.length} instructions=${instructions.length}`
       );
 
+      const cachePath = buildTtsCachePath({
+        text,
+        voice: requestedVoice,
+        instructions,
+        model: OPENAI_TTS_MODEL,
+        speed: OPENAI_TTS_SPEED
+      });
+
+      try {
+        const cachedAudio = await readFile(cachePath);
+        response.writeHead(200, {
+          "Content-Type": "audio/wav",
+          "Cache-Control": "no-store",
+          "X-TTS-Cache": "hit"
+        });
+        response.end(cachedAudio);
+        console.log(`[tts] cache_hit voice=${requestedVoice} chars=${text.length}`);
+        return;
+      } catch (_error) {
+        // Cache miss, continue to OpenAI.
+      }
+
       const upstreamResponse = await fetch("https://api.openai.com/v1/audio/speech", {
         method: "POST",
         headers: {
@@ -141,10 +165,21 @@ const server = createServer(async (request, response) => {
 
       response.writeHead(200, {
         "Content-Type": upstreamResponse.headers.get("content-type") || "audio/mpeg",
-        "Cache-Control": "no-store"
+        "Cache-Control": "no-store",
+        "X-TTS-Cache": "miss"
       });
 
       const audioBuffer = Buffer.from(await upstreamResponse.arrayBuffer());
+      try {
+        await mkdir(TTS_CACHE_DIR, { recursive: true });
+        await writeFile(cachePath, audioBuffer);
+      } catch (error) {
+        console.warn(
+          `[tts] cache_write_failed path=${cachePath} details=${
+            error instanceof Error ? error.message : String(error)
+          }`
+        );
+      }
       response.end(audioBuffer);
       return;
     }
@@ -389,6 +424,22 @@ function clampSpeed(rawValue) {
     return 1;
   }
   return Math.min(4, Math.max(0.25, parsed));
+}
+
+function buildTtsCachePath({ text, voice, instructions, model, speed }) {
+  const hash = createHash("sha256")
+    .update(
+      JSON.stringify({
+        text,
+        voice,
+        instructions,
+        model,
+        speed
+      })
+    )
+    .digest("hex");
+
+  return path.join(TTS_CACHE_DIR, `${hash}.wav`);
 }
 
 function normalizeVoice(rawVoice) {
