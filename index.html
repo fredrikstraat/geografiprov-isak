@@ -10,23 +10,6 @@
     <div class="background-glow background-glow-left"></div>
     <div class="background-glow background-glow-right"></div>
 
-    <header class="hero shell">
-      <div class="hero-copy">
-        <p class="eyebrow">Geografiträning för prov om en vecka</p>
-        <h1>Bygg kunskap steg för steg mot betyget C</h1>
-        <p class="hero-text">
-          Kort läsning, lyssning, quiz och jämförelser i lagom delar. Appen är
-          gjord för att hjälpa Isak hålla fokus och variera hur han lär sig.
-        </p>
-        <div class="hero-pills">
-          <span>Korta pass</span>
-          <span>Lyssna på svenska</span>
-          <span>Quiz med direkt feedback</span>
-          <span>Jämför världsdelar</span>
-        </div>
-      </div>
-    </header>
-
     <main class="shell app-layout">
       <section class="guided-runner" id="lesson-coach"></section>
       <section class="stats-grid" id="stats-grid"></section>
@@ -34,13 +17,9 @@
 
       <nav class="tab-row" id="tab-row" aria-label="Studielagen">
         <button class="tab active" data-tab="quickpass">Lektioner</button>
-        <button class="tab" data-tab="learn">Läs</button>
-        <button class="tab" data-tab="listen">Lyssna</button>
-        <button class="tab" data-tab="quiz">Quiz</button>
-        <button class="tab" data-tab="mapquiz">Blindkarta</button>
+        <button class="tab" data-tab="listen">Föreläsningar</button>
         <button class="tab" data-tab="compare">Jämför</button>
-        <button class="tab" data-tab="writing">Skriv</button>
-        <button class="tab" data-tab="book">Bokbilder</button>
+        <button class="tab" data-tab="game">Belöningsspel</button>
       </nav>
 
       <section class="panel active" id="panel-quickpass">
@@ -49,8 +28,33 @@
             <p class="panel-label">Steg för steg</p>
             <h2>Lektioner på cirka 15 minuter fram till provet</h2>
           </div>
-          <button class="ghost" id="jump-next-lesson">Starta nästa lektion</button>
+          <button class="ghost" id="jump-next-lesson">Starta vald lektion</button>
         </div>
+        <article class="study-card compare-choice-card">
+          <p class="panel-label">Välj världsdelar</p>
+          <h3>Vilka två världsdelar vill du jobba med nu?</h3>
+          <p class="microcopy">
+            Lektionen bygger bara på fakta från boksidorna ni har fotat.
+          </p>
+          <div class="compare-select-grid">
+            <label>
+              Första världsdelen
+              <select id="lesson-compare-a"></select>
+            </label>
+            <label>
+              Andra världsdelen
+              <select id="lesson-compare-b"></select>
+            </label>
+          </div>
+          <div class="lesson-start-box">
+            <p class="microcopy" id="lesson-start-hint">
+              Välj två olika världsdelar för att bygga lektionen.
+            </p>
+            <button class="primary lesson-start-cta" id="lesson-start-cta">
+              Välj två världsdelar först
+            </button>
+          </div>
+        </article>
         <div class="lesson-plan" id="quickpass-grid"></div>
 
         <article class="study-card">
@@ -94,8 +98,8 @@
       <section class="panel" id="panel-listen">
         <div class="section-heading">
           <div>
-            <p class="panel-label">Lyssna</p>
-            <h2>Hörselspår med enkla meningar och repetition</h2>
+            <p class="panel-label">Föreläsningar</p>
+            <h2>Lugna genomgångar som Isak kan lyssna på flera gånger</h2>
           </div>
         </div>
 
@@ -169,19 +173,43 @@
         <div class="section-heading">
           <div>
             <p class="panel-label">Jämför världsdelar</p>
-            <h2>Träning precis som instruktionen från läraren</h2>
+            <h2>Din guide för att jämföra världsdelar</h2>
           </div>
         </div>
 
+        <article class="study-card compare-choice-card">
+          <p class="panel-label">Välj världsdelar</p>
+          <h3>Vilka två världsdelar vill du jämföra?</h3>
+          <p class="microcopy">
+            Välj först en världsdel och sedan en till. Jämförelsen uppdateras direkt
+            och använder bara bokfakta från fotona.
+          </p>
+          <div class="compare-select-grid">
+            <label>
+              Första världsdelen
+              <select id="compare-a"></select>
+            </label>
+            <label>
+              Andra världsdelen
+              <select id="compare-b"></select>
+            </label>
+          </div>
+        </article>
+
+        <article class="study-card compare-focus-card">
+          <p class="panel-label">Guide</p>
+          <h3 id="compare-focus-title"></h3>
+          <p id="compare-focus-description"></p>
+          <div class="insight-strip">
+            <strong>När du jämför ska du inte bara skriva fakta</strong>
+            <p>
+              För C behöver Isak jämföra lugnt och tydligt, förklara varför det blir
+              så och ge exempel från båda världsdelarna.
+            </p>
+          </div>
+        </article>
+
         <div class="compare-controls">
-          <label>
-            Första världsdelen
-            <select id="compare-a"></select>
-          </label>
-          <label>
-            Andra världsdelen
-            <select id="compare-b"></select>
-          </label>
           <button class="ghost" id="listen-comparison">Läs upp jämförelsen</button>
         </div>
 
@@ -190,17 +218,17 @@
             <h3>Bygg svaret i tre steg</h3>
             <ol>
               <li><strong>Vad?</strong> Berätta vad som är lika eller olika.</li>
-              <li><strong>Varför?</strong> Förklara orsaken till att det ser ut så.</li>
+              <li><strong>Varför?</strong> Förklara orsaken. Varför är det så här?</li>
               <li><strong>Exempel?</strong> Ge minst ett tydligt exempel från båda.</li>
             </ol>
           </div>
           <div class="checklist-card">
             <h3>Jämförelseord</h3>
             <ul>
-              <li>Däremot är det så att...</li>
-              <li>Till skillnad från...</li>
-              <li>På samma sätt som...</li>
-              <li>Båda världsdelarna har...</li>
+              <li>...däremot...</li>
+              <li>...till skillnad från...</li>
+              <li>...på samma sätt som...</li>
+              <li>...båda världsdelarna har...</li>
             </ul>
           </div>
         </div>
@@ -216,47 +244,49 @@
         </article>
 
         <article class="notes-card">
-          <h3>Egna stödord eller utkast</h3>
+          <h3>Öva ditt jämförelsesvar</h3>
           <label class="notes-label" for="comparison-notes">
-            Skriv med nyckelord för att göra det enklare att minnas.
+            Skriv 4 till 6 meningar där du får med `Vad`, `Varför` och `Exempel`.
           </label>
           <textarea
             id="comparison-notes"
             rows="9"
             placeholder="Exempel: Europa har mest tempererat klimat medan Afrika har både tropiskt klimat och stora torra områden..."
           ></textarea>
-          <p class="microcopy">Texten sparas automatiskt på den här enheten.</p>
+          <p class="microcopy">
+            Tips: Säg först svaret högt, och skriv sedan samma tanke i lugna hela meningar. Texten sparas automatiskt på den här enheten.
+          </p>
         </article>
       </section>
 
       <section class="panel" id="panel-writing">
         <div class="section-heading">
           <div>
-            <p class="panel-label">Skrivsvar</p>
-            <h2>Svara med egna ord och få återkoppling mot lärarens mål</h2>
+            <p class="panel-label">Textfråga</p>
+            <h2>Förhör jämförelsen med egna ord</h2>
           </div>
         </div>
 
         <div class="writing-layout">
           <div class="writing-main">
             <article class="study-card">
-              <p class="panel-label">Skriv i fokus</p>
+              <p class="panel-label">Uppgift i fokus</p>
               <p class="microcopy" id="writing-context"></p>
               <h3 id="writing-title"></h3>
               <p id="writing-description"></p>
               <div class="insight-strip">
-                <strong>Det här ska Isak försöka få med</strong>
+                <strong>Det här ska Isak få med i sitt svar</strong>
                 <ul class="mini-list" id="writing-support-points"></ul>
               </div>
               <div class="writing-structure-card">
-                <strong>Skriv i den här ordningen för att nå C</strong>
+                <strong>Svara i den här ordningen för att nå C</strong>
                 <ol class="mini-list" id="writing-structure-points"></ol>
               </div>
             </article>
 
             <article class="notes-card">
               <label class="notes-label" for="writing-answer">
-                Skriv ett sammanhängande svar med fakta, förklaringar och exempel.
+                Svara på textfrågan med fakta, varför och exempel. Mallen ligger redan i rutan.
               </label>
               <textarea
                 id="writing-answer"
@@ -268,7 +298,8 @@
                 <button class="ghost" id="clear-writing-answer">Rensa svar</button>
               </div>
               <p class="microcopy">
-                OpenAI bedömer svaret mot uppgiften från läraren. Bedömningen är AI-genererad och ska användas som stöd.
+                OpenAI bedömer svaret mot lärarens uppgift och bokfakta från fotona.
+                Bedömningen är AI-genererad och ska användas som stöd.
               </p>
             </article>
 
@@ -280,6 +311,17 @@
             </article>
           </div>
         </div>
+      </section>
+
+      <section class="panel" id="panel-game">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Belöningsspel</p>
+            <h2>Flappy Globe</h2>
+          </div>
+        </div>
+
+        <div id="reward-game-panel"></div>
       </section>
 
       <section class="panel" id="panel-book">

@@ -160,6 +160,7 @@ const server = createServer(async (request, response) => {
       const questionTitle = String(body.questionTitle || "").trim();
       const questionDescription = String(body.questionDescription || "").trim();
       const supportPoints = Array.isArray(body.supportPoints) ? body.supportPoints : [];
+      const referenceFacts = Array.isArray(body.referenceFacts) ? body.referenceFacts : [];
 
       if (!answer || !questionTitle || !questionDescription) {
         return sendJson(response, 400, {
@@ -243,7 +244,7 @@ const server = createServer(async (request, response) => {
             {
               role: "system",
               content:
-                "Du är en varm, tydlig geografilärare som ger återkoppling till en svensk 12-åring. Bedöm svaret mot uppgiften, inte mot vuxennivå."
+                "Du är en varm, tydlig geografilärare som ger återkoppling till en svensk 12-åring. Bedöm svaret mot uppgiften, inte mot vuxennivå. Använd bara uppgiften, stödorden och referensfakta som skickas in. Lägg inte till egna geografifakta från annan kunskap. Om något inte stöds av referensfakta ska du vara försiktig och inte belöna det som säker fakta."
             },
             {
               role: "user",
@@ -254,11 +255,13 @@ Uppgift: ${questionTitle}
 Beskrivning: ${questionDescription}
 Stödord som eleven borde få med:
 ${supportPoints.map((point) => `- ${point}`).join("\n")}
+Referensfakta från jämförelsen. Detta är den enda tillåtna faktakällan:
+${referenceFacts.length ? referenceFacts.map((fact) => `- ${fact}`).join("\n") : "- Inga extra referensfakta skickades med."}
 
 Elevens svar:
 ${answer}
 
-Bedöm hur väl svaret når ungefär C-nivå. Lyft vad som fungerar, vad som saknas och ge ett bättre modell-svar på enkel svenska.
+Bedöm hur väl svaret når ungefär C-nivå i just jämförelsen. Lyft vad som fungerar, vad som saknas och ge ett bättre modell-svar på enkel svenska. Modellsvaret måste också hålla sig till referensfakta ovan.
               `.trim()
             }
           ]

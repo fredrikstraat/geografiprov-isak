@@ -3,57 +3,57 @@ const continents = [
     id: "europa",
     name: "Europa",
     intro:
-      "Europa är en relativt liten världsdel men har många länder, täta transporter och flera olika klimat.",
+      "Europa är en liten världsdel på norra halvklotet med lång kust, många öar och flera olika klimat.",
     memoryHook:
-      "Tänk på Europa som en världsdel med många kuster, mycket handel och stor befolkning på liten yta.",
-    countries: ["Sverige", "Tyskland", "Frankrike", "Spanien", "Italien"],
-    keyPlaces: ["Alperna", "Donau", "Nordsjon", "Medelhavet"],
+      "Tänk Europa som kuster, halvöar, många städer och flera klimat på liten yta.",
+    countries: ["Sverige", "Norge", "Finland", "Frankrike", "Tyskland"],
+    keyPlaces: ["Alperna", "Uralbergen", "Medelhavet", "Svarta havet"],
     cLevel:
-      "För C är det bra att kunna koppla Europas klimat och läge till varför många människor bor i städer och arbetar med industri, service och handel.",
+      "För C ska Isak kunna koppla Europas läge, klimat, naturresurser och stora stadsbefolkning till hur människor bor och arbetar.",
     audio:
-      "Europa ligger mest på norra halvklotet och har många kuster, floder och stora städer. Klimatet är ofta tempererat, men det finns också kalla och torrare områden. Eftersom världsdelens floder, hamnar och odlingsmarker gör transporter och handel enkla bor många människor tätt. Europa har skog, odlingsmark, vattenkraft och mineraler. Det gör att industrin, servicen och jordbruket har blivit viktiga delar av försörjningen.",
+      "Europa ligger helt på norra halvklotet. Gränsen mot Asien går längs Uralbergen, Uralfloden, Kaspiska havet, Kaukasus och Svarta havet. Europa har lång kust, många öar och flera halvöar. Klimatet varierar med breddgraden. I väster finns kustklimat, längre in inlandsklimat och i söder medelhavsklimat. I norr finns polar klimat och tundra. Omkring 750 miljoner människor bor i Europa och nästan tre fjärdedelar bor i städer. Europa har bördig jord, stora floder, stora skogar och tillgång till olja, kol, naturgas och järnmalm.",
     dimensions: {
       location: {
         summary:
-          "Ligger i den västra delen av Eurasien med många kuster, hav och floder.",
-        tags: ["norra halvklotet", "många kuster", "många grannländer"],
+          "Ligger helt på norra halvklotet. Gränsen mot Asien går längs Uralbergen, Uralfloden, Kaspiska havet, Kaukasus och Svarta havet.",
+        tags: ["norra halvklotet", "många kuster", "många öar och halvöar"],
         reason:
-          "Kuster, floder och korta avstånd mellan länder har underlättat transporter, handel och kontakt mellan människor."
+          "Den långa kusten och alla haven gör att havet påverkar både klimat, transporter och kontakter mellan platser."
       },
       climate: {
         summary:
-          "Mest tempererat klimat, men medelhavsklimat i södra delar och kallare klimat i norr och i bergsområden.",
-        tags: ["tempererat", "medelhav", "kallare i norr"],
+          "Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat.",
+        tags: ["tempererad zon", "kustklimat", "inlandsklimat", "medelhavsklimat"],
         reason:
-          "Breddläget, havens närhet och bergskedjor påverkar hur varmt, kallt och nederbördsrikt klimatet blir."
+          "Breddgrad, havens närhet och avståndet från kusten påverkar nederbörd, vintrar och somrar."
       },
       vegetation: {
         summary:
-          "Lövskog och barrskog är vanliga, men också stäpp och buskvegetation runt Medelhavet.",
-        tags: ["lövskog", "barrskog", "stäpp"],
+          "Tundra i de kallaste delarna. I övrigt finns skog, stäpp, buskar och höga bergsområden.",
+        tags: ["tundra", "skog", "stäpp", "berg"],
         reason:
-          "Vegetationen följer klimatet. Mildare och fuktigare områden ger skog medan torrare områden ger gräsmarker eller busklandskap."
+          "Olika temperatur och nederbörd gör att växtligheten blir olika i norr, söder, vid kusten och i bergen."
       },
       population: {
         summary:
-          "Tätbefolkad världsdel med många stora städer och mycket bebyggelse.",
-        tags: ["tätbefolkad", "stor andel städer"],
+          "Omkring 750 miljoner människor bor här. Befolkningen är ojämnt fördelad och nästan tre fjärdedelar bor i städer.",
+        tags: ["750 miljoner", "ojämnt fördelad", "många bor i städer"],
         reason:
-          "Goda transporter, arbetsplatser, odlingsmark och lång historia av handel gör att många människor bor tätt."
+          "Täta städer, transporter, arbete och odlingsbar mark har gjort att många människor samlas i vissa delar av Europa."
       },
       livelihoods: {
         summary:
-          "Många arbetar inom industri, service, handel och teknik. Jordbruk är viktigt i vissa områden.",
-        tags: ["industri", "service", "handel", "jordbruk"],
+          "Jordbruk och industri finns kvar, men en stor andel arbetar i tjänster som handel, transport och IT.",
+        tags: ["jordbruk", "industri", "handel", "transport", "IT"],
         reason:
-          "Utbildning, teknik, energi, transporter och nära marknader har gjort att fler arbetar i städer och i olika tjänsteyrken."
+          "Europa har moderna ekonomier där många arbetar med service och olika tjänster i stället för bara jordbruk och industri."
       },
       resources: {
         summary:
-          "Skog, vattenkraft, fisk, odlingsmark och mineraler som järnmalm är viktiga naturresurser.",
-        tags: ["skog", "vattenkraft", "odlingsmark", "mineraler"],
+          "Har bördig jord, många floder och stora skogar. Det finns också olja, kol och naturgas samt järnmalm och andra metaller.",
+        tags: ["bördig jord", "floder", "skog", "olja", "kol", "naturgas", "järnmalm"],
         reason:
-          "Naturresurser tillsammans med teknik och transportvägar gör att människor kan producera mat, energi och varor."
+          "Naturresurserna har gjort Europa viktigt för jordbruk, energi, industri och transporter."
       }
     }
   },
@@ -61,57 +61,57 @@ const continents = [
     id: "afrika",
     name: "Afrika",
     intro:
-      "Afrika är stor och sträcker sig över både norra och södra halvklotet. Därför finns både regnskog, savann och stora ökenområden.",
+      "Afrika är en mycket stor världsdel där ekvatorn går nästan mitt igenom och där klimatet skiftar från regnskog till öken.",
     memoryHook:
-      "Tänk på Afrika som en världsdel med mycket variation: hetta, regn, torra områden och snabb befolkningstillväxt.",
-    countries: ["Egypten", "Kenya", "Nigeria", "Sydafrika", "Etiopien"],
-    keyPlaces: ["Nilen", "Sahara", "Atlasbergen", "Kongo"],
+      "Tänk Afrika som varmt vid ekvatorn, torrare längre bort och med regnskog, savann, stäpp och öken.",
+    countries: ["Egypten", "Nigeria", "Kenya", "Sydafrika", "Etiopien"],
+    keyPlaces: ["Sahara", "Nilen", "Kongo", "Atlasbergen"],
     cLevel:
-      "För C är det viktigt att kunna förklara hur klimatet påverkar vegetation, jordbruk, vattenbrist och var människor kan bo och arbeta.",
+      "För C ska Isak kunna förklara hur värme, regn, torra områden och naturresurser påverkar vegetation och försörjning i Afrika.",
     audio:
-      "Afrika ligger på både norra och södra halvklotet och genomkorsas av ekvatorn. Därför finns flera klimat, till exempel tropiskt klimat runt ekvatorn och mycket torra områden i Sahara. I Afrika finns regnskog, savann och öken. Befolkningen växer snabbt och många bor i stora städer, men jordbruk är fortfarande viktigt. Naturresurser som olja, guld, koppar och kobolt finns i flera länder, samtidigt som tillgången till vatten kan vara avgörande för hur människor lever.",
+      "Afrika är den näst största världsdelen. Ekvatorn går nästan mitt genom Afrika. Kräftans vändkrets går genom norra delen och Stenbockens vändkrets genom södra delen. Nära ekvatorn är det varmt och regnigt. Längre bort följer savann, stäpp och öken. Därför finns både regnskog, gräsmarker och stora ökenområden som Sahara. Jordbruk, boskapsskötsel, gruvor, industri och turism är viktiga. Afrika har stora tillgångar av diamanter, guld, koppar, järnmalm och olja. Solenergi kan också bli en viktig resurs i framtiden.",
     dimensions: {
       location: {
         summary:
-          "Ligger på både norra och södra halvklotet och är omgiven av Atlanten, Indiska oceanen och Medelhavet.",
-        tags: ["båda halvkloten", "ekvatorn", "stora avstånd"],
+          "Ekvatorn går nästan mitt genom Afrika. Kräftans vändkrets ligger i norr och Stenbockens vändkrets i söder.",
+        tags: ["ekvatorn", "kräftans vändkrets", "stenbockens vändkrets"],
         reason:
-          "När ekvatorn och vändsklarna går genom Afrika blir temperaturen och nederbörden mycket olika i olika delar."
+          "Läget kring ekvatorn och vändkretsarna gör att Afrika får stora skillnader i värme, regn och torka."
       },
       climate: {
         summary:
-          "Har tropiskt klimat vid ekvatorn, savannklimat på flera håll och mycket torra ökenklimat i norr och delar av södra Afrika.",
-        tags: ["tropiskt", "savann", "öken"],
+          "Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut.",
+        tags: ["varmt", "regn vid ekvatorn", "savann", "stäpp", "öken"],
         reason:
-          "Läget runt ekvatorn ger varmt klimat medan torra vindar och högtrycksområden skapar stora ökenområden."
+          "När man rör sig bort från ekvatorn minskar regnet i många områden och klimatet blir torrare."
       },
       vegetation: {
         summary:
-          "Regnskog kring ekvatorn, savann med gräs och enstaka träd, samt sparsam vegetation i öknen.",
-        tags: ["regnskog", "savann", "sparsam vegetation"],
+          "Regnskog vid ekvatorn, savann och stäpp i stora områden och öken i till exempel Sahara.",
+        tags: ["regnskog", "savann", "stäpp", "öken"],
         reason:
-          "Mycket regn ger tät skog, men mindre nederbörd gör att gräsmarker eller öken dominerar."
+          "Växtligheten följer hur mycket regn som faller och hur varmt det är."
       },
       population: {
         summary:
-          "Befolkningen är stor och växer snabbt. Många bor i städer, men landsbygden är fortfarande viktig.",
-        tags: ["snabb tillväxt", "många städer", "landsbygd viktig"],
+          "Befolkningen är ojämnt fördelad. Människor lever både i städer och på landsbygden.",
+        tags: ["ojämnt fördelad", "städer", "landsbygd"],
         reason:
-          "Tillgång till arbete, utbildning och service gör att fler flyttar till städer, men jordbruket gör också landsbygden viktig."
+          "Tillgång till vatten, odlingsbar mark och arbete påverkar var människor kan bo och försörja sig."
       },
       livelihoods: {
         summary:
-          "Jordbruk, gruvnäring, handel, turism och olika tjänster är vanliga sätt att försörja sig.",
-        tags: ["jordbruk", "gruvor", "turism", "handel"],
+          "Jordbruk, boskapsskötsel, gruvor, industri och turism är viktiga sätt att försörja sig.",
+        tags: ["jordbruk", "boskap", "gruvor", "industri", "turism"],
         reason:
-          "Klimat, mark, vatten och naturresurser styr vilka jobb som är möjliga på olika platser."
+          "Klimatet och naturresurserna påverkar vilka jobb som är vanliga i olika delar av Afrika."
       },
       resources: {
         summary:
-          "Naturresurser som olja, guld, diamanter, koppar, kobolt och odlingsmark är viktiga.",
-        tags: ["olja", "metaller", "odlingsmark", "solenergi"],
+          "Afrika har stora tillgångar av diamanter, guld, koppar, järnmalm och olja. Solenergi kan bli viktigare.",
+        tags: ["diamanter", "guld", "koppar", "järnmalm", "olja", "solenergi"],
         reason:
-          "Naturresurser kan ge inkomster och arbeten, men hur de används påverkar också miljö, mark och människors livsmiljö."
+          "De stora naturresurserna påverkar både ekonomin och hur länderna kan utvecklas."
       }
     }
   },
@@ -119,57 +119,57 @@ const continents = [
     id: "asien",
     name: "Asien",
     intro:
-      "Asien är världens största världsdel med både höga berg, stora floder, stora öknar och tätbefolkade storstäder.",
+      "Asien är världens största världsdel och sträcker sig från kalla områden i norr till varma och fuktiga områden i söder.",
     memoryHook:
-      "Tänk på Asien som den största och mest varierade världsdelen, från tundra i norr till tropiker i sydost.",
-    countries: ["Kina", "Japan", "Indien", "Thailand", "Saudiarabien"],
-    keyPlaces: ["Himalaya", "Ganges", "Yangtze", "Mellanöstern"],
+      "Tänk Asien som störst av alla, tätast i öst och syd, kallt i norr och monsun i syd och öst.",
+    countries: ["Kina", "Indien", "Japan", "Thailand", "Saudiarabien"],
+    keyPlaces: ["Himalaya", "Sibirien", "Arabiska halvön", "Indiska oceanen"],
     cLevel:
-      "För C är det smart att kunna visa hur storleken på Asien gör att klimat, naturresurser och levnadssätt blir mycket olika i olika regioner.",
+      "För C ska Isak kunna visa hur Asiens storlek påverkar klimat, befolkning, naturresurser och försörjning.",
     audio:
-      "Asien är störst av alla världsdelar och sträcker sig från kalla områden i norr till tropiska områden i sydost. Där finns Himalaya, stora floder som Ganges och Yangtze samt öknar som Arabiska öknen och Gobi. Många av världens mest tätbefolkade områden finns i Asien. I vissa delar är risodling viktigt, i andra dominerar industri, teknik eller utvinning av olja och gas. Det visar hur läge, klimat och naturresurser påverkar människors livsmiljöer.",
+      "Asien är världens största världsdel. I norr finns kalla områden med tundra och barrskog. I södra och östra delarna påverkar monsunen klimatet. Inland långt från havet kan vara mycket torrt. Därför finns både tundra, skog, stäpp, öken och regnskog i Asien. Över 4,6 miljarder människor bor här och befolkningen är tätast i öst och syd. Många arbetar fortfarande med jordbruk och fiske, men industrin och tjänsterna växer snabbt. Asien har också stora tillgångar av olja, kol och naturgas.",
     dimensions: {
       location: {
         summary:
-          "Sträcker sig över mycket stora områden från Europa till Stilla havet och från Norra ishavet till tropikerna.",
-        tags: ["mycket stor yta", "norra halvklotet", "flera regioner"],
+          "Världens största världsdel med mycket stora avstånd från norr till söder och från kuster till inland.",
+        tags: ["världens största", "långa avstånd", "kust och inland"],
         reason:
-          "När en världsdel är så stor blir natur, klimat och befolkning mycket olika mellan norr, söder, kust och inland."
+          "Den stora ytan gör att natur och klimat skiljer sig mycket mellan olika delar av Asien."
       },
       climate: {
         summary:
-          "Har allt från polart och tempererat klimat till monsun, subtropiskt och tropiskt klimat.",
-        tags: ["tempererat", "tropiskt", "monsun", "polart"],
+          "Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt.",
+        tags: ["kallt i norr", "tempererat", "tropiskt", "monsun", "torrt inland"],
         reason:
-          "Stor bredd i nord-sydlig riktning, höga berg och avstånd till hav skapar stora klimatkontraster."
+          "Storleken, avståndet till haven och bergsområden påverkar både regn och temperatur."
       },
       vegetation: {
         summary:
-          "Taiga i norr, stäpp och öken i inlandet samt regnskog och odlingslandskap i varmare delar.",
-        tags: ["taiga", "stäpp", "öken", "regnskog"],
+          "Tundra och barrskog i norr, stäpp och öken i torra inland och regnskog i varma fuktiga delar.",
+        tags: ["tundra", "barrskog", "stäpp", "öken", "regnskog"],
         reason:
-          "Temperatur, nederbörd och monsunsystem styr vilka växter som kan leva och odlas."
+          "Växtligheten följer klimatet och förändras när regn och temperatur skiftar."
       },
       population: {
         summary:
-          "Världens största befolkning finns här, med många megastäder och tätbefolkade floddalar och kustområden.",
-        tags: ["mycket stor befolkning", "megastäder", "tätbefolkade dalar"],
+          "Över 4,6 miljarder människor bor i Asien. Befolkningen är tätast i öst och syd och många bor i stora städer.",
+        tags: ["över 4,6 miljarder", "tätast i öst och syd", "stora städer"],
         reason:
-          "Floder, kustnära läge, odlingsbar mark och jobb i städer gör att många människor samlas på vissa platser."
+          "Klimat, odlingsmark och arbete gör att många människor samlas i vissa delar av Asien."
       },
       livelihoods: {
         summary:
-          "Jordbruk, industri, handel, teknik och energiutvinning är vanliga inkomstkällor.",
-        tags: ["jordbruk", "industri", "teknik", "energi"],
+          "Jordbruk och fiske är viktiga, men industrin och tjänsterna har vuxit mycket.",
+        tags: ["jordbruk", "fiske", "industri", "tjänster"],
         reason:
-          "Olika naturresurser och olika utveckling i olika regioner gör att jobben ser mycket olika ut."
+          "Den ekonomiska utvecklingen har gjort att fler arbetar i fabriker, städer och serviceyrken."
       },
       resources: {
         summary:
-          "Har bland annat olja, gas, kol, metaller, skog, fisk och mycket odlingsmark i vissa områden.",
-        tags: ["olja", "gas", "kol", "skog", "odlingsmark"],
+          "Asien har stora tillgångar av olja, kol och naturgas och i vissa delar också mycket bördig jord.",
+        tags: ["olja", "kol", "naturgas", "bördig jord"],
         reason:
-          "Naturresurserna är ojämnt fördelade och påverkar både ekonomin och människors levnadsvillkor."
+          "Naturresurserna påverkar hur länder tjänar pengar och vilka näringar som blir viktiga."
       }
     }
   },
@@ -177,57 +177,57 @@ const continents = [
     id: "nordamerika",
     name: "Nordamerika",
     intro:
-      "Nordamerika har stora skillnader mellan kalla områden i norr, tätbefolkade områden i södra Kanada och USA samt varmare delar längre söderut.",
+      "Nordamerika sträcker sig från arktiska områden i norr till varmare delar i söder och har stora naturresurser.",
     memoryHook:
-      "Tänk på Nordamerika som en världsdel med stora naturresurser, lång transport och många olika klimatzoner.",
+      "Tänk Nordamerika som kallt i norr, tätare befolkat i söder och rikt på jord, olja och naturgas.",
     countries: ["Kanada", "USA", "Mexiko"],
-    keyPlaces: ["Klippiga bergen", "Mississippi", "Grönska områden", "Centralamerika"],
+    keyPlaces: ["Klippiga bergen", "Stora sjöarna", "Hudson Bay", "Centralamerika"],
     cLevel:
-      "För C är det bra att se sambandet mellan naturresurser, transportvägar, stadsutveckling och varför befolkningen är tät i vissa bälten men gles i andra.",
+      "För C ska Isak kunna koppla Nordamerikas klimat och naturresurser till befolkning, näringar och stora städer.",
     audio:
-      "Nordamerika sträcker sig från arktiska områden i norr till varmare klimat i söder. Därför finns tundra, barrskog, gräsmarker, berg, öknar och subtropiska områden. Många människor bor i storstadsbältet i USA och i södra Kanada. Jordbruk, industri, teknik och handel är viktiga näringar. Nordamerika har också mycket skog, olja, gas, mineraler och sötvatten, vilket har gjort naturresurserna viktiga för ekonomin.",
+      "I Nordamerika bor ungefär 590 miljoner människor. De flesta bor i söder, vid kusterna och kring de stora sjöarna. I norr finns mycket kalla områden. I mitten finns breda slätter och i väster Klippiga bergen. Klimatet varierar från polarklimat i norr till subtropiskt klimat i söder. Västkusten är mildare tack vare Stilla havet. Här finns tundra, barrskog, prärie och öken. Nordamerika har bördig jord och stora tillgångar av järnmalm, olja och naturgas. Många arbetar i industri och tjänster.",
     dimensions: {
       location: {
         summary:
-          "Ligger på västra halvklotet mellan Stilla havet, Atlanten och Norra ishavet.",
-        tags: ["västra halvklotet", "stora kuster", "arktiska delar"],
+          "Sträcker sig från arktiska områden i norr till Centralamerika i söder. I väster finns Klippiga bergen och i öster de stora sjöarna.",
+        tags: ["arktiska områden", "stora sjöar", "Klippiga bergen"],
         reason:
-          "Det stora nord-sydliga läget skapar skillnader mellan kalla, tempererade och varma områden."
+          "Det stora nord-sydliga läget gör att både naturen och klimatet skiftar mycket mellan olika delar."
       },
       climate: {
         summary:
-          "Har polart klimat i norr, tempererat klimat i stora delar och torra eller subtropiska områden längre söderut.",
-        tags: ["polart", "tempererat", "subtropiskt", "torrt"],
+          "Polarklimat i norr, inlandsklimat i stora delar och subtropiskt klimat i söder. Västkusten är mildare tack vare havet.",
+        tags: ["polarklimat", "inlandsklimat", "subtropiskt", "mild västkust"],
         reason:
-          "Breddgrad, hav, vindar och bergskedjor påverkar nederbörd och temperatur."
+          "Breddgrad, avstånd till havet och bergskedjor påverkar både nederbörd och temperatur."
       },
       vegetation: {
         summary:
-          "Tundra och barrskog i norr, gräsmarker i inlandet samt skog, öken och busklandskap i varmare delar.",
-        tags: ["tundra", "barrskog", "gräsmark", "öken"],
+          "Tundra i norr, barrskog, prärie och torra ökenområden längre söderut.",
+        tags: ["tundra", "barrskog", "prärie", "öken"],
         reason:
-          "Vegetationen följer klimatet och hur mycket regn som kommer till olika delar av världsdelen."
+          "När klimatet skiftar mellan kallt, torrt och mildare förändras också växtligheten."
       },
       population: {
         summary:
-          "Många bor i stora städer och i sydligare delar, medan norr och vissa inland är glesbefolkade.",
-        tags: ["stor andel städer", "gles i norr", "tät i söder"],
+          "Omkring 590 miljoner människor bor här. De flesta bor i söder och i stora städer vid kusterna och runt de stora sjöarna.",
+        tags: ["590 miljoner", "fler i söder", "stora städer"],
         reason:
-          "Mildare klimat, arbete, handel och goda transporter gör att fler bor tätt i sydligare områden."
+          "Mildare klimat, arbeten och viktiga transportlägen gör att fler bor i södra och tätare delar."
       },
       livelihoods: {
         summary:
-          "Industri, handel, teknik, jordbruk, turism och energiutvinning är vanliga.",
-        tags: ["industri", "teknik", "jordbruk", "energi"],
+          "Många arbetar i industri och tjänster. Jordbruket är också viktigt.",
+        tags: ["industri", "tjänster", "jordbruk"],
         reason:
-          "Hög teknisk utveckling och stora naturresurser skapar många olika jobb."
+          "Naturresurser, teknik och stora marknader har gjort industri, service och jordbruk viktiga."
       },
       resources: {
         summary:
-          "Har olja, gas, skog, fisk, sötvatten, metaller och stora odlingsområden.",
-        tags: ["olja", "gas", "skog", "sötvatten", "odlingsmark"],
+          "Har mycket bördig jord och stora tillgångar av järnmalm, olja och naturgas.",
+        tags: ["bördig jord", "järnmalm", "olja", "naturgas"],
         reason:
-          "Tillgången till resurser har gjort energi, jordbruk och industri viktiga för ekonomin."
+          "De stora naturresurserna påverkar både ekonomin och vilka näringar som dominerar."
       }
     }
   },
@@ -235,57 +235,57 @@ const continents = [
     id: "sydamerika",
     name: "Sydamerika",
     intro:
-      "Sydamerika är känt för Anderna, Amazonas och stora skillnader mellan regnskog, gräsmarker, berg och torrare områden.",
+      "Sydamerika är en lång världsdel med Anderna längs västsidan och Amazonas i norr.",
     memoryHook:
-      "Tänk på Sydamerika som en världsdel där naturen är starkt närvarande och påverkar både boende, transporter och jobb.",
-    countries: ["Brasilien", "Argentina", "Chile", "Peru"],
-    keyPlaces: ["Anderna", "Amazonas", "Atacama", "Pampas"],
+      "Tänk Sydamerika som Anderna i väster, Amazonas i norr och stora skillnader mellan regnskog, savann och torrare områden.",
+    countries: ["Brasilien", "Argentina", "Chile", "Peru", "Bolivia"],
+    keyPlaces: ["Anderna", "Amazonas", "Patagonien", "Eldslandet"],
     cLevel:
-      "För C är det viktigt att förklara hur regnskog, höga berg och stora naturresurser påverkar människors liv och försörjning.",
+      "För C ska Isak kunna förklara hur Anderna, Amazonas och de olika klimatzonerna påverkar natur, resurser och försörjning i Sydamerika.",
     audio:
-      "Sydamerika ligger mest på södra halvklotet och har både tropiska och tempererade områden. Här finns Anderna längst i väster, Amazonas regnskog och torra områden som Atacamaöknen. Många människor bor längs kusterna eller i högländer och storstäder. Jordbruk, gruvnäring, vattenkraft, handel och turism är viktiga. Naturresurser som skog, koppar, litium och odlingsmark spelar stor roll, samtidigt som markanvändning kan påverka miljö och livsmiljöer.",
+      "Den största delen av Sydamerika ligger i den tropiska klimatzonen. Söderut finns subtropisk zon och längst i söder tempererad zon. Längs västsidan ligger Anderna. I norr finns Amazonas med regnskog. Därför finns både regnskog, savann och torrare områden. Sydamerika har flera viktiga naturresurser som olja, metaller, bördig jord, vattenkraft och skog. Jordbruk, boskapsskötsel, fiske, gruvor och industri är viktiga näringar.",
     dimensions: {
       location: {
         summary:
-          "Ligger på västra halvklotet och sträcker sig från ekvatorn till kalla delar i söder.",
-        tags: ["västra halvklotet", "mest södra halvklotet", "lång och smal"],
+          "En lång världsdel med Anderna längs västsidan och Amazonas i norr. Den sträcker sig långt från norr till söder.",
+        tags: ["Anderna", "Amazonas", "lång nord-sydlig sträckning"],
         reason:
-          "Det långa nord-sydliga läget gör att klimatet skiftar mycket mellan norr, centrala delar och söder."
+          "Den långa sträckningen och bergskedjan i väster gör att klimat och natur skiljer sig mycket mellan olika delar."
       },
       climate: {
         summary:
-          "Tropiskt klimat i norr, torra områden i väster och mer tempererat klimat längre söderut.",
-        tags: ["tropiskt", "tempererat", "torrt"],
+          "Största delen ligger i den tropiska zonen. Söderut finns subtropisk zon och längst i söder tempererad zon.",
+        tags: ["tropisk zon", "subtropisk zon", "tempererad zon"],
         reason:
-          "Ekvatorn, havsströmmar, berg och breddgrad styr temperatur och nederbörd."
+          "Läget från norr till söder och Andernas påverkan gör att både värme och regn varierar."
       },
       vegetation: {
         summary:
-          "Regnskog i Amazonas, gräsmarker som pampas och gles vegetation i torra eller kalla områden.",
-        tags: ["regnskog", "gräsmark", "gles vegetation"],
+          "Regnskog i Amazonas, savann i vissa delar och torrare vegetation i andra områden.",
+        tags: ["regnskog", "savann", "torrare vegetation"],
         reason:
-          "Stora skillnader i nederbörd och temperatur gör att olika vegetationstyper dominerar på olika platser."
+          "Klimatet styr om det blir tät regnskog, gräsmarker eller torrare landskap."
       },
       population: {
         summary:
-          "Många bor i stora städer och längs kusterna, medan vissa delar av inlandet är glest befolkade.",
-        tags: ["kustnära städer", "gles i inlandet", "storstad"],
+          "Befolkningen är ojämnt fördelad över världsdelens stora yta.",
+        tags: ["ojämnt fördelad"],
         reason:
-          "Kuster, arbete och transporter lockar fler människor, medan tät regnskog och berg kan göra det svårare att bo tätt."
+          "Berg, regnskog, klimat och viktiga transportlägen påverkar var människor lättast kan bo och arbeta."
       },
       livelihoods: {
         summary:
-          "Jordbruk, gruvor, turism, handel och vattenkraft är viktiga delar av försörjningen.",
-        tags: ["jordbruk", "gruvor", "vattenkraft", "turism"],
+          "Jordbruk, boskapsskötsel, fiske, gruvor och industri är viktiga delar av försörjningen.",
+        tags: ["jordbruk", "boskap", "fiske", "gruvor", "industri"],
         reason:
-          "Naturresurser och landskap skapar olika möjligheter för jobb och export."
+          "Naturresurserna och landskapet styr vilka arbeten som blir vanliga i olika delar av Sydamerika."
       },
       resources: {
         summary:
-          "Har skog, sötvatten, koppar, litium, odlingsmark och stora möjligheter till vattenkraft.",
-        tags: ["skog", "sötvatten", "koppar", "litium", "vattenkraft"],
+          "Har olja, metaller, bördig jord, vattenkraft och stora skogsområden.",
+        tags: ["olja", "metaller", "bördig jord", "vattenkraft", "skog"],
         reason:
-          "Naturresurserna är viktiga för ekonomin men hur de används påverkar också naturen och människors livsmiljö."
+          "Resurserna är viktiga för export och ekonomi men påverkar också hur naturen används."
       }
     }
   },
@@ -293,57 +293,57 @@ const continents = [
     id: "oceanien",
     name: "Oceanien",
     intro:
-      "Oceanien består av Australien, Nya Zeeland och många öar i Stilla havet. Därför finns både torra och tropiska miljöer.",
+      "Oceanien består av Australien, Nya Zeeland och många öar i Stilla havet.",
     memoryHook:
-      "Tänk på Oceanien som en utspridd världsdel där havet är lika viktigt som landet.",
-    countries: ["Australien", "Nya Zeeland"],
-    keyPlaces: ["Stilla havet", "Stora Barriarrevet", "Outback", "Melanesien"],
+      "Tänk Oceanien som öar och hav, liten befolkning och stor skillnad mellan Australiens inland och fuktiga öar.",
+    countries: ["Australien", "Nya Zeeland", "Fiji", "Papua Nya Guinea"],
+    keyPlaces: ["Stilla havet", "Australien", "Nya Zeeland", "Stillahavsöarna"],
     cLevel:
-      "För C är det bra att kunna se hur det utspridda läget i havet påverkar transport, klimat och försörjning.",
+      "För C ska Isak kunna koppla Oceaniens ö-läge, klimat och naturresurser till turism, fiske, jordbruk och andra näringar.",
     audio:
-      "Oceanien ligger i och runt Stilla havet och består av både stora landområden som Australien och många mindre öar. I Australien finns mycket torra områden, medan flera öar har tropiskt klimat. Befolkningen är liten jämfört med andra världsdelar och bor ofta vid kusterna. Gruvnäring, jordbruk, turism, fiske och handel är viktiga. Naturresurser som järnmalm, kol, gas, fisk och odlingsmark är betydelsefulla i olika delar av Oceanien.",
+      "Oceanien är en liten världsdel som består av Australien, Nya Zeeland och många öar i Stilla havet. Klimatet varierar. På många öar är det tropiskt, medan stora delar av Australiens inland är torra. Nya Zeeland har också svalare områden. Befolkningen är liten jämfört med andra världsdelar och många bor vid kusterna. Turism, jordbruk, fiske och gruvarbete är viktiga. Havet och naturen betyder mycket för både vardag och ekonomi i Oceanien.",
     dimensions: {
       location: {
         summary:
-          "Ligger i och runt Stilla havet och består av både fastland och många öar.",
-        tags: ["stilla havet", "utspridda öar", "södra halvklotet"],
+          "Består av Australien, Nya Zeeland och många öar i Stilla havet.",
+        tags: ["öar", "Australien", "Nya Zeeland", "Stilla havet"],
         reason:
-          "Det utspridda läget gör havet och avstånd viktiga för transporter, handel och vardag."
+          "När en världsdel består av öar och stora havsområden blir havet viktigt för transporter, fiske och kontakt."
       },
       climate: {
         summary:
-          "Torra och heta områden i Australien, men tropiskt eller tempererat klimat på andra platser.",
-        tags: ["tropiskt", "tempererat", "torrt"],
+          "Tropiskt på många öar, torrare i Australiens inland och svalare i delar av Nya Zeeland.",
+        tags: ["tropiskt", "torrt inland", "svalare söderut"],
         reason:
-          "Storlek, breddgrad och havets närhet gör att klimatet blir olika på fastlandet och på öarna."
+          "Läget i havet och skillnader mellan öar och fastland gör att klimatet varierar mycket."
       },
       vegetation: {
         summary:
-          "Buskmark och gräsmarker i torrare delar, men också skog och tropisk vegetation på fuktigare platser.",
-        tags: ["buskmark", "gräsmark", "skog", "tropisk vegetation"],
+          "Regnskog och annan frodig växtlighet på fuktiga platser men torrare växtlighet i Australiens inland.",
+        tags: ["regnskog", "fuktig växtlighet", "torrare inland"],
         reason:
-          "Vegetationen följer hur varmt och regnigt det är i olika delar av världsdelen."
+          "Växtligheten följer regn, torka och hur nära havet olika områden ligger."
       },
       population: {
         summary:
-          "Relativt liten befolkning som ofta bor kustnära, medan stora delar av inlandet är glest befolkade.",
-        tags: ["liten befolkning", "kustnära städer", "gles i inlandet"],
+          "Befolkningen är liten jämfört med andra världsdelar och många bor kustnära.",
+        tags: ["liten befolkning", "kustnära"],
         reason:
-          "Torrare inland, långa avstånd och tillgång till jobb och service gör att fler bor vid kusten."
+          "Kusterna ger lättare transporter, bättre service och fler arbeten än torrare och mer avlägsna inland."
       },
       livelihoods: {
         summary:
-          "Gruvnäring, jordbruk, turism, fiske och olika tjänster är viktiga.",
-        tags: ["gruvor", "jordbruk", "turism", "fiske"],
+          "Turism, jordbruk, fiske, gruvarbete och olika tjänster är viktiga.",
+        tags: ["turism", "jordbruk", "fiske", "gruvarbete", "tjänster"],
         reason:
-          "Naturresurser, havet och klimatet påverkar vilka jobb som är vanliga."
+          "Havet, naturen och naturresurserna påverkar vilka jobb som blir vanliga i Oceanien."
       },
       resources: {
         summary:
-          "Har bland annat kol, järnmalm, gas, fisk och odlingsmark i vissa områden.",
-        tags: ["kol", "järnmalm", "gas", "fisk", "odlingsmark"],
+          "Natur, fisk, jordbruksmark och olika mineraler är viktiga resurser i olika delar av Oceanien.",
+        tags: ["fisk", "jordbruksmark", "mineraler", "natur"],
         reason:
-          "Naturresurserna är viktiga för export och försörjning, men kräver också att naturen används på ett hållbart sätt."
+          "Resurserna används både för försörjning i vardagen och för export och turism."
       }
     }
   },
@@ -351,56 +351,166 @@ const continents = [
     id: "antarktis",
     name: "Antarktis",
     intro:
-      "Antarktis är den kallaste världsdelen och är nästan helt täckt av is.",
+      "Antarktis ligger runt sydpolen och är den kallaste världsdelen. Nästan hela världsdelen är täckt av is.",
     memoryHook:
-      "Tänk på Antarktis som is, kyla, forskning och ingen permanent befolkning.",
+      "Tänk Antarktis som is, kyla, starka vindar, forskning och ingen permanent befolkning.",
     countries: [],
-    keyPlaces: ["Södra ishavet", "Sydpolen", "Inlandsis"],
+    keyPlaces: ["Sydpolen", "Inlandsisen", "Södra ishavet"],
     cLevel:
-      "För C räcker det ofta att kunna förklara hur det extrema klimatet gör att få människor kan bo där och att världsdelen mest används för forskning.",
+      "För C räcker det att kunna förklara hur det extrema klimatet påverkar växtlighet, människor och varför Antarktis främst används för forskning.",
     audio:
-      "Antarktis ligger runt sydpolen och är den kallaste världsdelen. Nästan hela ytan är täckt av is och klimatet är polart med mycket kalla vintrar och starka vindar. Det finns ingen permanent befolkning, men forskare arbetar där periodvis. Antarktis är viktig som en stor lagring av sötvatten i isform och som ett område som hjälper forskare att förstå klimatförändringar.",
+      "Antarktis ligger runt sydpolen. Nästan hela världsdelen är täckt av is. Vintern kan bli kallare än minus 80 grader och sommartid blir det ändå sällan varmare än noll. Det finns också kraftiga vindar och snöstormar. Därför finns ingen permanent befolkning. Bara forskare arbetar där under perioder. Antarktis är viktig eftersom stora mängder sötvatten finns bundet i isen och för att forskare kan studera klimatet där.",
     dimensions: {
       location: {
-        summary: "Ligger runt sydpolen och omges av Södra ishavet.",
-        tags: ["sydpolen", "södra halvklotet", "isolering"],
+        summary:
+          "Ligger runt sydpolen och är omgiven av hav.",
+        tags: ["sydpolen", "omgiven av hav"],
         reason:
-          "Det extrema sydliga läget gör att solen värmer lite under stora delar av året."
+          "Det extrema läget längst i söder gör att solen värmer mycket lite under stora delar av året."
       },
       climate: {
-        summary: "Polart klimat med mycket kyla, is, snö och starka vindar.",
-        tags: ["polart", "is", "mycket kallt"],
+        summary:
+          "Mycket kallt klimat med is, snö, kraftiga vindar och snöstormar. Vintern kan bli kallare än minus 80 grader.",
+        tags: ["mycket kallt", "is", "snö", "stormar"],
         reason:
-          "Läget vid sydpolen och den stora isytan gör att lite värme tas upp."
+          "Den låga solvärmen och all is gör att Antarktis blir jordens kallaste världsdel."
       },
       vegetation: {
-        summary: "Mycket lite vegetation på land eftersom klimatet är så kallt och torrt.",
-        tags: ["mycket lite vegetation"],
+        summary:
+          "Mycket lite växtlighet på land eftersom klimatet är så kallt och isigt.",
+        tags: ["mycket lite växtlighet"],
         reason:
-          "Extrem kyla och is gör det svårt för de flesta växter att överleva."
+          "Den extrema kylan och isen gör det svårt för växter att växa."
       },
       population: {
-        summary: "Ingen permanent befolkning, bara forskare under perioder.",
-        tags: ["ingen permanent befolkning", "forskning"],
+        summary:
+          "Ingen permanent befolkning. Bara forskare vistas där under vissa perioder.",
+        tags: ["ingen permanent befolkning", "forskare"],
         reason:
-          "Klimatet gör vardagsliv och jordbruk mycket svårt, så människor vistas mest där för forskning."
+          "Det hårda klimatet gör vanligt vardagsliv mycket svårt."
       },
       livelihoods: {
-        summary: "Forskning är den viktigaste verksamheten.",
+        summary:
+          "Forskning är det viktigaste som människor gör i Antarktis.",
         tags: ["forskning"],
         reason:
-          "Antarktis används framför allt för att studera klimat, is, djurliv och miljöförändringar."
+          "Antarktis används främst för att förstå klimat, is och natur i extrem kyla."
       },
       resources: {
         summary:
-          "Den största naturresursen är sötvatten som är bundet i is. Området är också viktigt för forskning.",
-        tags: ["sötvatten i is", "forskning"],
+          "Stora mängder sötvatten finns bundet i isen. Antarktis är också viktig för klimatforskning.",
+        tags: ["sötvatten i is", "klimatforskning"],
         reason:
-          "Antarktis visar hur klimatet påverkar jordens system och är därför viktig globalt."
+          "Isen och forskningen gör Antarktis viktig för att förstå jordens klimat och vatten."
       }
     }
   }
 ];
+
+const guideAreas = [
+  {
+    key: "location",
+    label: "Läge",
+    prompt: "Var ligger den på jordklotet? Vilka hav, gränser eller stora områden hör ihop med den?"
+  },
+  {
+    key: "climate",
+    label: "Klimat",
+    prompt: "Vilka klimatzoner eller klimat finns? Till exempel tropiskt, subtropiskt, tempererat eller polarzon."
+  },
+  {
+    key: "vegetation",
+    label: "Vegetation",
+    prompt: "Vad växer där? Till exempel regnskog, öken, savann eller barrskog. Hur hänger det ihop med klimatet?"
+  },
+  {
+    key: "population",
+    label: "Befolkning",
+    prompt: "Var bor folk, och var är det glesare? Varför bor människor just där?"
+  },
+  {
+    key: "livelihoods",
+    label: "Försörjning",
+    prompt: "Vad arbetar människor med, till exempel industri, turism, jordbruk eller fiske? Hur används naturen i jobben?"
+  },
+  {
+    key: "resources",
+    label: "Naturresurser",
+    prompt: "Vilka rikedomar finns? Tänk både på förnybara och icke-förnybara resurser."
+  }
+];
+
+const comparisonWords = {
+  different: ["däremot", "till skillnad från", "å andra sidan"],
+  similar: ["på samma sätt som", "precis som", "båda världsdelarna har"]
+};
+
+const areaExamplesByContinent = {
+  europa: {
+    location: "Uralbergen, Kaspiska havet och Svarta havet",
+    climate: "kustklimat i väster och medelhavsklimat i söder",
+    vegetation: "tundra i norr och skog i stora delar",
+    population: "många människor i städer",
+    livelihoods: "handel, transport och IT",
+    resources: "bördig jord, stora floder och järnmalm"
+  },
+  afrika: {
+    location: "ekvatorn mitt på kontinenten och Sahara i norr",
+    climate: "regn vid ekvatorn men torrare längre bort",
+    vegetation: "regnskog, savann och öken",
+    population: "människor i både städer och på landsbygden",
+    livelihoods: "jordbruk, boskapsskötsel och gruvor",
+    resources: "diamanter, guld, koppar och olja"
+  },
+  asien: {
+    location: "Sibirien i norr och den arabiska halvön i sydväst",
+    climate: "monsun i syd och öst men torrt inland",
+    vegetation: "tundra i norr och regnskog i varma fuktiga delar",
+    population: "mycket tät befolkning i öst och syd",
+    livelihoods: "jordbruk, fiske, industri och tjänster",
+    resources: "olja, kol och naturgas"
+  },
+  nordamerika: {
+    location: "Klippiga bergen i väster och de stora sjöarna i öster",
+    climate: "polarklimat i norr och subtropiskt klimat i söder",
+    vegetation: "tundra i norr och prärie längre söderut",
+    population: "många bor i söder och runt de stora sjöarna",
+    livelihoods: "industri, tjänster och jordbruk",
+    resources: "bördig jord, olja och naturgas"
+  },
+  sydamerika: {
+    location: "Anderna i väster och Amazonas i norr",
+    climate: "tropisk zon i stora delar och tempererad zon längst i söder",
+    vegetation: "regnskog i Amazonas och savann i andra delar",
+    population: "ojämn befolkning över den stora ytan",
+    livelihoods: "jordbruk, fiske, gruvor och industri",
+    resources: "olja, metaller, vattenkraft och skog"
+  },
+  oceanien: {
+    location: "Australien, Nya Zeeland och många öar i Stilla havet",
+    climate: "tropiskt på många öar men torrare i Australiens inland",
+    vegetation: "frodig växtlighet på fuktiga öar och torrare inland i Australien",
+    population: "många bor nära kusterna",
+    livelihoods: "turism, fiske, jordbruk och gruvarbete",
+    resources: "fisk, jordbruksmark och mineraler"
+  },
+  antarktis: {
+    location: "sydpolen och den stora inlandsisen",
+    climate: "extrem kyla, kraftiga vindar och snöstormar",
+    vegetation: "mycket lite växtlighet",
+    population: "forskare under kortare perioder",
+    livelihoods: "forskning om klimat, is och natur",
+    resources: "sötvatten bundet i isen"
+  }
+};
+
+function renderTagChips(tags = []) {
+  return `
+    <div class="tag-chip-row">
+      ${tags.map((tag) => `<span class="tag-chip">${tag}</span>`).join("")}
+    </div>
+  `;
+}
 
 const drillCollections = {
   hav: [
@@ -849,62 +959,74 @@ const countryPool = countryQuizItems.map((item) => item.country);
 const planStartIso = "2026-03-14";
 const examDateIso = "2026-03-20";
 const lessonDurationMinutes = 15;
+const comparisonPresets = [
+  {
+    id: "europa-afrika",
+    compareA: "europa",
+    compareB: "afrika",
+    label: "Europa och Afrika",
+    detail: "Klimat, befolkning och naturresurser"
+  },
+  {
+    id: "asien-nordamerika",
+    compareA: "asien",
+    compareB: "nordamerika",
+    label: "Asien och Nordamerika",
+    detail: "Storlek, klimat och försörjning"
+  },
+  {
+    id: "nordamerika-sydamerika",
+    compareA: "nordamerika",
+    compareB: "sydamerika",
+    label: "Nordamerika och Sydamerika",
+    detail: "Natur, städer och resurser"
+  }
+];
 
 const writingPrompts = [
   {
     id: "prompt-europa-afrika",
-    title: "Jämför Europa och Afrika",
+    title: "Textfråga: Jämför Europa och Afrika",
     description:
-      "Skriv ett svar där du jämför Europa och Afrika utifrån klimat, befolkning, naturresurser och försörjning.",
+      "Förklara skillnader och likheter mellan Europa och Afrika utifrån klimat, befolkning, naturresurser och försörjning.",
     supportPoints: [
-      "Berätta minst två tydliga likheter eller skillnader.",
-      "Förklara varför det ser ut så.",
-      "Ge exempel från båda världsdelarna.",
-      "Använd ord som klimat, naturresurser, befolkning och försörjning."
+      "Börja med vad som är lika eller olika.",
+      "Förklara varför det ser ut så med geografiord.",
+      "Ge minst ett tydligt exempel från båda världsdelarna.",
+      "Skriv 4 till 6 meningar i lugn, tydlig ordning."
     ],
     compareA: "europa",
     compareB: "afrika",
     target: "C"
   },
   {
-    id: "prompt-asien-amerika",
-    title: "Jämför Asien och Nordamerika",
+    id: "prompt-asien-nordamerika",
+    title: "Textfråga: Jämför Asien och Nordamerika",
     description:
       "Förklara hur läge, klimat och naturresurser påverkar hur människor bor och arbetar i Asien och Nordamerika.",
     supportPoints: [
-      "Ta upp läge eller storlek som förklaring.",
-      "Koppla klimat till vegetation eller befolkning.",
-      "Ge exempel på jobb eller näringar i båda.",
-      "Skriv i hela meningar med tydliga samband."
+      "Säg något om läge eller storlek.",
+      "Koppla klimat till befolkning, vegetation eller jobb.",
+      "Ge exempel från båda världsdelarna.",
+      "Skriv ett sammanhängande jämförelsesvar."
     ],
     compareA: "asien",
     compareB: "nordamerika",
     target: "C"
   },
   {
-    id: "prompt-varfor-folk-bor",
-    title: "Varför bor människor nära floder och kuster?",
+    id: "prompt-nordamerika-sydamerika",
+    title: "Textfråga: Jämför Nordamerika och Sydamerika",
     description:
-      "Skriv ett förklarande svar om varför människor ofta bor nära floder och kuster i världen.",
+      "Jämför Nordamerika och Sydamerika och förklara hur natur, befolkning och naturresurser påverkar människors liv.",
     supportPoints: [
-      "Ta upp vatten, transporter eller handel.",
-      "Förklara varför det blir viktigt för människor.",
-      "Ge minst ett konkret exempel.",
-      "Använd geografiska begrepp i svaret."
+      "Berätta något som är lika eller olika.",
+      "Förklara varför med klimat, natur eller resurser.",
+      "Ge minst ett tydligt exempel från båda.",
+      "Skriv så att svaret låter som ett utvecklat resonemang."
     ],
-    target: "C"
-  },
-  {
-    id: "prompt-naturresurser",
-    title: "Hur påverkar naturresurser människors liv?",
-    description:
-      "Beskriv hur naturresurser som vatten, odlingsmark, skog eller mineraler kan påverka jobb, boende och landskap.",
-    supportPoints: [
-      "Nämn flera naturresurser.",
-      "Förklara hur de används.",
-      "Beskriv någon konsekvens för människor eller miljö.",
-      "Skriv som ett utvecklat resonemang, inte bara en lista."
-    ],
+    compareA: "nordamerika",
+    compareB: "sydamerika",
     target: "C"
   }
 ];
@@ -913,274 +1035,120 @@ const lessons = [
   {
     id: "lesson-1",
     order: 1,
-    title: "Världskartan och hav",
-    theme: "Kom igång med världsdelar, världshav och kartan.",
+    title: "Europa och Afrika",
+    theme: "Fem tydliga delar i lugn ordning.",
     summary:
-      "Första lektionen bygger trygghet. Isak tränar världsdelar, världshav och att hitta rätt på kartan innan jämförelserna blir svårare.",
+      "Först lyssnar Isak på Europa. Sedan Afrika. Efter det lyssnar han på jämförelsen, svarar på textfrågan och avslutar med ett kort belöningsspel.",
     steps: [
       {
         minutes: 3,
-        mode: "Läs",
-        description: "Läs om Europa som exempel på hur läge, hav och floder hänger ihop.",
-        action: { type: "learn", continentId: "europa" }
-      },
-      {
-        minutes: 3,
-        mode: "Lyssna",
-        description: "Lyssna på Europa-spåret och peka ut världsdel och hav på karta.",
+        mode: "Första världsdelen",
+        description: "Lyssna på Europa i lugn takt.",
         action: { type: "listen", trackId: "track-europa" }
       },
       {
-        minutes: 4,
-        mode: "Kortträning",
-        description: "Träna på världsdelar, världshav och några viktiga länder med korten.",
-        action: { type: "drill", category: "hav" }
+        minutes: 3,
+        mode: "Andra världsdelen",
+        description: "Lyssna på Afrika i lugn takt.",
+        action: { type: "listen", trackId: "track-afrika" }
       },
       {
         minutes: 3,
-        mode: "Quiz",
-        description: "Gör en snabb quizrunda för att se vad som redan sitter.",
-        action: { type: "quiz" }
+        mode: "Jämförelsen",
+        description: "Lyssna på jämförelsen mellan Europa och Afrika.",
+        action: { type: "listen", trackId: "track-compare", compareA: "europa", compareB: "afrika" }
       },
       {
-        minutes: 2,
-        mode: "Skriv",
-        description: "Skriv 3 meningar om varför karta, hav och läge är viktiga i geografi.",
-        action: { type: "writing", promptId: "prompt-varfor-folk-bor" }
+        minutes: 5,
+        mode: "Textfrågan",
+        description: "Svara på textfrågan om Europa och Afrika.",
+        action: { type: "writing", promptId: "prompt-europa-afrika", compareA: "europa", compareB: "afrika" }
+      },
+      {
+        minutes: 1,
+        mode: "Belöningsspel",
+        description: "Spela Flappy Globe som en kort belöning.",
+        action: { type: "game" }
       }
     ]
   },
   {
     id: "lesson-2",
     order: 2,
-    title: "Europa och Afrika",
-    theme: "Första stora jämförelsen mot lärarens instruktion.",
+    title: "Asien och Nordamerika",
+    theme: "Samma tydliga femstegsflöde.",
     summary:
-      "Den här lektionen tränar just modellen Vad, Varför och Exempel. Europa och Afrika ger tydliga skillnader i klimat och befolkning.",
+      "Isak följer samma lugna ordning: lyssna på båda världsdelarna, lyssna på jämförelsen, svara på textfrågan och avsluta med en snabb belöning.",
     steps: [
       {
         minutes: 3,
-        mode: "Läs",
-        description: "Läs först Afrika och repetera sedan Europa snabbt.",
-        action: { type: "learn", continentId: "afrika" }
+        mode: "Första världsdelen",
+        description: "Lyssna på Asien.",
+        action: { type: "listen", trackId: "track-asien" }
       },
       {
         minutes: 3,
-        mode: "Lyssna",
-        description: "Lyssna på Afrika-spåret för att höra sambanden lugnt och tydligt.",
-        action: { type: "listen", trackId: "track-afrika" }
+        mode: "Andra världsdelen",
+        description: "Lyssna på Nordamerika.",
+        action: { type: "listen", trackId: "track-nordamerika" }
       },
       {
         minutes: 3,
-        mode: "Jämför",
-        description: "Jämför Europa och Afrika utifrån klimat, befolkning och naturresurser.",
-        action: { type: "compare", compareA: "europa", compareB: "afrika" }
+        mode: "Jämförelsen",
+        description: "Lyssna på jämförelsen mellan Asien och Nordamerika.",
+        action: { type: "listen", trackId: "track-compare", compareA: "asien", compareB: "nordamerika" }
       },
       {
-        minutes: 3,
-        mode: "Quiz",
-        description: "Gör quiz med fokus på resonemang och huvudstäder.",
-        action: { type: "quiz" }
+        minutes: 5,
+        mode: "Textfrågan",
+        description: "Svara på textfrågan om Asien och Nordamerika.",
+        action: { type: "writing", promptId: "prompt-asien-nordamerika", compareA: "asien", compareB: "nordamerika" }
       },
       {
-        minutes: 3,
-        mode: "Skriv",
-        description: "Skriv ett kort jämförelsesvar och låt OpenAI ge återkoppling.",
-        action: { type: "writing", promptId: "prompt-europa-afrika" }
+        minutes: 1,
+        mode: "Belöningsspel",
+        description: "Spela Flappy Globe som en kort belöning.",
+        action: { type: "game" }
       }
     ]
   },
   {
     id: "lesson-3",
     order: 3,
-    title: "Asien och stora mönster",
-    theme: "Storlek, variation och varför människor bor där de bor.",
-    summary:
-      "Nu tränar Isak på att tänka större. Asien är bra för att förstå hur storlek, klimat och naturresurser skapar skillnader inom en världsdel.",
-    steps: [
-      {
-        minutes: 4,
-        mode: "Läs",
-        description: "Läs om Asien och markera ord om klimat, befolkning och naturresurser.",
-        action: { type: "learn", continentId: "asien" }
-      },
-      {
-        minutes: 3,
-        mode: "Lyssna",
-        description: "Lyssna på Asien-spåret och försök säga ett samband efteråt.",
-        action: { type: "listen", trackId: "track-asien" }
-      },
-      {
-        minutes: 3,
-        mode: "Kortträning",
-        description: "Träna floder, bergskedjor och regioner i Asien.",
-        action: { type: "drill", category: "floder" }
-      },
-      {
-        minutes: 2,
-        mode: "Quiz",
-        description: "Ta en kort quizrunda och se om Himalaya, Ganges och Asien sitter.",
-        action: { type: "quiz" }
-      },
-      {
-        minutes: 3,
-        mode: "Skriv",
-        description: "Skriv varför stora världsdelar kan ha olika klimat och vegetation.",
-        action: { type: "writing", promptId: "prompt-naturresurser" }
-      }
-    ]
-  },
-  {
-    id: "lesson-4",
-    order: 4,
     title: "Nordamerika och Sydamerika",
-    theme: "Berg, floder, kuster och var människor bor.",
+    theme: "Lyssna först, skriv sedan och avsluta lätt.",
     summary:
-      "Här vävs namngeografi och resonemang ihop. Amerika-delarna är bra för att koppla natur till städer, handel och försörjning.",
+      "Här tränar Isak på två världsdelar som ligger nära varandra på kartan men skiljer sig i natur, befolkning och resurser, och avslutar med en kort spelbelöning.",
     steps: [
       {
         minutes: 3,
-        mode: "Läs",
-        description: "Läs om Nordamerika med fokus på befolkning och naturresurser.",
-        action: { type: "learn", continentId: "nordamerika" }
+        mode: "Första världsdelen",
+        description: "Lyssna på Nordamerika.",
+        action: { type: "listen", trackId: "track-nordamerika" }
       },
       {
         minutes: 3,
-        mode: "Läs",
-        description: "Läs om Sydamerika och lägg märke till Anderna och Amazonas.",
-        action: { type: "learn", continentId: "sydamerika" }
+        mode: "Andra världsdelen",
+        description: "Lyssna på Sydamerika.",
+        action: { type: "listen", trackId: "track-sydamerika" }
       },
       {
         minutes: 3,
-        mode: "Jämför",
-        description: "Jämför Nordamerika och Sydamerika på samma sätt som i instruktionen.",
-        action: { type: "compare", compareA: "nordamerika", compareB: "sydamerika" }
+        mode: "Jämförelsen",
+        description: "Lyssna på jämförelsen mellan Nordamerika och Sydamerika.",
+        action: { type: "listen", trackId: "track-compare", compareA: "nordamerika", compareB: "sydamerika" }
       },
       {
-        minutes: 3,
-        mode: "Quiz",
-        description: "Quiz på floder, bergskedjor, länder och huvudstäder.",
-        action: { type: "quiz" }
+        minutes: 5,
+        mode: "Textfrågan",
+        description: "Svara på textfrågan om Nordamerika och Sydamerika.",
+        action: { type: "writing", promptId: "prompt-nordamerika-sydamerika", compareA: "nordamerika", compareB: "sydamerika" }
       },
       {
-        minutes: 3,
-        mode: "Skriv",
-        description: "Förklara varför människor ofta bor vid kuster och floder i Amerika.",
-        action: { type: "writing", promptId: "prompt-varfor-folk-bor" }
-      }
-    ]
-  },
-  {
-    id: "lesson-5",
-    order: 5,
-    title: "Namngeografi i provtempo",
-    theme: "Länder, huvudstäder, berg, floder och regioner.",
-    summary:
-      "Nu skruvas tempot upp. Den här lektionen tränar snabbare igenkänning och säkrare minne inför själva provsituationen.",
-    steps: [
-      {
-        minutes: 3,
-        mode: "Kortträning",
-        description: "Kör kort på länder och huvudstäder.",
-        action: { type: "drill", category: "lander" }
-      },
-      {
-        minutes: 3,
-        mode: "Kortträning",
-        description: "Kör bergskedjor och regioner.",
-        action: { type: "drill", category: "berg" }
-      },
-      {
-        minutes: 4,
-        mode: "Quiz",
-        description: "Gör en hel quizrunda med blandade frågor.",
-        action: { type: "quiz" }
-      },
-      {
-        minutes: 2,
-        mode: "Lyssna",
-        description: "Lyssna på jämförelsestödet som repetition.",
-        action: { type: "listen", trackId: "track-compare" }
-      },
-      {
-        minutes: 3,
-        mode: "Skriv",
-        description: "Skriv ett kort svar om hur naturresurser påverkar människors liv.",
-        action: { type: "writing", promptId: "prompt-naturresurser" }
-      }
-    ]
-  },
-  {
-    id: "lesson-6",
-    order: 6,
-    title: "C-nivå i jämförelser",
-    theme: "Utvecklade resonemang med tydliga exempel.",
-    summary:
-      "Nu tränar Isak specifikt på att lyfta svaren från fakta till förklarande resonemang, vilket är det som krävs för C.",
-    steps: [
-      {
-        minutes: 3,
-        mode: "Jämför",
-        description: "Jämför Asien och Nordamerika med fokus på Varför-delen.",
-        action: { type: "compare", compareA: "asien", compareB: "nordamerika" }
-      },
-      {
-        minutes: 3,
-        mode: "Lyssna",
-        description: "Lyssna på jämförelsestödet och pausa efter varje steg.",
-        action: { type: "listen", trackId: "track-compare" }
-      },
-      {
-        minutes: 3,
-        mode: "Quiz",
-        description: "Gör quiz och läs förklaringen noggrant efter varje svar.",
-        action: { type: "quiz" }
-      },
-      {
-        minutes: 6,
-        mode: "Skriv",
-        description: "Skriv ett utvecklat jämförelsesvar och få bedömning av OpenAI.",
-        action: { type: "writing", promptId: "prompt-asien-amerika" }
-      }
-    ]
-  },
-  {
-    id: "lesson-7",
-    order: 7,
-    title: "Genrep före provet",
-    theme: "Repetition i rätt ordning före provdagen.",
-    summary:
-      "Sista lektionen fungerar som ett genrep: snabb repetition, quiz, jämförelse och ett sista skrivsvar innan provet.",
-    steps: [
-      {
-        minutes: 3,
-        mode: "Läs",
-        description: "Läs igenom den världsdel du känner dig mest osäker på.",
-        action: { type: "learn", continentId: "afrika" }
-      },
-      {
-        minutes: 3,
-        mode: "Kortträning",
-        description: "Kör kort på den kategori du tycker är svårast.",
-        action: { type: "drill", category: "regioner" }
-      },
-      {
-        minutes: 4,
-        mode: "Quiz",
-        description: "Gör en sista quizrunda i provtempo.",
-        action: { type: "quiz" }
-      },
-      {
-        minutes: 2,
-        mode: "Jämför",
-        description: "Säg högt: Vad, Varför, Exempel.",
-        action: { type: "compare", compareA: "europa", compareB: "afrika" }
-      },
-      {
-        minutes: 3,
-        mode: "Skriv",
-        description: "Skriv ett sista svar och kontrollera att du använder exempel.",
-        action: { type: "writing", promptId: "prompt-europa-afrika" }
+        minutes: 1,
+        mode: "Belöningsspel",
+        description: "Spela Flappy Globe som en kort belöning.",
+        action: { type: "game" }
       }
     ]
   }
@@ -1188,7 +1156,7 @@ const lessons = [
 
 const appState = {
   activeTab: "quickpass",
-  selectedLessonId: lessons[0].id,
+  selectedLessonId: "",
   completedLessons: new Set(loadSavedJson("geografi-completed-lessons", [])),
   guidedLessonId: null,
   guidedStepIndex: 0,
@@ -1215,14 +1183,29 @@ const appState = {
   mapQuizAnswered: false,
   mapQuizFinished: false,
   mapQuizDraft: "",
-  compareA: "europa",
-  compareB: "afrika",
+  lessonCompareA: "",
+  lessonCompareB: "",
+  compareA: "",
+  compareB: "",
+  selectedComparePresetId: "",
   comparisonVersion: 0,
   comparisonNotes: loadSavedJson("geografi-comparison-notes", {}),
   selectedWritingPromptId: writingPrompts[0].id,
   writingDrafts: loadSavedJson("geografi-writing-drafts", {}),
   gradingResult: null,
   gradingLoading: false,
+  rewardGameBest: loadSavedJson("geografi-reward-game-best", 0),
+  rewardGameScore: 0,
+  rewardGameRunning: false,
+  rewardGameStarted: false,
+  rewardGameCrashed: false,
+  rewardGameAnimationFrame: null,
+  rewardGameLastTime: 0,
+  rewardGamePendingBoost: false,
+  rewardGameGlobeY: 160,
+  rewardGameGlobeVelocity: 0,
+  rewardGameObstacles: [],
+  rewardGameMessage: "Tryck på start och hjälp globen mellan öarna.",
   stats: loadSavedJson("geografi-stats", {
     quizRounds: 0,
     bestScore: 0,
@@ -1236,6 +1219,7 @@ const appState = {
   ttsStatusMessage: "Kontrollerar uppläsningstjänst...",
   ttsAudio: null,
   ttsAudioUrl: null,
+  ttsPlayToken: 0,
   ttsCache: new Map(),
   ttsWarmupTimer: null,
   bookImages: [],
@@ -1291,6 +1275,13 @@ function formatTimer(seconds) {
 }
 
 function setActiveTab(tabId) {
+  if (tabId !== "game") {
+    stopRewardGameLoop();
+    updateRewardGameHud();
+  }
+  if (tabId === "game") {
+    renderRewardGamePanel();
+  }
   appState.activeTab = tabId;
   document.querySelectorAll(".tab").forEach((button) => {
     button.classList.toggle("active", button.dataset.tab === tabId);
@@ -1351,11 +1342,25 @@ function parseLocalDate(isoDate) {
 }
 
 function lessonById(lessonId) {
+  const dynamicLesson = buildSelectedLesson();
+  if (dynamicLesson?.id === lessonId) {
+    return dynamicLesson;
+  }
   return lessons.find((lesson) => lesson.id === lessonId);
 }
 
 function writingPromptById(promptId) {
-  return writingPrompts.find((prompt) => prompt.id === promptId);
+  const savedPrompt = writingPrompts.find((prompt) => prompt.id === promptId);
+  if (savedPrompt) {
+    return savedPrompt;
+  }
+
+  const match = String(promptId || "").match(/^prompt-dynamic-(.+)-(.+)$/);
+  if (!match) {
+    return undefined;
+  }
+
+  return buildWritingPromptForPair(match[1], match[2]);
 }
 
 function getStudiedMinutes() {
@@ -1363,17 +1368,117 @@ function getStudiedMinutes() {
 }
 
 function getNextLesson() {
-  return lessons.find((lesson) => !appState.completedLessons.has(lesson.id)) || lessons[lessons.length - 1];
+  return buildSelectedLesson();
+}
+
+function selectedLesson() {
+  return buildSelectedLesson();
 }
 
 function nextLessonAfter(lesson) {
-  return lessons.find(
-    (candidate) => candidate.order > lesson.order && !appState.completedLessons.has(candidate.id)
-  ) || null;
+  return null;
 }
 
 function lessonWritingStep(lesson) {
   return lesson?.steps.find((step) => step.action.type === "writing") || null;
+}
+
+function lessonComparisonPair(lesson) {
+  const compareAction = lesson?.steps.find(
+    (step) => step.action.compareA && step.action.compareB
+  )?.action;
+
+  if (compareAction?.compareA && compareAction?.compareB) {
+    return {
+      compareA: compareAction.compareA,
+      compareB: compareAction.compareB
+    };
+  }
+
+  const prompt = writingPromptById(lessonWritingStep(lesson)?.action.promptId);
+  if (prompt?.compareA && prompt?.compareB) {
+    return {
+      compareA: prompt.compareA,
+      compareB: prompt.compareB
+    };
+  }
+
+  return null;
+}
+
+function buildWritingPromptForPair(compareA, compareB) {
+  const first = continentById(compareA);
+  const second = continentById(compareB);
+  if (!first || !second) {
+    return undefined;
+  }
+
+  return {
+    id: `prompt-dynamic-${compareA}-${compareB}`,
+    title: `Förhör: Jämför ${first.name} och ${second.name}`,
+    description:
+      `Du blir förhörd på jämförelsen mellan ${first.name} och ${second.name}. Förklara skillnader och likheter utifrån klimat, befolkning, naturresurser och försörjning.`,
+    supportPoints: [
+      "Svara på jämförelsen mellan de två världsdelarna, inte om bara en av dem.",
+      "Börja med vad som är lika eller olika.",
+      "Förklara varför det ser ut så med geografiord.",
+      "Ge minst ett tydligt exempel från båda världsdelarna.",
+      "Skriv 4 till 6 meningar i lugn, tydlig ordning."
+    ],
+    compareA,
+    compareB,
+    target: "C"
+  };
+}
+
+function buildSelectedLesson() {
+  const first = continentById(appState.lessonCompareA);
+  const second = continentById(appState.lessonCompareB);
+  if (!first || !second) {
+    return null;
+  }
+
+  const prompt = buildWritingPromptForPair(first.id, second.id);
+  return {
+    id: `lesson-dynamic-${first.id}-${second.id}`,
+    order: 1,
+    title: `${first.name} och ${second.name}`,
+    theme: "Fem tydliga delar i lugn ordning.",
+    summary:
+      `Först lyssnar Isak på ${first.name}. Sedan ${second.name}. Efter det lyssnar han på jämförelsen, svarar på textfrågan och avslutar med ett kort belöningsspel.`,
+    steps: [
+      {
+        minutes: 3,
+        mode: "Första världsdelen",
+        description: `Lyssna på ${first.name} i lugn takt.`,
+        action: { type: "listen", trackId: `track-${first.id}` }
+      },
+      {
+        minutes: 3,
+        mode: "Andra världsdelen",
+        description: `Lyssna på ${second.name} i lugn takt.`,
+        action: { type: "listen", trackId: `track-${second.id}` }
+      },
+      {
+        minutes: 3,
+        mode: "Jämförelsen",
+        description: `Lyssna på jämförelsen mellan ${first.name} och ${second.name}.`,
+        action: { type: "listen", trackId: "track-compare", compareA: first.id, compareB: second.id }
+      },
+      {
+        minutes: 5,
+        mode: "Textfrågan",
+        description: `Svara på textfrågan om ${first.name} och ${second.name}.`,
+        action: { type: "writing", promptId: prompt.id, compareA: first.id, compareB: second.id }
+      },
+      {
+        minutes: 1,
+        mode: "Belöningsspel",
+        description: "Spela Flappy Globe som en kort belöning.",
+        action: { type: "game" }
+      }
+    ]
+  };
 }
 
 function recommendedWritingPromptId() {
@@ -1382,7 +1487,7 @@ function recommendedWritingPromptId() {
     return activeStep.action.promptId;
   }
 
-  const lesson = guidedLessonIsComplete() ? getNextLesson() : guidedLesson() || getNextLesson();
+  const lesson = guidedLessonIsComplete() ? selectedLesson() : guidedLesson() || selectedLesson();
   return lessonWritingStep(lesson)?.action.promptId || writingPrompts[0].id;
 }
 
@@ -1391,7 +1496,92 @@ function recommendedWritingLesson() {
     return guidedLesson();
   }
 
-  return guidedLessonIsComplete() ? getNextLesson() : guidedLesson() || getNextLesson();
+  return guidedLessonIsComplete() ? selectedLesson() : guidedLesson() || selectedLesson() || lessons[0];
+}
+
+function recommendedCompareLesson() {
+  if (guidedLesson()) {
+    return guidedLesson();
+  }
+
+  return selectedLesson() || lessons[0];
+}
+
+function compareFocusData() {
+  const lesson = recommendedCompareLesson();
+  const pair = guidedLesson()
+    ? lessonComparisonPair(lesson)
+    : { compareA: appState.compareA, compareB: appState.compareB };
+  const first = continentById(pair?.compareA || appState.compareA);
+  const second = continentById(pair?.compareB || appState.compareB);
+
+  if (!first || !second) {
+    return {
+      lesson,
+      first: null,
+      second: null,
+      title: "Välj två världsdelar",
+      description:
+        "Välj först två olika världsdelar här ovanför. Då visar appen jämförelsen direkt."
+    };
+  }
+
+  return {
+    lesson,
+    first,
+    second,
+    title: `Jämför ${first.name} och ${second.name}`,
+    description:
+      guidedLesson() && guidedStep()?.action.type === "writing"
+        ? `Nu är Isak på sista delen i ${lesson.title}. Bygg svaret i ordningen vad, varför och exempel.`
+        : guidedLesson() && guidedStep()?.action.type === "listen" && guidedStep()?.action.trackId === "track-compare"
+          ? `Nu lyssnar Isak på jämförelsen i ${lesson.title}. Fokusera på vad, varför och exempel område för område.`
+          : `I ${lesson.title} är ${first.name} och ${second.name} paret i fokus. Använd checklistan område för område.`
+  };
+}
+
+function setComparisonPair(compareA, compareB) {
+  appState.compareA = compareA;
+  appState.compareB = compareB;
+  appState.selectedComparePresetId = "";
+}
+
+function setLessonPair(compareA, compareB) {
+  appState.lessonCompareA = compareA;
+  appState.lessonCompareB = compareB;
+  const lesson = buildSelectedLesson();
+  appState.selectedLessonId = lesson?.id || "";
+  if (!lesson) {
+    return;
+  }
+
+  const firstListenStep = lesson.steps.find((step) => step.action.type === "listen");
+  if (firstListenStep?.action?.trackId) {
+    appState.listenTrackId = firstListenStep.action.trackId;
+  }
+  const writingStep = lessonWritingStep(lesson);
+  if (writingStep?.action?.promptId) {
+    appState.selectedWritingPromptId = writingStep.action.promptId;
+    appState.gradingResult = null;
+  }
+}
+
+function renderLessonChoices() {
+  const firstSelect = document.querySelector("#lesson-compare-a");
+  const secondSelect = document.querySelector("#lesson-compare-b");
+  if (!firstSelect || !secondSelect) {
+    return;
+  }
+
+  const options = [
+    `<option value="">Välj en världsdel</option>`,
+    ...continents.map((continent) => `<option value="${continent.id}">${continent.name}</option>`)
+  ].join("");
+
+  firstSelect.innerHTML = options;
+  secondSelect.innerHTML = options;
+  firstSelect.value = appState.lessonCompareA;
+  secondSelect.value = appState.lessonCompareB;
 }
 
 function guidedLesson() {
@@ -1444,20 +1634,26 @@ function guidedCompleteLabel(step) {
     drill: "Jag är klar med korten",
     quiz: "Jag är klar med quizet",
     compare: "Jag är klar med jämförelsen",
-    writing: "Jag är klar med skrivandet"
+    writing: "Jag har svarat klart",
+    game: "Jag är klar med spelet"
   };
 
   return labels[step?.action?.type] || "Jag är klar";
 }
 
 function guidedSupportText(step) {
+  if (step?.action?.type === "listen" && step.action.trackId === "track-compare") {
+    return "Isak, lyssna efter vad som är lika eller olika, varför det blir så och vilka exempel som nämns. När du känner att du fått med det viktigaste kan du gå vidare.";
+  }
+
   const messages = {
     learn: "Isak, läs i lugn takt. När du känner att du är klar kan du gå vidare direkt.",
     listen: "Isak, lyssna lugnt. När du känner att du är klar kan du gå vidare direkt.",
     drill: "Isak, skriv ett svar på varje kort och vänd sedan för att rätta. Gå vidare när du känner att du tränat klart.",
     quiz: "Isak, gör frågorna i lugn takt. När du känner dig färdig med quizet kan du gå vidare direkt.",
     compare: "Isak, fokusera på att jämföra lugnt och tydligt. När du känner dig färdig kan du gå vidare direkt.",
-    writing: "Isak, skriv så långt du orkar och tänk fakta, varför och exempel. När du känner dig klar kan du gå vidare direkt."
+    writing: "Isak, svara på textfrågan med vad, varför och exempel. När du känner dig klar kan du gå vidare direkt.",
+    game: "Isak, nu får du en kort belöning. Klicka eller tryck mellanslag för att hålla globen i luften och ta några poäng."
   };
 
   return messages[step?.action?.type] || "Isak, jobba i lugn takt och gå vidare när du känner dig klar.";
@@ -1491,7 +1687,8 @@ function guidedActionLabel(step) {
     drill: "Öppna kortträning",
     quiz: "Öppna quiz",
     compare: "Öppna jämförelse",
-    writing: "Öppna skrivdelen"
+    writing: "Öppna skrivdelen",
+    game: "Öppna belöningsspel"
   };
 
   return labels[step?.action?.type] || "Öppna moment";
@@ -1507,7 +1704,8 @@ function updateLessonFocusMode() {
     "focus-step-listen",
     "focus-step-quiz",
     "focus-step-compare",
-    "focus-step-writing"
+    "focus-step-writing",
+    "focus-step-game"
   ];
 
   body.classList.remove(...focusClasses);
@@ -1540,6 +1738,12 @@ function applyGuidedAutostart() {
   if (step.action.type === "writing") {
     window.setTimeout(() => {
       document.querySelector("#writing-answer")?.focus();
+    }, 50);
+  }
+
+  if (step.action.type === "game") {
+    window.setTimeout(() => {
+      startRewardGame();
     }, 50);
   }
 }
@@ -1748,7 +1952,26 @@ function renderProgressBoard() {
 
 function renderLessonCoach() {
   const container = document.querySelector("#lesson-coach");
-  const lesson = guidedLesson() || getNextLesson();
+  const lesson = guidedLesson() || selectedLesson();
+  if (!lesson) {
+    container.innerHTML = `
+      <article class="guided-card">
+        <div class="guided-header">
+          <div>
+            <p class="panel-label">Lektionscoach</p>
+            <p class="microcopy guided-welcome">Hej Isak. Vi börjar med att välja två världsdelar.</p>
+            <h2>Välj två världsdelar för att starta lektionen</h2>
+            <p class="microcopy">När ni har valt två olika världsdelar bygger appen hela femstegslektionen direkt.</p>
+          </div>
+          <div class="lesson-meta">
+            <span>15 min</span>
+          </div>
+        </div>
+      </article>
+    `;
+    updateLessonFocusMode();
+    return;
+  }
   const step = guidedLesson() ? guidedStep() : lesson.steps[0];
   const lessonIsActive = Boolean(appState.guidedLessonId);
   const lessonIsComplete = lessonIsActive && guidedLessonIsComplete();
@@ -1786,14 +2009,14 @@ function renderLessonCoach() {
         ? "Tid kvar"
         : "Planerad tid";
   const primaryAction = lessonIsComplete
-    ? upcomingLesson
-      ? `<button class="primary" id="start-guided-lesson">Starta nästa lektion: ${upcomingLesson.title}</button>`
-      : `<button class="primary" id="start-guided-lesson">Kör sista repetitionen igen</button>`
+      ? upcomingLesson
+        ? `<button class="primary" id="start-guided-lesson" data-guided-start="${upcomingLesson.id}">Starta nästa lektion: ${upcomingLesson.title}</button>`
+        : `<button class="primary" id="start-guided-lesson" data-guided-start="${lesson.id}">Kör sista repetitionen igen</button>`
     : appState.guidedStepDone
       ? `<button class="primary" id="next-guided-step">Jag är klar, gå vidare</button>`
       : lessonIsActive
         ? `<button class="primary" id="complete-guided-step">${finishEarlyLabel}</button>`
-        : `<button class="primary" id="start-guided-lesson">Starta nästa lektion</button>`;
+        : `<button class="primary" id="start-guided-lesson" data-guided-start="${lesson.id}">Starta vald lektion</button>`;
 
   container.innerHTML = `
     <article class="guided-card ${appState.guidedStepRunning ? "is-running" : ""} ${lessonIsComplete ? "is-complete" : ""}">
@@ -1801,9 +2024,9 @@ function renderLessonCoach() {
         <div>
           <p class="panel-label">Lektionscoach</p>
           <p class="microcopy guided-welcome">
-            Hej Isak. Fokus nu: ${lessonIsActive ? step.mode.toLowerCase() : "nästa lektion"}.
+            Hej Isak. Fokus nu: ${lessonIsActive ? step.mode.toLowerCase() : "vald lektion"}.
           </p>
-          <h2>${lessonIsActive ? `Nu jobbar du med ${lesson.title}` : `Nästa lektion för dig, Isak: ${lesson.title}`}</h2>
+          <h2>${lessonIsActive ? `Nu jobbar du med ${lesson.title}` : `Vald lektion för dig, Isak: ${lesson.title}`}</h2>
           <p class="microcopy">
             ${encouragement}
           </p>
@@ -1879,7 +2102,43 @@ function renderLessonCoach() {
 
 function renderQuickPass() {
   const grid = document.querySelector("#quickpass-grid");
-  const lesson = guidedLesson() || getNextLesson();
+  const jumpButton = document.querySelector("#jump-next-lesson");
+  const startCta = document.querySelector("#lesson-start-cta");
+  const startHint = document.querySelector("#lesson-start-hint");
+  renderLessonChoices();
+  const lesson = guidedLesson() || selectedLesson();
+  if (jumpButton) {
+    jumpButton.disabled = !lesson;
+    jumpButton.textContent = lesson ? `Starta lektionen: ${lesson.title}` : "Välj två världsdelar först";
+  }
+  if (startCta) {
+    startCta.disabled = !lesson;
+    startCta.textContent = lesson ? `Starta lektionen om ${lesson.title}` : "Välj två världsdelar först";
+  }
+  if (startHint) {
+    startHint.textContent = lesson
+      ? `Nu är lektionen byggd. Tryck på den stora knappen för att starta direkt.`
+      : "Välj två olika världsdelar för att bygga lektionen.";
+  }
+  if (!lesson) {
+    grid.innerHTML = `
+      <article class="lesson-card is-next">
+        <div class="lesson-card-header">
+          <div>
+            <p class="panel-label">Lektionsstart</p>
+            <h3>Välj två världsdelar först</h3>
+            <p>Det är första steget innan Isak startar sin lektion.</p>
+          </div>
+          <div class="lesson-meta">
+            <span>${lessonDurationMinutes} min</span>
+            <span>Väntar</span>
+          </div>
+        </div>
+        <p class="microcopy">När två olika världsdelar är valda bygger appen en tydlig lektion med föreläsningar, jämförelse, textfråga och ett kort belöningsspel.</p>
+      </article>
+    `;
+    return;
+  }
   const isComplete = appState.completedLessons.has(lesson.id);
   const isActive = guidedLesson()?.id === lesson.id;
 
@@ -1893,7 +2152,7 @@ function renderQuickPass() {
         </div>
         <div class="lesson-meta">
           <span>${lessonDurationMinutes} min</span>
-          <span>${isActive ? "Pågår nu" : isComplete ? "Klar" : "Nästa steg"}</span>
+          <span>${isActive ? "Pågår nu" : isComplete ? "Redan klar" : "Vald nu"}</span>
         </div>
       </div>
       <p class="microcopy">${lesson.summary}</p>
@@ -1912,14 +2171,367 @@ function renderQuickPass() {
         .join("")}
       <div class="lesson-card-header">
         <p class="microcopy">
-          ${isActive ? "Isak följer nu ett låst fokusflöde steg för steg." : "Det här är nästa lektion i ordningen. Starta bara här, så sköter appen resten."}
+          ${isActive ? "Isak följer nu ett låst fokusflöde steg för steg." : "Det här är lektionen för de världsdelar ni valt. Starta bara här, så sköter appen resten."}
         </p>
         <button class="primary" data-lesson-start="${lesson.id}">
-          ${isActive ? "Fortsätt lektionen" : "Starta lektionen"}
+          ${isActive ? "Fortsätt lektionen" : isComplete ? "Gör lektionen igen" : "Starta lektionen"}
         </button>
       </div>
     </article>
   `;
+}
+
+const rewardGameConfig = {
+  width: 760,
+  height: 320,
+  globeX: 150,
+  globeRadius: 20,
+  gravity: 820,
+  boost: -290,
+  obstacleWidth: 66,
+  obstacleGap: 118,
+  obstacleSpeed: 180,
+  spawnSpacing: 260
+};
+
+function rewardGameStatusText() {
+  if (appState.rewardGameRunning) {
+    return "Spelet är igång. Klicka eller tryck mellanslag för att studsa.";
+  }
+  if (appState.rewardGameCrashed) {
+    return "Bra försök, Isak. Tryck på spela igen och försök slå ditt rekord.";
+  }
+  if (appState.rewardGameStarted) {
+    return "Snyggt jobbat. Du kan spela en gång till om du vill.";
+  }
+  return "Klicka på start och håll globen i luften mellan öarna.";
+}
+
+function renderRewardGamePanel() {
+  const container = document.querySelector("#reward-game-panel");
+  if (!container) {
+    return;
+  }
+
+  const activeLesson = guidedLesson();
+  const isGuidedGame = activeLesson && guidedStep()?.action.type === "game";
+  const introText = isGuidedGame
+    ? "Det här är del 5. Nu får du en kort belöning, Isak."
+    : "En kort geografi-belöning när du vill ha en liten paus.";
+
+  container.innerHTML = `
+    <article class="reward-card">
+      <div class="reward-header">
+        <div>
+          <p class="panel-label">Flappy Globe</p>
+          <h3>Korta hopp mellan öarna</h3>
+          <p class="microcopy">${introText}</p>
+        </div>
+        <div class="lesson-meta">
+          <span>Poäng: <strong id="reward-score">${appState.rewardGameScore}</strong></span>
+          <span>Bäst: <strong id="reward-best">${appState.rewardGameBest}</strong></span>
+        </div>
+      </div>
+      <div class="reward-stage-shell" id="reward-game-stage" tabindex="0" aria-label="Flappy Globe">
+        <canvas id="reward-game-canvas" width="${rewardGameConfig.width}" height="${rewardGameConfig.height}"></canvas>
+        <div class="reward-stage-overlay ${appState.rewardGameRunning ? "is-hidden" : ""}" id="reward-stage-overlay">
+          <div>
+            <strong>${appState.rewardGameCrashed ? "Försök igen" : "Redo för en snabb runda?"}</strong>
+            <p>${rewardGameStatusText()}</p>
+          </div>
+        </div>
+      </div>
+      <div class="reward-footer">
+        <p class="microcopy" id="reward-message">${appState.rewardGameMessage || rewardGameStatusText()}</p>
+        <div class="reward-actions">
+          <button class="primary" id="reward-game-start">${appState.rewardGameRunning ? "Spelet pågår" : appState.rewardGameStarted ? "Spela igen" : "Starta spelet"}</button>
+          <button class="ghost" id="reward-game-flap">Hoppa</button>
+        </div>
+      </div>
+    </article>
+  `;
+
+  updateRewardGameHud();
+  drawRewardGameFrame();
+}
+
+function updateRewardGameHud() {
+  const score = document.querySelector("#reward-score");
+  const best = document.querySelector("#reward-best");
+  const message = document.querySelector("#reward-message");
+  const overlay = document.querySelector("#reward-stage-overlay");
+  const startButton = document.querySelector("#reward-game-start");
+  const flapButton = document.querySelector("#reward-game-flap");
+
+  if (score) {
+    score.textContent = String(appState.rewardGameScore);
+  }
+  if (best) {
+    best.textContent = String(appState.rewardGameBest);
+  }
+  if (message) {
+    message.textContent = appState.rewardGameMessage || rewardGameStatusText();
+  }
+  if (overlay) {
+    overlay.classList.toggle("is-hidden", appState.rewardGameRunning);
+    overlay.innerHTML = appState.rewardGameRunning
+      ? ""
+      : `
+          <div>
+            <strong>${appState.rewardGameCrashed ? "Försök igen" : "Redo för en snabb runda?"}</strong>
+            <p>${rewardGameStatusText()}</p>
+          </div>
+        `;
+  }
+  if (startButton) {
+    startButton.disabled = appState.rewardGameRunning;
+    startButton.textContent = appState.rewardGameRunning
+      ? "Spelet pågår"
+      : appState.rewardGameStarted
+        ? "Spela igen"
+        : "Starta spelet";
+  }
+  if (flapButton) {
+    flapButton.disabled = !appState.rewardGameRunning;
+  }
+}
+
+function resetRewardGameState() {
+  appState.rewardGameScore = 0;
+  appState.rewardGameRunning = false;
+  appState.rewardGameStarted = false;
+  appState.rewardGameCrashed = false;
+  appState.rewardGameAnimationFrame = null;
+  appState.rewardGameLastTime = 0;
+  appState.rewardGamePendingBoost = false;
+  appState.rewardGameGlobeY = rewardGameConfig.height / 2;
+  appState.rewardGameGlobeVelocity = 0;
+  appState.rewardGameObstacles = [];
+  appState.rewardGameMessage = "Tryck på start och hjälp globen mellan öarna.";
+}
+
+function stopRewardGameLoop() {
+  if (appState.rewardGameAnimationFrame) {
+    cancelAnimationFrame(appState.rewardGameAnimationFrame);
+    appState.rewardGameAnimationFrame = null;
+  }
+  appState.rewardGameRunning = false;
+}
+
+function createRewardObstacle(x) {
+  const safeMargin = 46;
+  const gapRange = rewardGameConfig.height - rewardGameConfig.obstacleGap - safeMargin * 2;
+  const gapTop = safeMargin + Math.random() * gapRange;
+  return {
+    x,
+    width: rewardGameConfig.obstacleWidth,
+    gapTop,
+    scored: false
+  };
+}
+
+function startRewardGame() {
+  stopRewardGameLoop();
+  resetRewardGameState();
+  appState.rewardGameStarted = true;
+  appState.rewardGameRunning = true;
+  appState.rewardGameMessage = "Nu kör vi, Isak. Ta dig mellan öarna.";
+  appState.rewardGameObstacles = [
+    createRewardObstacle(rewardGameConfig.width + 120),
+    createRewardObstacle(rewardGameConfig.width + 120 + rewardGameConfig.spawnSpacing),
+    createRewardObstacle(rewardGameConfig.width + 120 + rewardGameConfig.spawnSpacing * 2)
+  ];
+  renderRewardGamePanel();
+  document.querySelector("#reward-game-stage")?.focus();
+  appState.rewardGameAnimationFrame = requestAnimationFrame(runRewardGameFrame);
+}
+
+function queueRewardGameBoost() {
+  if (!appState.rewardGameRunning) {
+    return;
+  }
+  appState.rewardGamePendingBoost = true;
+}
+
+function rewardGameBoundsHit() {
+  return (
+    appState.rewardGameGlobeY - rewardGameConfig.globeRadius <= 0 ||
+    appState.rewardGameGlobeY + rewardGameConfig.globeRadius >= rewardGameConfig.height
+  );
+}
+
+function rewardGameObstacleHit(obstacle) {
+  const globeLeft = rewardGameConfig.globeX - rewardGameConfig.globeRadius;
+  const globeRight = rewardGameConfig.globeX + rewardGameConfig.globeRadius;
+  const globeTop = appState.rewardGameGlobeY - rewardGameConfig.globeRadius;
+  const globeBottom = appState.rewardGameGlobeY + rewardGameConfig.globeRadius;
+  const obstacleRight = obstacle.x + obstacle.width;
+  const gapBottom = obstacle.gapTop + rewardGameConfig.obstacleGap;
+  const overlapsX = globeRight > obstacle.x && globeLeft < obstacleRight;
+  const overlapsY = globeTop < obstacle.gapTop || globeBottom > gapBottom;
+  return overlapsX && overlapsY;
+}
+
+function finishRewardGame(crashed = false) {
+  stopRewardGameLoop();
+  appState.rewardGameCrashed = crashed;
+  if (appState.rewardGameScore > appState.rewardGameBest) {
+    appState.rewardGameBest = appState.rewardGameScore;
+    saveJson("geografi-reward-game-best", appState.rewardGameBest);
+  }
+  appState.rewardGameMessage = crashed
+    ? `Du fick ${appState.rewardGameScore} poäng. Bra kämpat, Isak.`
+    : `Snyggt, Isak. Du avslutade på ${appState.rewardGameScore} poäng.`;
+  updateRewardGameHud();
+  drawRewardGameFrame();
+}
+
+function runRewardGameFrame(timestamp) {
+  if (!appState.rewardGameRunning) {
+    return;
+  }
+
+  const lastTime = appState.rewardGameLastTime || timestamp;
+  const delta = Math.min((timestamp - lastTime) / 1000, 0.03);
+  appState.rewardGameLastTime = timestamp;
+
+  if (appState.rewardGamePendingBoost) {
+    appState.rewardGameGlobeVelocity = rewardGameConfig.boost;
+    appState.rewardGamePendingBoost = false;
+  }
+
+  appState.rewardGameGlobeVelocity += rewardGameConfig.gravity * delta;
+  appState.rewardGameGlobeY += appState.rewardGameGlobeVelocity * delta;
+
+  let rightmostX = 0;
+  appState.rewardGameObstacles = appState.rewardGameObstacles
+    .map((obstacle) => {
+      const nextObstacle = { ...obstacle, x: obstacle.x - rewardGameConfig.obstacleSpeed * delta };
+      rightmostX = Math.max(rightmostX, nextObstacle.x);
+      if (!nextObstacle.scored && nextObstacle.x + nextObstacle.width < rewardGameConfig.globeX) {
+        nextObstacle.scored = true;
+        appState.rewardGameScore += 1;
+        appState.rewardGameMessage = `Snyggt, Isak. Nu har du ${appState.rewardGameScore} poäng.`;
+      }
+      return nextObstacle;
+    })
+    .filter((obstacle) => obstacle.x + obstacle.width > -20);
+
+  while (appState.rewardGameObstacles.length < 3) {
+    rightmostX = Math.max(
+      rightmostX,
+      rewardGameConfig.width + 120 + rewardGameConfig.spawnSpacing * (appState.rewardGameObstacles.length + 1)
+    );
+    appState.rewardGameObstacles.push(createRewardObstacle(rightmostX + rewardGameConfig.spawnSpacing));
+  }
+
+  if (
+    rewardGameBoundsHit() ||
+    appState.rewardGameObstacles.some((obstacle) => rewardGameObstacleHit(obstacle))
+  ) {
+    finishRewardGame(true);
+    return;
+  }
+
+  updateRewardGameHud();
+  drawRewardGameFrame();
+  appState.rewardGameAnimationFrame = requestAnimationFrame(runRewardGameFrame);
+}
+
+function drawRewardGameFrame() {
+  const canvas = document.querySelector("#reward-game-canvas");
+  if (!canvas) {
+    return;
+  }
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    return;
+  }
+
+  const { width, height, globeX, globeRadius, obstacleGap } = rewardGameConfig;
+  context.clearRect(0, 0, width, height);
+
+  const sky = context.createLinearGradient(0, 0, 0, height);
+  sky.addColorStop(0, "#cde8ee");
+  sky.addColorStop(0.55, "#edf7f4");
+  sky.addColorStop(1, "#f6e4be");
+  context.fillStyle = sky;
+  context.fillRect(0, 0, width, height);
+
+  context.strokeStyle = "rgba(25, 51, 77, 0.08)";
+  context.lineWidth = 1;
+  for (let x = 40; x < width; x += 80) {
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, height);
+    context.stroke();
+  }
+  for (let y = 40; y < height; y += 60) {
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(width, y);
+    context.stroke();
+  }
+
+  context.fillStyle = "rgba(255, 255, 255, 0.76)";
+  [
+    [120, 54, 28],
+    [320, 70, 22],
+    [560, 50, 30]
+  ].forEach(([x, y, size]) => {
+    context.beginPath();
+    context.arc(x, y, size, Math.PI, 0);
+    context.arc(x + size * 0.85, y + 4, size * 0.8, Math.PI, 0);
+    context.arc(x - size * 0.9, y + 6, size * 0.75, Math.PI, 0);
+    context.closePath();
+    context.fill();
+  });
+
+  appState.rewardGameObstacles.forEach((obstacle) => {
+    const gapBottom = obstacle.gapTop + obstacleGap;
+    context.fillStyle = "#87a96b";
+    context.fillRect(obstacle.x, 0, obstacle.width, obstacle.gapTop);
+    context.fillRect(obstacle.x, gapBottom, obstacle.width, height - gapBottom);
+
+    context.fillStyle = "#d0b37a";
+    context.beginPath();
+    context.moveTo(obstacle.x, obstacle.gapTop);
+    context.lineTo(obstacle.x + obstacle.width / 2, obstacle.gapTop - 22);
+    context.lineTo(obstacle.x + obstacle.width, obstacle.gapTop);
+    context.closePath();
+    context.fill();
+
+    context.beginPath();
+    context.moveTo(obstacle.x, gapBottom);
+    context.lineTo(obstacle.x + obstacle.width / 2, gapBottom + 22);
+    context.lineTo(obstacle.x + obstacle.width, gapBottom);
+    context.closePath();
+    context.fill();
+  });
+
+  context.save();
+  context.translate(globeX, appState.rewardGameGlobeY);
+  context.rotate(Math.max(-0.35, Math.min(0.35, appState.rewardGameGlobeVelocity / 400)));
+  context.fillStyle = "#2b8db7";
+  context.beginPath();
+  context.arc(0, 0, globeRadius, 0, Math.PI * 2);
+  context.fill();
+  context.fillStyle = "#8fbd68";
+  context.beginPath();
+  context.ellipse(-5, -3, 8, 5, 0.3, 0, Math.PI * 2);
+  context.ellipse(7, 4, 6, 4, -0.5, 0, Math.PI * 2);
+  context.ellipse(-2, 10, 5, 3, 0.1, 0, Math.PI * 2);
+  context.fill();
+  context.strokeStyle = "rgba(255, 255, 255, 0.85)";
+  context.lineWidth = 1.5;
+  context.beginPath();
+  context.arc(0, 0, globeRadius - 4, 0.6, 2.4);
+  context.stroke();
+  context.beginPath();
+  context.arc(0, 0, globeRadius - 8, -1.1, 1.2);
+  context.stroke();
+  context.restore();
 }
 
 function renderContinentButtons() {
@@ -1943,67 +2555,142 @@ function renderContinentDetail() {
   card.innerHTML = buildContinentStudyContent(continent).html;
 }
 
+function areaExamplesText(continent, area) {
+  const explicitExample = areaExamplesByContinent[continent.id]?.[area.key];
+  if (explicitExample) {
+    return explicitExample;
+  }
+  const dimension = continent.dimensions[area.key];
+  return humanJoin(dimension.tags) || dimension.summary;
+}
+
+function buildLectureStepsMarkup(mode, names) {
+  const subjectText =
+    mode === "compare"
+      ? `${names.first} och ${names.second}`
+      : names.first;
+
+  const steps =
+    mode === "compare"
+      ? [
+          "Vad? Berätta vad som är lika eller olika mellan världsdelarna.",
+          "Varför? Förklara orsaken till att det ser ut så.",
+          "Exempel? Ge tydliga exempel från båda världsdelarna."
+        ]
+      : [
+          `Vad? Fånga de viktigaste fakta om ${subjectText}.`,
+          "Varför? Lyssna efter varför klimat, läge och natur påverkar människor.",
+          `Exempel? Lägg märke till tydliga exempel som du kan använda senare när du jämför ${subjectText}.`
+        ];
+
+  return `
+    <article class="checklist-card lecture-steps-card">
+      <h3>${mode === "compare" ? "Bygg ditt svar i tre steg" : "Bygg förståelsen i tre steg"}</h3>
+      <ol>
+        ${steps.map((step) => `<li>${step}</li>`).join("")}
+      </ol>
+    </article>
+  `;
+}
+
+function buildComparisonWordsMarkup() {
+  return `
+    <article class="checklist-card lecture-words-card">
+      <h3>Använd jämförelseord</h3>
+      <p class="microcopy"><strong>När det är olika:</strong></p>
+      <ul>
+        ${comparisonWords.different.map((word) => `<li>...${word}...</li>`).join("")}
+      </ul>
+      <p class="microcopy"><strong>När det är lika:</strong></p>
+      <ul>
+        ${comparisonWords.similar.map((word) => `<li>...${word}...</li>`).join("")}
+      </ul>
+    </article>
+  `;
+}
+
 function buildContinentStudyContent(continent) {
-  const countriesMarkup = continent.countries.length
-    ? continent.countries.map((item) => `<li>${item}</li>`).join("")
-    : "<li>Inga vanliga länder att träna här, fokusera på klimat och läge.</li>";
-  const countriesSpeech = continent.countries.length
-    ? continent.countries.join(", ")
-    : "inga vanliga länder att träna här, så fokus ligger på klimat och läge";
+  const areaMarkup = guideAreas
+    .map((area) => {
+      const dimension = continent.dimensions[area.key];
+      return `
+        <article class="lecture-area-card">
+          <div class="lecture-area-prompt">
+            <p class="panel-label">Område</p>
+            <h3>${area.label}</h3>
+            <p>${area.prompt}</p>
+          </div>
+          <div class="lecture-area-answer">
+            <p class="panel-label">Kort sagt i ${continent.name}</p>
+            <p>${dimension.summary}</p>
+            ${renderTagChips(dimension.tags)}
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+
+  const speechSections = guideAreas.map((area) => {
+    const dimension = continent.dimensions[area.key];
+    return [
+      `${area.label}.`,
+      `Att tänka på: ${area.prompt}`,
+      `I ${continent.name} ser man att ${dimension.summary.toLowerCase()}.`,
+      `Det är viktigt därför att ${dimension.reason.toLowerCase()}.`,
+      `Nyckelord som hjälper dig att minnas är ${humanJoin(dimension.tags)}.`,
+      `Ett tydligt sätt att säga det är att ${continent.name} hänger ihop genom ${areaExamplesText(continent, area)}.`
+    ].join(" ");
+  });
 
   return {
     html: `
-    <div>
-      <p class="panel-label">Världsdel i fokus</p>
-      <h2>${continent.name}</h2>
-      <p>${continent.intro}</p>
-    </div>
-    <div class="insight-strip">
-      <strong>Vad du ska kunna för att nå C:</strong>
-      <p>${continent.cLevel}</p>
-    </div>
-    <div>
-      <h3>Koppla natur till människor</h3>
-      <ul class="fact-list">
-        <li><strong>Läge:</strong> ${continent.dimensions.location.summary}</li>
-        <li><strong>Klimat:</strong> ${continent.dimensions.climate.summary}</li>
-        <li><strong>Vegetation:</strong> ${continent.dimensions.vegetation.summary}</li>
-        <li><strong>Befolkning:</strong> ${continent.dimensions.population.summary}</li>
-        <li><strong>Försörjning:</strong> ${continent.dimensions.livelihoods.summary}</li>
-        <li><strong>Naturresurser:</strong> ${continent.dimensions.resources.summary}</li>
-      </ul>
-    </div>
-    <div class="learn-layout">
-      <section class="study-card">
-        <h3>Exempel att namnge</h3>
-        <ul class="mini-list">
-          ${continent.keyPlaces.map((item) => `<li>${item}</li>`).join("")}
-        </ul>
-      </section>
-      <section class="study-card">
-        <h3>Exempel på länder</h3>
-        <ul class="mini-list">
-          ${countriesMarkup}
-        </ul>
-      </section>
-    </div>
-    <div class="insight-strip">
-      <strong>Minnesknep:</strong>
-      <p>${continent.memoryHook}</p>
+    <div class="lecture-guide-flow">
+      <article class="study-card lecture-intro-card">
+        <p class="panel-label">Guide</p>
+        <h2>${continent.name}</h2>
+        <p>${continent.intro}</p>
+        <div class="insight-strip">
+          <strong>Vad du ska kunna för att nå C</strong>
+          <p>${continent.cLevel}</p>
+        </div>
+      </article>
+      <div class="compare-checklist lecture-guide-top">
+        ${buildLectureStepsMarkup("continent", { first: continent.name })}
+        <article class="checklist-card lecture-purpose-card">
+          <h3>Checklista för dina områden</h3>
+          <p>
+            Vi går igenom samma sex områden som sedan används när Isak ska jämföra
+            världsdelar: läge, klimat, vegetation, befolkning, försörjning och
+            naturresurser.
+          </p>
+        </article>
+      </div>
+      <div class="lecture-area-grid">
+        ${areaMarkup}
+      </div>
+      <div class="compare-checklist lecture-guide-bottom">
+        <article class="checklist-card">
+          <h3>Exempel att namnge</h3>
+          <ul>
+            ${continent.keyPlaces.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        </article>
+        <article class="checklist-card">
+          <h3>Minnesknep</h3>
+          <p>${continent.memoryHook}</p>
+        </article>
+      </div>
     </div>
   `,
     speechText: [
       `${continent.name}. ${continent.intro}`,
-      `För att nå C behöver du kunna det här: ${continent.cLevel}`,
-      `Läge: ${continent.dimensions.location.summary}`,
-      `Klimat: ${continent.dimensions.climate.summary}`,
-      `Vegetation: ${continent.dimensions.vegetation.summary}`,
-      `Befolkning: ${continent.dimensions.population.summary}`,
-      `Försörjning: ${continent.dimensions.livelihoods.summary}`,
-      `Naturresurser: ${continent.dimensions.resources.summary}`,
-      `Exempel att namnge: ${continent.keyPlaces.join(", ")}.`,
-      `Exempel på länder: ${countriesSpeech}.`,
-      `Minnesknep: ${continent.memoryHook}`
+      `Först bygger vi förståelsen i tre steg. Vad? Fånga de viktigaste fakta om ${continent.name}. Varför? Lyssna efter hur läge, klimat och natur påverkar människor. Exempel? Lägg märke till tydliga exempel som du kan använda senare när du jämför.`,
+      `Nu kommer en lugn genomgång område för område. Försök inte minnas allt på en gång. Lyssna efter huvudidén först och ta sedan stöd av nyckelorden på skärmen.`,
+      `Nu tar vi områdena ett i taget.`,
+      ...speechSections,
+      `Exempel att namnge i ${continent.name}: ${continent.keyPlaces.join(", ")}.`,
+      `Minnesknep: ${continent.memoryHook}`,
+      `Bra jobbat Isak. Nu har du hört en längre genomgång av ${continent.name}, och nästa steg blir lättare när du jämför världsdelarna.`
     ].join(" ")
   };
 }
@@ -2119,18 +2806,17 @@ function buildListenTracks() {
   const continentTracks = continents.map((continent) => ({
     id: `track-${continent.id}`,
     title: continent.name,
-    description: "Samma fakta som i Läs-delen, men för lyssning.",
+    description: "Område för område enligt jämförelsemallen.",
     kind: "continent",
     continentId: continent.id
   }));
 
   const compareTrack = {
     id: "track-compare",
-    title: "Jämförelsestöd",
-    description: "Lyssna på en modell för att beskriva likheter, skillnader och orsaker.",
+    title: "Jämförelsen",
+    description: "Vad, varför, exempel och checklista område för område.",
     kind: "compare",
-    text:
-      "När du jämför två världsdelar ska du inte bara rada upp fakta. Börja med att säga vad som är lika eller olika. Fortsätt sedan med varför det ser ut så. Avsluta med tydliga exempel. Ett bra C-svar kopplar ihop läge, klimat, vegetation, befolkning, naturresurser och försörjning."
+    text: ""
   };
 
   return [...continentTracks, compareTrack];
@@ -2138,15 +2824,90 @@ function buildListenTracks() {
 
 const listenTracks = buildListenTracks();
 
+function getVisibleListenTracks() {
+  const lesson = guidedLesson() || selectedLesson();
+  if (lesson) {
+    const lessonTrackIds = lesson.steps
+      .filter((step) => step.action.type === "listen")
+      .map((step) => step.action.trackId);
+    return listenTracks.filter((track) => lessonTrackIds.includes(track.id));
+  }
+
+  return listenTracks;
+}
+
 function getListenTrackPresentation(track) {
   if (track.kind === "continent") {
     const continent = continentById(track.continentId);
     const content = buildContinentStudyContent(continent);
     return {
       title: continent.name,
-      description: "Samma fakta som i Läs-delen, men som du också kan få uppläst.",
+      description: "Följer samma områden som i jämförelsemallen: läge, klimat, vegetation, befolkning, försörjning och naturresurser.",
       html: content.html,
       speechText: content.speechText
+    };
+  }
+
+  if (track.kind === "compare") {
+    const first = continentById(appState.compareA);
+    const second = continentById(appState.compareB);
+    if (!first || !second) {
+      return {
+        title: "Jämförelsen",
+        description: "Välj två världsdelar i Jämför först, så kan du lyssna på jämförelsen här.",
+        html: `<div class="script-box">Välj två världsdelar i avsnittet Jämför för att skapa en jämförelse.</div>`,
+        speechText:
+          "Välj först två världsdelar i avsnittet Jämför. Då kan appen läsa upp jämförelsen."
+      };
+    }
+    const speechText = buildComparisonSpeechText();
+    return {
+      title: `Jämför ${first.name} och ${second.name}`,
+      description: "Samma struktur som i studieplanen: först vad, varför och exempel, sedan område för område.",
+      html: `
+        <div class="lecture-guide-flow">
+          <article class="study-card lecture-intro-card">
+            <p class="panel-label">Guide</p>
+            <h2>Din guide för att jämföra ${first.name} och ${second.name}</h2>
+            <p>
+              När du jämför två världsdelar ska du inte bara skriva fakta. Du ska
+              förklara hur allt hänger ihop. Använd den här checklistan som stöd.
+            </p>
+          </article>
+          <div class="compare-checklist lecture-guide-top">
+            ${buildLectureStepsMarkup("compare", { first: first.name, second: second.name })}
+            ${buildComparisonWordsMarkup()}
+          </div>
+          <div class="lecture-area-grid">
+            ${buildComparisonRows()
+              .map(
+                (row) => `
+                  <article class="comparison-card comparison-card-structured">
+                    <div class="lecture-area-prompt">
+                      <p class="panel-label">Område</p>
+                      <h3>${row.label}</h3>
+                      <p>${row.prompt}</p>
+                    </div>
+                    <div class="comparison-simple-grid">
+                      <section class="comparison-side">
+                        <p class="panel-label">${row.firstName}</p>
+                        <p>${row.first}</p>
+                        ${renderTagChips(row.firstTags)}
+                      </section>
+                      <section class="comparison-side">
+                        <p class="panel-label">${row.secondName}</p>
+                        <p>${row.second}</p>
+                        ${renderTagChips(row.secondTags)}
+                      </section>
+                    </div>
+                  </article>
+                `
+              )
+              .join("")}
+          </div>
+        </div>
+      `,
+      speechText
     };
   }
 
@@ -2160,7 +2921,8 @@ function getListenTrackPresentation(track) {
 
 function renderListenTracks() {
   const buttons = document.querySelector("#listen-buttons");
-  buttons.innerHTML = listenTracks
+  const visibleTracks = getVisibleListenTracks();
+  buttons.innerHTML = visibleTracks
     .map(
       (track) => `
         <button class="${track.id === appState.listenTrackId ? "active" : ""}" data-listen-id="${track.id}">
@@ -2171,7 +2933,11 @@ function renderListenTracks() {
     )
     .join("");
 
-  const currentTrack = listenTracks.find((track) => track.id === appState.listenTrackId);
+  const currentTrack =
+    visibleTracks.find((track) => track.id === appState.listenTrackId) || visibleTracks[0];
+  if (currentTrack && currentTrack.id !== appState.listenTrackId) {
+    appState.listenTrackId = currentTrack.id;
+  }
   const presentation = getListenTrackPresentation(currentTrack);
   document.querySelector("#listen-title").textContent = presentation.title;
   document.querySelector("#listen-description").textContent = presentation.description;
@@ -2648,37 +3414,29 @@ function humanJoin(list) {
 function buildComparisonRows() {
   const first = continentById(appState.compareA);
   const second = continentById(appState.compareB);
-  const dimensionOrder = [
-    ["location", "Läge"],
-    ["climate", "Klimat"],
-    ["vegetation", "Vegetation"],
-    ["population", "Befolkning"],
-    ["livelihoods", "Försörjning"],
-    ["resources", "Naturresurser"]
-  ];
-
-  return dimensionOrder.map(([key, label]) => {
-    const firstDimension = first.dimensions[key];
-    const secondDimension = second.dimensions[key];
-    const shared = intersectTags(firstDimension.tags, secondDimension.tags);
+  if (!first || !second) {
+    return [];
+  }
+  return guideAreas.map((area) => {
+    const firstDimension = first.dimensions[area.key];
+    const secondDimension = second.dimensions[area.key];
     const firstOnly = uniqueTags(firstDimension.tags, secondDimension.tags);
     const secondOnly = uniqueTags(secondDimension.tags, firstDimension.tags);
 
-    const similarity = shared.length
-      ? `Likhet: Båda har ${humanJoin(shared)}.`
-      : `Likhet: Båda kan fortfarande kopplas till naturresurser, klimat och hur människor lever, men på olika sätt.`;
-
-    const difference = `Skillnad: ${first.name} har ${humanJoin(firstOnly) || firstDimension.summary.toLowerCase()} medan ${second.name} har ${humanJoin(secondOnly) || secondDimension.summary.toLowerCase()}.`;
-
-    const why = `Varför: ${first.name} - ${firstDimension.reason} ${second.name} - ${secondDimension.reason}`;
-
     return {
-      label,
-      first: firstDimension.summary,
-      second: secondDimension.summary,
-      similarity,
-      difference,
-      why
+      key: area.key,
+      label: area.label,
+      prompt: area.prompt,
+      firstName: first.name,
+      secondName: second.name,
+      first: humanJoin(firstOnly) || firstDimension.summary,
+      second: humanJoin(secondOnly) || secondDimension.summary,
+      firstTags: firstDimension.tags,
+      secondTags: secondDimension.tags,
+      firstReason: firstDimension.reason,
+      secondReason: secondDimension.reason,
+      firstExamples: areaExamplesText(first, area),
+      secondExamples: areaExamplesText(second, area)
     };
   });
 }
@@ -2686,15 +3444,14 @@ function buildComparisonRows() {
 function buildSampleAnswer() {
   const first = continentById(appState.compareA);
   const second = continentById(appState.compareB);
-  const rows = buildComparisonRows();
-  const climate = rows.find((row) => row.label === "Klimat");
-  const population = rows.find((row) => row.label === "Befolkning");
-  const resources = rows.find((row) => row.label === "Naturresurser");
+  if (!first || !second) {
+    return "När du har valt två världsdelar visas ett exempel på hur ett jämförelsesvar på C-nivå kan låta.";
+  }
 
   const variants = [
-    `${first.name} och ${second.name} skiljer sig åt i både läge och klimat. ${first.name} ${first.dimensions.location.summary.toLowerCase()} medan ${second.name} ${second.dimensions.location.summary.toLowerCase()}. Det gör att klimatet blir olika, eftersom ${first.dimensions.climate.reason.toLowerCase()} I ${second.name} påverkas klimatet i stället av att ${second.dimensions.climate.reason.toLowerCase()} Ett tydligt exempel är att ${climate.difference.toLowerCase()} Därför ser också vegetation och jobb olika ut.`,
-    `När man jämför ${first.name} och ${second.name} ser man både likheter och skillnader. En likhet är att ${resources.similarity.replace("Likhet: ", "").toLowerCase()} Men ${population.difference.toLowerCase()} Det beror bland annat på klimat, naturresurser och transportmöjligheter. Till exempel kan människor i ${first.name} ofta arbeta med ${humanJoin(first.dimensions.livelihoods.tags).toLowerCase()}, medan ${second.name} ofta kopplas till ${humanJoin(second.dimensions.livelihoods.tags).toLowerCase()}.`,
-    `${first.name} och ${second.name} är olika på flera sätt, men båda visar hur naturen påverkar människors liv. ${climate.difference} ${resources.difference} Det är viktigt eftersom naturresurser och klimat styr var människor kan bo och vad de kan arbeta med. Ett exempel är att ${first.name} ofta kopplas till ${humanJoin(first.dimensions.resources.tags).toLowerCase()}, medan ${second.name} snarare har ${humanJoin(second.dimensions.resources.tags).toLowerCase()}.`
+    `${first.name} och ${second.name} skiljer sig åt i både läge och klimat. ${first.name} ${first.dimensions.location.summary.toLowerCase()} medan ${second.name} ${second.dimensions.location.summary.toLowerCase()}. Klimatet blir olika eftersom ${first.dimensions.climate.reason.toLowerCase()} I ${second.name} påverkas klimatet i stället av att ${second.dimensions.climate.reason.toLowerCase()} Därför skiljer sig också vegetation och jobb åt.`,
+    `När man jämför ${first.name} och ${second.name} ser man tydliga skillnader i befolkning och försörjning. I ${first.name} märks ofta ${first.dimensions.population.summary.toLowerCase()}, medan ${second.name} snarare har ${second.dimensions.population.summary.toLowerCase()}. Det påverkar också hur människor arbetar. I ${first.name} är ${humanJoin(first.dimensions.livelihoods.tags).toLowerCase()} viktiga delar, medan ${second.name} ofta kopplas till ${humanJoin(second.dimensions.livelihoods.tags).toLowerCase()}.`,
+    `${first.name} och ${second.name} visar hur naturen påverkar människors liv på olika sätt. ${first.name} har ofta ${humanJoin(first.dimensions.resources.tags).toLowerCase()}, medan ${second.name} har ${humanJoin(second.dimensions.resources.tags).toLowerCase()}. Klimat och naturresurser påverkar därför både var människor bor och vad de kan arbeta med. Ett tydligt exempel är att livsmiljöer och näringar blir olika i de två världsdelarna.`
   ];
 
   return variants[appState.comparisonVersion % variants.length];
@@ -2703,27 +3460,48 @@ function buildSampleAnswer() {
 function renderComparison() {
   const grid = document.querySelector("#comparison-grid");
   const rows = buildComparisonRows();
+  const focus = compareFocusData();
 
-  grid.innerHTML = rows
-    .map(
-      (row) => `
-        <article class="comparison-card">
-          <h3>${row.label}</h3>
-          <p><strong>${continentById(appState.compareA).name}:</strong> ${row.first}</p>
-          <p><strong>${continentById(appState.compareB).name}:</strong> ${row.second}</p>
-          <ul class="comparison-points">
-            <li>${row.similarity}</li>
-            <li>${row.difference}</li>
-            <li>${row.why}</li>
-          </ul>
+  populateCompareSelects();
+  document.querySelector("#compare-focus-title").textContent = focus.title;
+  document.querySelector("#compare-focus-description").textContent = focus.description;
+
+  grid.innerHTML = rows.length
+    ? rows
+        .map(
+          (row) => `
+            <article class="comparison-card comparison-card-structured">
+              <div class="lecture-area-prompt">
+                <p class="panel-label">Område</p>
+                <h3>${row.label}</h3>
+                <p>${row.prompt}</p>
+              </div>
+              <div class="comparison-simple-grid">
+                <section class="comparison-side">
+                  <p class="panel-label">${row.firstName}</p>
+                  <p>${row.first}</p>
+                  ${renderTagChips(row.firstTags)}
+                </section>
+                <section class="comparison-side">
+                  <p class="panel-label">${row.secondName}</p>
+                  <p>${row.second}</p>
+                  ${renderTagChips(row.secondTags)}
+                </section>
+              </div>
+            </article>
+          `
+        )
+        .join("")
+    : `
+        <article class="study-card">
+          <p class="microcopy">Välj två olika världsdelar för att se jämförelsen här.</p>
         </article>
-      `
-    )
-    .join("");
+      `;
 
   const key = comparisonStorageKey();
   document.querySelector("#comparison-notes").value = appState.comparisonNotes[key] || "";
   document.querySelector("#sample-answer-text").textContent = buildSampleAnswer();
+  scheduleTtsWarmup();
 }
 
 function comparisonStorageKey() {
@@ -2731,30 +3509,39 @@ function comparisonStorageKey() {
 }
 
 function populateCompareSelects() {
-  const options = continents
-    .map((continent) => `<option value="${continent.id}">${continent.name}</option>`)
+  const options = [
+    `<option value="">Välj en världsdel</option>`,
+    ...continents.map((continent) => `<option value="${continent.id}">${continent.name}</option>`)
+  ]
     .join("");
 
-  document.querySelector("#compare-a").innerHTML = options;
-  document.querySelector("#compare-b").innerHTML = options;
-  document.querySelector("#compare-a").value = appState.compareA;
-  document.querySelector("#compare-b").value = appState.compareB;
+  const firstSelect = document.querySelector("#compare-a");
+  const secondSelect = document.querySelector("#compare-b");
+  if (!firstSelect || !secondSelect) {
+    return;
+  }
+
+  firstSelect.innerHTML = options;
+  secondSelect.innerHTML = options;
+  firstSelect.value = appState.compareA;
+  secondSelect.value = appState.compareB;
 }
 
 function updateComparisonSelection(source, nextValue) {
   if (source === "a") {
     appState.compareA = nextValue;
-    if (appState.compareA === appState.compareB) {
-      appState.compareB = continents.find((continent) => continent.id !== nextValue).id;
-      document.querySelector("#compare-b").value = appState.compareB;
-    }
-  } else {
-    appState.compareB = nextValue;
-    if (appState.compareA === appState.compareB) {
-      appState.compareA = continents.find((continent) => continent.id !== nextValue).id;
-      document.querySelector("#compare-a").value = appState.compareA;
+    if (appState.compareA && appState.compareA === appState.compareB) {
+      appState.compareB = continents.find((continent) => continent.id !== nextValue)?.id || appState.compareB;
     }
   }
+
+  if (source === "b") {
+    appState.compareB = nextValue;
+    if (appState.compareB && appState.compareA === appState.compareB) {
+      appState.compareA = continents.find((continent) => continent.id !== nextValue)?.id || appState.compareA;
+    }
+  }
+
   renderComparison();
 }
 
@@ -2766,24 +3553,49 @@ function renderWritingPrompts() {
   appState.selectedWritingPromptId = nextPromptId;
 }
 
+function buildWritingStarter() {
+  const first = continentById(appState.compareA);
+  const second = continentById(appState.compareB);
+  const lesson = recommendedWritingLesson();
+
+  if (!first || !second) {
+    return "Vad: De två världsdelarna är lika/olika genom att ...\n\nVarför: Det beror på att ...\n\nExempel: I den ena världsdelen finns ... medan den andra har ...";
+  }
+
+  return [
+    `Vad: ${first.name} och ${second.name} är lika eller olika genom att ...`,
+    "",
+    `Varför: Det beror på att ${first.name} ... medan ${second.name} ...`,
+    "",
+    `Exempel: I ${first.name} finns ... medan ${second.name} har ...`,
+    "",
+    `Avslutning: Därför påverkar detta hur människor bor och arbetar i ${lesson.title.toLowerCase()}.`
+  ].join("\n");
+}
+
 function renderWritingPanel() {
   renderWritingPrompts();
   const prompt = writingPromptById(appState.selectedWritingPromptId);
   const lesson = recommendedWritingLesson();
   const currentStep = guidedStep();
-  const savedDraft = appState.writingDrafts[prompt.id] || "";
+  const starterText = buildWritingStarter();
+  const savedDraft = appState.writingDrafts[prompt.id] || starterText;
+  if (!appState.writingDrafts[prompt.id]) {
+    appState.writingDrafts[prompt.id] = starterText;
+    saveJson("geografi-writing-drafts", appState.writingDrafts);
+  }
 
   document.querySelector("#writing-context").textContent =
     guidedLesson() && currentStep?.action.type === "writing"
-      ? `Det här är skrivsteget i ${lesson.title}. Fokusera bara på den här frågan nu.`
-      : `Det här är skrivfrågan som hör till ${lesson.title}. Skriv den här först för att träna mot C.`;
+      ? `Nu blir Isak förhörd på jämförelsen i ${lesson.title}. Svara bara på den här frågan nu, med bokfakta från fotona.`
+      : `Det här är förhöret som hör till ${lesson.title}. Svara på jämförelsen med bokfakta för att träna mot C.`;
   document.querySelector("#writing-title").textContent = prompt.title;
   document.querySelector("#writing-description").textContent = prompt.description;
   document.querySelector("#writing-support-points").innerHTML = prompt.supportPoints
     .map((point) => `<li>${point}</li>`)
     .join("");
   document.querySelector("#writing-structure-points").innerHTML = [
-    "Vad? Börja med att säga vad som är viktigt eller vad som skiljer sig åt.",
+    "Vad? Börja med att säga vad som är lika eller olika mellan världsdelarna.",
     "Varför? Förklara orsaken med geografiord som klimat, naturresurser, befolkning eller försörjning.",
     "Exempel? Ge minst ett tydligt exempel som visar att du förstår.",
     "Knyt ihop svaret i 4 till 6 meningar så att det blir ett utvecklat resonemang."
@@ -2796,11 +3608,33 @@ function renderWritingPanel() {
 
 function renderGradingResult() {
   const container = document.querySelector("#grading-result");
+  const gradeButton = document.querySelector("#grade-writing-answer");
+  const clearButton = document.querySelector("#clear-writing-answer");
+  const answerField = document.querySelector("#writing-answer");
+
+  if (gradeButton) {
+    gradeButton.disabled = appState.gradingLoading;
+    gradeButton.textContent = appState.gradingLoading ? "Bedömer..." : "Bedöm med OpenAI";
+  }
+
+  if (clearButton) {
+    clearButton.disabled = appState.gradingLoading;
+  }
+
+  if (answerField) {
+    answerField.disabled = appState.gradingLoading;
+  }
 
   if (appState.gradingLoading) {
     container.innerHTML = `
       <p class="panel-label">Återkoppling</p>
-      <p>OpenAI läser svaret och jämför det med uppgiften från läraren...</p>
+      <div class="grading-loading">
+        <span class="loading-dot" aria-hidden="true"></span>
+        <div>
+          <strong>OpenAI tänker och läser svaret</strong>
+          <p class="microcopy">Jämför nu texten med uppgiften och bokfakta från fotona, och letar efter fakta, varför-förklaringar och exempel.</p>
+        </div>
+      </div>
     `;
     return;
   }
@@ -2886,6 +3720,10 @@ function openLessonStep(lessonId, stepIndex, options = {}) {
     renderContinentDetail();
     setActiveTab("learn");
   } else if (step.action.type === "listen") {
+    if (step.action.compareA && step.action.compareB) {
+      setComparisonPair(step.action.compareA, step.action.compareB);
+      renderComparison();
+    }
     appState.listenTrackId = step.action.trackId;
     renderListenTracks();
     scheduleTtsWarmup();
@@ -2900,16 +3738,22 @@ function openLessonStep(lessonId, stepIndex, options = {}) {
     startQuizRound();
     setActiveTab("quiz");
   } else if (step.action.type === "compare") {
-    appState.compareA = step.action.compareA;
-    appState.compareB = step.action.compareB;
+    setComparisonPair(step.action.compareA, step.action.compareB);
     populateCompareSelects();
     renderComparison();
     setActiveTab("compare");
   } else if (step.action.type === "writing") {
+    if (step.action.compareA && step.action.compareB) {
+      setComparisonPair(step.action.compareA, step.action.compareB);
+      renderComparison();
+    }
     appState.selectedWritingPromptId = step.action.promptId;
     appState.gradingResult = null;
     renderWritingPanel();
     setActiveTab("writing");
+  } else if (step.action.type === "game") {
+    renderRewardGamePanel();
+    setActiveTab("game");
   }
 
   if (!skipLessonCoachRender) {
@@ -2935,6 +3779,10 @@ function toggleLessonComplete(lessonId) {
 async function gradeWritingAnswer() {
   const prompt = writingPromptById(appState.selectedWritingPromptId);
   const answer = document.querySelector("#writing-answer").value.trim();
+  const referenceFacts = buildComparisonRows().map(
+    (row) =>
+      `${row.label}. Att tänka på: ${row.prompt} ${row.firstName}: ${row.first}. Varför: ${row.firstReason}. Exempel: ${row.firstExamples}. ${row.secondName}: ${row.second}. Varför: ${row.secondReason}. Exempel: ${row.secondExamples}.`
+  );
 
   if (!answer) {
     alert("Skriv ett svar först, så kan OpenAI ge återkoppling.");
@@ -2956,6 +3804,7 @@ async function gradeWritingAnswer() {
         questionTitle: prompt.title,
         questionDescription: prompt.description,
         supportPoints: prompt.supportPoints,
+        referenceFacts,
         answer
       })
     });
@@ -3031,6 +3880,150 @@ function buildTtsCacheKey(text, options = {}) {
   return `${voice}::${options.kind || "lesson"}::${text}`;
 }
 
+function splitIntoStandardTtsChunks(text, maxChunkLength = 3800) {
+  const normalized = String(text || "").replace(/\s+/g, " ").trim();
+  if (!normalized) {
+    return [];
+  }
+
+  if (normalized.length <= maxChunkLength) {
+    return [normalized];
+  }
+
+  const sentences = normalized.match(/[^.!?]+[.!?]?/g) || [normalized];
+  const chunks = [];
+  let current = "";
+
+  const pushChunk = () => {
+    if (current.trim()) {
+      chunks.push(current.trim());
+      current = "";
+    }
+  };
+
+  for (const sentence of sentences) {
+    const trimmedSentence = sentence.trim();
+    if (!trimmedSentence) {
+      continue;
+    }
+
+    if (trimmedSentence.length > maxChunkLength) {
+      pushChunk();
+      const words = trimmedSentence.split(" ");
+      let wordChunk = "";
+      for (const word of words) {
+        const candidate = wordChunk ? `${wordChunk} ${word}` : word;
+        if (candidate.length > maxChunkLength) {
+          if (wordChunk) {
+            chunks.push(wordChunk.trim());
+          }
+          wordChunk = word;
+        } else {
+          wordChunk = candidate;
+        }
+      }
+      if (wordChunk.trim()) {
+        chunks.push(wordChunk.trim());
+      }
+      continue;
+    }
+
+    const candidate = current ? `${current} ${trimmedSentence}` : trimmedSentence;
+    if (candidate.length > maxChunkLength) {
+      pushChunk();
+      current = trimmedSentence;
+    } else {
+      current = candidate;
+    }
+  }
+
+  pushChunk();
+  return chunks;
+}
+
+function splitTextForTts(text, options = {}) {
+  const {
+    maxChunkLength = 3800,
+    firstChunkWords = 60,
+    firstChunkChars = 950
+  } = options;
+  const normalized = String(text || "").replace(/\s+/g, " ").trim();
+  if (!normalized) {
+    return [];
+  }
+
+  const sentences = normalized.match(/[^.!?]+[.!?]?/g) || [normalized];
+  const wordCount = normalized.split(/\s+/).filter(Boolean).length;
+  if (normalized.length <= maxChunkLength && wordCount <= firstChunkWords + 10) {
+    return [normalized];
+  }
+
+  let firstChunk = "";
+  let consumedSentences = 0;
+  let consumedWords = 0;
+
+  for (const sentence of sentences) {
+    const trimmedSentence = sentence.trim();
+    if (!trimmedSentence) {
+      continue;
+    }
+
+    const sentenceWords = trimmedSentence.split(/\s+/).filter(Boolean).length;
+    const candidate = firstChunk ? `${firstChunk} ${trimmedSentence}` : trimmedSentence;
+    const wouldExceedChars = candidate.length > firstChunkChars;
+    const wouldExceedWords = consumedWords + sentenceWords > firstChunkWords;
+
+    if (firstChunk && (wouldExceedChars || wouldExceedWords)) {
+      break;
+    }
+
+    firstChunk = candidate;
+    consumedSentences += 1;
+    consumedWords += sentenceWords;
+
+    if (firstChunk.length >= firstChunkChars || consumedWords >= firstChunkWords) {
+      break;
+    }
+  }
+
+  if (!firstChunk) {
+    firstChunk = normalized.slice(0, firstChunkChars).trim();
+    const remainderFallback = normalized.slice(firstChunk.length).trim();
+    return remainderFallback
+      ? [firstChunk, ...splitIntoStandardTtsChunks(remainderFallback, maxChunkLength)]
+      : [firstChunk];
+  }
+
+  const remainder = sentences
+    .slice(consumedSentences)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return remainder
+    ? [firstChunk, ...splitIntoStandardTtsChunks(remainder, maxChunkLength)]
+    : [firstChunk];
+}
+
+function buildComparisonSpeechText() {
+  const rows = buildComparisonRows();
+  if (!rows.length) {
+    return "";
+  }
+  const first = continentById(appState.compareA);
+  const second = continentById(appState.compareB);
+  return [
+    `Din guide för att jämföra ${first.name} och ${second.name}.`,
+    "Bygg svaret i tre steg: vad, varför och exempel.",
+    "Nu går vi kort och tydligt område för område.",
+    ...rows.map(
+      (row) =>
+        `${row.label}. ${first.name} har ${row.first}, medan ${second.name} har ${row.second}. Det hänger ihop med att ${row.firstName} ${row.firstReason.toLowerCase()}, medan ${row.secondName} ${row.secondReason.toLowerCase()}. Tänk till exempel på ${row.firstExamples} och ${row.secondExamples}.`
+    ),
+    `Nu har du hört jämförelsen. När du skriver kan du börja med vad som skiljer sig, sedan förklara varför, och till sist ge exempel.`
+  ].join(" ");
+}
+
 function waitForAudioMetadata(audioElement) {
   return new Promise((resolve) => {
     if (Number.isFinite(audioElement.duration) && audioElement.duration > 0) {
@@ -3079,9 +4072,55 @@ async function fetchTtsBlob(text, options = {}) {
   return { audioBlob, chosenVoice };
 }
 
+function getAudioBlobDuration(audioBlob) {
+  return new Promise((resolve) => {
+    const tempAudio = document.createElement("audio");
+    const tempUrl = URL.createObjectURL(audioBlob);
+    tempAudio.preload = "metadata";
+    tempAudio.src = tempUrl;
+
+    const finish = (duration) => {
+      URL.revokeObjectURL(tempUrl);
+      resolve(Number.isFinite(duration) && duration > 0 ? duration : 0);
+    };
+
+    tempAudio.addEventListener(
+      "loadedmetadata",
+      () => {
+        finish(tempAudio.duration);
+      },
+      { once: true }
+    );
+
+    tempAudio.addEventListener(
+      "error",
+      () => {
+        finish(0);
+      },
+      { once: true }
+    );
+  });
+}
+
 function getWarmupText() {
   const currentTrack = listenTracks.find((track) => track.id === appState.listenTrackId) || listenTracks[0];
   return currentTrack ? getListenTrackPresentation(currentTrack).speechText : "";
+}
+
+function getWarmupTexts() {
+  const visibleTracks = getVisibleListenTracks();
+  const currentTrack = visibleTracks.find((track) => track.id === appState.listenTrackId);
+  const compareTrack = visibleTracks.find((track) => track.id === "track-compare");
+  const texts = [currentTrack, compareTrack]
+    .filter(Boolean)
+    .map((track) => getListenTrackPresentation(track).speechText);
+
+  const comparisonText = buildComparisonSpeechText();
+  if (comparisonText) {
+    texts.push(comparisonText);
+  }
+
+  return [...new Set(texts.filter(Boolean))];
 }
 
 function scheduleTtsWarmup() {
@@ -3094,17 +4133,24 @@ function scheduleTtsWarmup() {
   }
 
   appState.ttsWarmupTimer = window.setTimeout(async () => {
-    const warmupText = getWarmupText();
-    if (!warmupText) {
+    const warmupTexts = getWarmupTexts();
+    if (!warmupTexts.length) {
       return;
     }
 
-    try {
-      await fetchTtsBlob(warmupText, { kind: "lesson" });
-    } catch (error) {
-      console.warn("Could not warm TTS cache", error);
+    for (const [index, text] of warmupTexts.entries()) {
+      const chunks = splitTextForTts(text).slice(0, index === 0 ? 2 : 1);
+      try {
+        for (const chunk of chunks) {
+          await fetchTtsBlob(chunk, {
+            kind: index === warmupTexts.length - 1 ? "comparison" : "lesson"
+          });
+        }
+      } catch (error) {
+        console.warn("Could not warm TTS cache", error);
+      }
     }
-  }, 300);
+  }, 180);
 }
 
 function setTtsStatus(message, tone = "muted") {
@@ -3157,6 +4203,10 @@ async function hydrateTtsStatus() {
 }
 
 function stopSpeaking(options = {}) {
+  if (options.bumpToken !== false) {
+    appState.ttsPlayToken += 1;
+  }
+
   if ("speechSynthesis" in window) {
     window.speechSynthesis.cancel();
   }
@@ -3223,30 +4273,86 @@ async function speakWithOpenAi(text, options = {}) {
   const chosenVoice = appState.ttsVoice || "alloy";
   appState.ttsLoading = true;
   renderTtsStatus();
-  setTtsStatus("Skapar OpenAI-röst...", "muted");
+  const chunks = splitTextForTts(text);
+  stopSpeaking({ keepStatus: true });
+  const playToken = appState.ttsPlayToken;
+  setTtsStatus(
+    chunks.length > 1 ? `Skapar OpenAI-röst i ${chunks.length} delar...` : "Skapar OpenAI-röst...",
+    "muted"
+  );
 
   try {
-    const { audioBlob } = await fetchTtsBlob(text, { ...options, voice: chosenVoice });
-
-    stopSpeaking({ keepStatus: true });
-
     const audioElement = appState.ttsAudio || document.querySelector("#tts-audio");
     appState.ttsAudio = audioElement;
-    appState.ttsAudioUrl = URL.createObjectURL(audioBlob);
-    audioElement.src = appState.ttsAudioUrl;
-    const duration = await waitForAudioMetadata(audioElement);
-    syncGuidedListenDuration(duration);
+    const partPromises = chunks.map((chunk, index) => {
+      const loadPart = async () => {
+        const { audioBlob } = await fetchTtsBlob(chunk, { ...options, voice: chosenVoice });
+        const duration = await getAudioBlobDuration(audioBlob);
+        return { audioBlob, duration };
+      };
 
-    audioElement.onended = () => {
+      return index === 0 ? loadPart() : null;
+    });
+
+    const firstPart = await partPromises[0];
+    if (appState.ttsPlayToken !== playToken) {
+      return;
+    }
+
+    syncGuidedListenDuration(
+      firstPart.duration > 0 && chunks.length === 1
+        ? firstPart.duration
+        : estimateSpeechDuration(text)
+    );
+
+    if (chunks.length > 1) {
+      for (let index = 1; index < chunks.length; index += 1) {
+        partPromises[index] =
+          partPromises[index] ||
+          (async () => {
+            const { audioBlob } = await fetchTtsBlob(chunks[index], { ...options, voice: chosenVoice });
+            const duration = await getAudioBlobDuration(audioBlob);
+            return { audioBlob, duration };
+          })();
+      }
+    }
+
+    appState.ttsLoading = false;
+    renderTtsStatus();
+
+    for (let index = 0; index < chunks.length; index += 1) {
+      if (appState.ttsPlayToken !== playToken) {
+        return;
+      }
+
+      const part = index === 0 ? firstPart : await partPromises[index];
+
+      if (appState.ttsAudioUrl) {
+        URL.revokeObjectURL(appState.ttsAudioUrl);
+        appState.ttsAudioUrl = null;
+      }
+
+      appState.ttsAudioUrl = URL.createObjectURL(part.audioBlob);
+      audioElement.src = appState.ttsAudioUrl;
+      await waitForAudioMetadata(audioElement);
+
+      setTtsStatus(
+        chunks.length > 1
+          ? `OpenAI-röst spelar upp del ${index + 1} av ${chunks.length}.`
+          : "OpenAI-röst spelar upp.",
+        "ready"
+      );
+
+      await new Promise((resolve, reject) => {
+        audioElement.onended = () => resolve();
+        audioElement.onerror = () => reject(new Error("Ljudspelaren kunde inte spela upp OpenAI-rösten."));
+        audioElement.play().catch(reject);
+      });
+    }
+
+    if (appState.ttsPlayToken === playToken) {
       setTtsStatus("OpenAI-röst redo.", "ready");
-    };
-
-    audioElement.onerror = () => {
-      setTtsStatus("Ljudspelaren kunde inte spela upp OpenAI-rösten.", "error");
-    };
-
-    await audioElement.play();
-    setTtsStatus("OpenAI-röst spelar upp.", "ready");
+    }
   } finally {
     appState.ttsLoading = false;
     renderTtsStatus();
@@ -3286,8 +4392,18 @@ function bindEvents() {
     setActiveTab(button.dataset.tab);
   });
   document.querySelector("#jump-next-lesson").addEventListener("click", () => {
-    const nextLesson = getNextLesson();
-    startGuidedLesson(nextLesson.id);
+    const lesson = selectedLesson();
+    if (!lesson) {
+      return;
+    }
+    startGuidedLesson(lesson.id);
+  });
+  document.querySelector("#lesson-start-cta").addEventListener("click", () => {
+    const lesson = selectedLesson();
+    if (!lesson) {
+      return;
+    }
+    startGuidedLesson(lesson.id);
   });
   document.querySelector("#restart-quiz").addEventListener("click", startQuizRound);
   document.querySelector("#restart-mapquiz").addEventListener("click", startMapQuizRound);
@@ -3295,7 +4411,11 @@ function bindEvents() {
   document.querySelector("#lesson-coach").addEventListener("click", (event) => {
     const startButton = event.target.closest("#start-guided-lesson");
     if (startButton) {
-      startGuidedLesson(getNextLesson().id);
+      const lessonId = startButton.dataset.guidedStart || selectedLesson()?.id;
+      if (!lessonId) {
+        return;
+      }
+      startGuidedLesson(lessonId);
       return;
     }
 
@@ -3318,6 +4438,28 @@ function bindEvents() {
       return;
     }
   });
+
+  const syncLessonSelection = () => {
+    if (guidedLesson()) {
+      return;
+    }
+
+    const nextA = document.querySelector("#lesson-compare-a")?.value || "";
+    const nextB = document.querySelector("#lesson-compare-b")?.value || "";
+    setLessonPair(nextA, nextB);
+    if (appState.lessonCompareA && appState.lessonCompareA === appState.lessonCompareB) {
+      const fallback = continents.find((continent) => continent.id !== appState.lessonCompareA)?.id || "";
+      appState.lessonCompareB = fallback;
+      document.querySelector("#lesson-compare-b").value = fallback;
+      setLessonPair(appState.lessonCompareA, fallback);
+    }
+    renderQuickPass();
+    renderLessonCoach();
+    renderWritingPanel();
+  };
+
+  document.querySelector("#lesson-compare-a").addEventListener("change", syncLessonSelection);
+  document.querySelector("#lesson-compare-b").addEventListener("change", syncLessonSelection);
 
   document.querySelector("#continent-buttons").addEventListener("click", (event) => {
     const button = event.target.closest("[data-continent-id]");
@@ -3379,19 +4521,18 @@ function bindEvents() {
   document.querySelector("#compare-a").addEventListener("change", (event) => {
     updateComparisonSelection("a", event.target.value);
   });
+
   document.querySelector("#compare-b").addEventListener("change", (event) => {
     updateComparisonSelection("b", event.target.value);
   });
 
   document.querySelector("#listen-comparison").addEventListener("click", async () => {
-    const rows = buildComparisonRows();
-    const text = rows
-      .map(
-        (row) =>
-          `${row.label}. ${continentById(appState.compareA).name}: ${row.first}. ${continentById(appState.compareB).name}: ${row.second}. ${row.similarity} ${row.difference}`
-      )
-      .join(" ");
-    await speakText(text, { kind: "comparison" });
+    const speechText = buildComparisonSpeechText();
+    if (!speechText) {
+      setTtsStatus("Välj två världsdelar först, så kan appen läsa upp jämförelsen.", "warning");
+      return;
+    }
+    await speakText(speechText, { kind: "comparison" });
   });
 
   document.querySelector("#refresh-sample-answer").addEventListener("click", () => {
@@ -3415,11 +4556,47 @@ function bindEvents() {
 
   document.querySelector("#grade-writing-answer").addEventListener("click", gradeWritingAnswer);
   document.querySelector("#clear-writing-answer").addEventListener("click", () => {
-    appState.writingDrafts[appState.selectedWritingPromptId] = "";
+    const starterText = buildWritingStarter();
+    appState.writingDrafts[appState.selectedWritingPromptId] = starterText;
     saveJson("geografi-writing-drafts", appState.writingDrafts);
-    document.querySelector("#writing-answer").value = "";
+    document.querySelector("#writing-answer").value = starterText;
     appState.gradingResult = null;
     renderGradingResult();
+  });
+
+  document.querySelector("#reward-game-panel").addEventListener("click", (event) => {
+    if (event.target.closest("#reward-game-start")) {
+      startRewardGame();
+      return;
+    }
+    if (event.target.closest("#reward-game-flap")) {
+      queueRewardGameBoost();
+      return;
+    }
+    if (event.target.closest("#reward-game-stage")) {
+      if (!appState.rewardGameRunning) {
+        startRewardGame();
+        return;
+      }
+      queueRewardGameBoost();
+    }
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (appState.activeTab !== "game") {
+      return;
+    }
+    if (event.target instanceof Element && event.target.matches("textarea, input, select")) {
+      return;
+    }
+    if (event.code === "Space" || event.code === "ArrowUp") {
+      event.preventDefault();
+      if (!appState.rewardGameRunning) {
+        startRewardGame();
+        return;
+      }
+      queueRewardGameBoost();
+    }
   });
 
   document.querySelector("#book-image-input").addEventListener("change", async (event) => {
@@ -3594,6 +4771,7 @@ async function deleteBookImage(id) {
 
 function init() {
   appState.ttsAudio = document.querySelector("#tts-audio");
+  setLessonPair(appState.lessonCompareA, appState.lessonCompareB);
   renderQuickPass();
   renderStats();
   renderProgressBoard();
@@ -3606,6 +4784,7 @@ function init() {
   populateCompareSelects();
   renderComparison();
   renderWritingPanel();
+  renderRewardGamePanel();
   startQuizRound();
   startMapQuizRound();
   renderBookGallery();
@@ -3620,6 +4799,7 @@ window.addEventListener("beforeunload", () => {
     clearTimeout(appState.ttsWarmupTimer);
   }
   clearGuidedStepTimer();
+  stopRewardGameLoop();
   stopSpeaking();
   appState.imageUrls.forEach((url) => URL.revokeObjectURL(url));
 });
