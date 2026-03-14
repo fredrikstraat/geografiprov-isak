@@ -1220,6 +1220,8 @@ const appState = {
   ttsLastError: "",
   ttsAudio: null,
   ttsAudioUrl: null,
+  ttsAudioContext: null,
+  ttsBufferSources: [],
   ttsPlayToken: 0,
   ttsCache: new Map(),
   ttsPendingRequests: new Map(),
@@ -3872,6 +3874,35 @@ function renderTtsStatus() {
   }
 }
 
+async function getOrCreateTtsAudioContext() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) {
+    throw new Error("Web Audio stöds inte i den här webbläsaren.");
+  }
+
+  if (!appState.ttsAudioContext || appState.ttsAudioContext.state === "closed") {
+    appState.ttsAudioContext = new AudioContextClass();
+  }
+
+  if (appState.ttsAudioContext.state === "suspended") {
+    await appState.ttsAudioContext.resume();
+  }
+
+  return appState.ttsAudioContext;
+}
+
+function stopOpenAiBufferPlayback() {
+  appState.ttsBufferSources.forEach((source) => {
+    try {
+      source.onended = null;
+      source.stop();
+    } catch (_error) {
+      // Ignore already-stopped sources.
+    }
+  });
+  appState.ttsBufferSources = [];
+}
+
 function buildTtsCacheKey(text, options = {}) {
   const voice = options.voice || appState.ttsVoice || "alloy";
   return `${voice}::${options.kind || "lesson"}::${text}`;
@@ -4198,6 +4229,8 @@ function stopSpeaking(options = {}) {
     window.speechSynthesis.cancel();
   }
 
+  stopOpenAiBufferPlayback();
+
   if (appState.ttsAudio) {
     appState.ttsAudio.pause();
     appState.ttsAudio.currentTime = 0;
@@ -4271,71 +4304,66 @@ async function speakWithOpenAi(text, options = {}) {
   try {
     const audioElement = appState.ttsAudio || document.querySelector("#tts-audio");
     appState.ttsAudio = audioElement;
+    const audioContext = await getOrCreateTtsAudioContext();
     const partPromises = chunks.map((chunk, index) => {
       const loadPart = async () => {
         const { audioBlob } = await fetchTtsBlob(chunk, { ...options, voice: chosenVoice });
         const duration = await getAudioBlobDuration(audioBlob);
-        return { audioBlob, duration };
+        const arrayBuffer = await audioBlob.arrayBuffer();
+        const decodedBuffer = await audioContext.decodeAudioData(arrayBuffer.slice(0));
+        return { audioBlob, duration, decodedBuffer };
       };
 
-      return index === 0 ? loadPart() : null;
+      return loadPart();
     });
 
-    const firstPart = await partPromises[0];
+    const parts = await Promise.all(partPromises);
+    const firstPart = parts[0];
     if (appState.ttsPlayToken !== playToken) {
       return;
     }
 
     syncGuidedListenDuration(
-      firstPart.duration > 0 && chunks.length === 1
-        ? firstPart.duration
+      parts.every((part) => part.duration > 0)
+        ? Math.round(parts.reduce((total, part) => total + part.duration, 0))
         : estimateSpeechDuration(text)
     );
-
-    if (chunks.length > 1) {
-      for (let index = 1; index < chunks.length; index += 1) {
-        partPromises[index] =
-          partPromises[index] ||
-          (async () => {
-            const { audioBlob } = await fetchTtsBlob(chunks[index], { ...options, voice: chosenVoice });
-            const duration = await getAudioBlobDuration(audioBlob);
-            return { audioBlob, duration };
-          })();
-      }
-    }
 
     appState.ttsLoading = false;
     renderTtsStatus();
 
-    for (let index = 0; index < chunks.length; index += 1) {
-      if (appState.ttsPlayToken !== playToken) {
-        return;
-      }
-
-      const part = index === 0 ? firstPart : await partPromises[index];
-
-      if (appState.ttsAudioUrl) {
-        URL.revokeObjectURL(appState.ttsAudioUrl);
-        appState.ttsAudioUrl = null;
-      }
-
-      appState.ttsAudioUrl = URL.createObjectURL(part.audioBlob);
-      audioElement.src = appState.ttsAudioUrl;
-      await waitForAudioMetadata(audioElement);
-
-      setTtsStatus(
-        chunks.length > 1
-          ? `OpenAI-röst spelar upp del ${index + 1} av ${chunks.length}.`
-          : "OpenAI-röst spelar upp.",
-        "ready"
-      );
-
-      await new Promise((resolve, reject) => {
-        audioElement.onended = () => resolve();
-        audioElement.onerror = () => reject(new Error("Ljudspelaren kunde inte spela upp OpenAI-rösten."));
-        audioElement.play().catch(reject);
-      });
+    if (audioElement?.src) {
+      audioElement.pause();
+      audioElement.removeAttribute("src");
+      audioElement.load();
     }
+
+    setTtsStatus(
+      chunks.length > 1
+        ? `OpenAI-röst spelar upp ${chunks.length} delar utan paus.`
+        : "OpenAI-röst spelar upp.",
+      "ready"
+    );
+
+    await new Promise((resolve) => {
+      let endedSources = 0;
+      let startAt = audioContext.currentTime + 0.05;
+      appState.ttsBufferSources = parts.map((part, index) => {
+        const source = audioContext.createBufferSource();
+        source.buffer = part.decodedBuffer;
+        source.connect(audioContext.destination);
+        source.onended = () => {
+          endedSources += 1;
+          if (endedSources >= parts.length) {
+            appState.ttsBufferSources = [];
+            resolve();
+          }
+        };
+        source.start(startAt);
+        startAt += part.decodedBuffer.duration;
+        return source;
+      });
+    });
 
     if (appState.ttsPlayToken === playToken) {
       setTtsStatus("OpenAI-röst redo.", "ready");
