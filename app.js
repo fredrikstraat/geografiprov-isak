@@ -1366,6 +1366,34 @@ function getNextLesson() {
   return lessons.find((lesson) => !appState.completedLessons.has(lesson.id)) || lessons[lessons.length - 1];
 }
 
+function nextLessonAfter(lesson) {
+  return lessons.find(
+    (candidate) => candidate.order > lesson.order && !appState.completedLessons.has(candidate.id)
+  ) || null;
+}
+
+function lessonWritingStep(lesson) {
+  return lesson?.steps.find((step) => step.action.type === "writing") || null;
+}
+
+function recommendedWritingPromptId() {
+  const activeStep = guidedStep();
+  if (guidedLesson() && activeStep?.action.type === "writing") {
+    return activeStep.action.promptId;
+  }
+
+  const lesson = guidedLessonIsComplete() ? getNextLesson() : guidedLesson() || getNextLesson();
+  return lessonWritingStep(lesson)?.action.promptId || writingPrompts[0].id;
+}
+
+function recommendedWritingLesson() {
+  if (guidedLesson() && guidedStep()?.action.type === "writing") {
+    return guidedLesson();
+  }
+
+  return guidedLessonIsComplete() ? getNextLesson() : guidedLesson() || getNextLesson();
+}
+
 function guidedLesson() {
   return appState.guidedLessonId ? lessonById(appState.guidedLessonId) : null;
 }
@@ -1625,6 +1653,7 @@ function nextGuidedStep() {
       renderStats();
       renderProgressBoard();
     }
+    setActiveTab("quickpass");
     renderLessonCoach();
     renderQuickPass();
     return;
@@ -1723,6 +1752,7 @@ function renderLessonCoach() {
   const step = guidedLesson() ? guidedStep() : lesson.steps[0];
   const lessonIsActive = Boolean(appState.guidedLessonId);
   const lessonIsComplete = lessonIsActive && guidedLessonIsComplete();
+  const upcomingLesson = lessonIsComplete ? nextLessonAfter(lesson) : null;
   const completedStepCount = lessonIsActive
     ? Math.min(
         lesson.steps.length,
@@ -1756,7 +1786,9 @@ function renderLessonCoach() {
         ? "Tid kvar"
         : "Planerad tid";
   const primaryAction = lessonIsComplete
-    ? `<button class="primary" id="start-guided-lesson">Starta nästa lektion</button>`
+    ? upcomingLesson
+      ? `<button class="primary" id="start-guided-lesson">Starta nästa lektion: ${upcomingLesson.title}</button>`
+      : `<button class="primary" id="start-guided-lesson">Kör sista repetitionen igen</button>`
     : appState.guidedStepDone
       ? `<button class="primary" id="next-guided-step">Jag är klar, gå vidare</button>`
       : lessonIsActive
@@ -1798,7 +1830,7 @@ function renderLessonCoach() {
           <p>
             ${
               lessonIsComplete
-                ? "Du har tjänat ihop ännu en klar lektion. Det här är exakt så man bygger självförtroende inför provet."
+                ? `Du har tjänat ihop ännu en klar lektion. Nästa steg är ${upcomingLesson?.title || "att repetera lugnt"}.`
                 : lessonIsActive
                   ? guidedSupportText(step)
                   : "När du trycker start öppnas första momentet direkt och steg-timern börjar av sig själv."
@@ -1810,7 +1842,7 @@ function renderLessonCoach() {
           <p class="microcopy progress-note">
             ${
               lessonIsComplete
-                ? "Ta en kort paus, Isak."
+                ? `${upcomingLesson ? `Nästa lektion är ${upcomingLesson.order}: ${upcomingLesson.title}.` : "Alla lektioner är klara, Isak."}`
                 : appState.guidedStepDone
                   ? "Bra kämpat, Isak."
                   : lessonIsActive
@@ -2727,30 +2759,38 @@ function updateComparisonSelection(source, nextValue) {
 }
 
 function renderWritingPrompts() {
-  const select = document.querySelector("#writing-prompt-select");
-  select.innerHTML = writingPrompts
-    .map(
-      (prompt) => `
-        <option value="${prompt.id}" ${prompt.id === appState.selectedWritingPromptId ? "selected" : ""}>
-          ${prompt.title}
-        </option>
-      `
-    )
-    .join("");
+  const nextPromptId = recommendedWritingPromptId();
+  if (appState.selectedWritingPromptId !== nextPromptId) {
+    appState.gradingResult = null;
+  }
+  appState.selectedWritingPromptId = nextPromptId;
 }
 
 function renderWritingPanel() {
+  renderWritingPrompts();
   const prompt = writingPromptById(appState.selectedWritingPromptId);
+  const lesson = recommendedWritingLesson();
+  const currentStep = guidedStep();
   const savedDraft = appState.writingDrafts[prompt.id] || "";
 
-  renderWritingPrompts();
+  document.querySelector("#writing-context").textContent =
+    guidedLesson() && currentStep?.action.type === "writing"
+      ? `Det här är skrivsteget i ${lesson.title}. Fokusera bara på den här frågan nu.`
+      : `Det här är skrivfrågan som hör till ${lesson.title}. Skriv den här först för att träna mot C.`;
   document.querySelector("#writing-title").textContent = prompt.title;
   document.querySelector("#writing-description").textContent = prompt.description;
   document.querySelector("#writing-support-points").innerHTML = prompt.supportPoints
     .map((point) => `<li>${point}</li>`)
     .join("");
+  document.querySelector("#writing-structure-points").innerHTML = [
+    "Vad? Börja med att säga vad som är viktigt eller vad som skiljer sig åt.",
+    "Varför? Förklara orsaken med geografiord som klimat, naturresurser, befolkning eller försörjning.",
+    "Exempel? Ge minst ett tydligt exempel som visar att du förstår.",
+    "Knyt ihop svaret i 4 till 6 meningar så att det blir ett utvecklat resonemang."
+  ]
+    .map((point) => `<li>${point}</li>`)
+    .join("");
   document.querySelector("#writing-answer").value = savedDraft;
-  document.querySelector("#writing-prompt-select").value = prompt.id;
   renderGradingResult();
 }
 
@@ -3366,12 +3406,6 @@ function bindEvents() {
     appState.stats.notesSaved = Object.values(appState.comparisonNotes).filter(Boolean).length;
     saveJson("geografi-stats", appState.stats);
     renderStats();
-  });
-
-  document.querySelector("#writing-prompt-select").addEventListener("change", (event) => {
-    appState.selectedWritingPromptId = event.target.value;
-    appState.gradingResult = null;
-    renderWritingPanel();
   });
 
   document.querySelector("#writing-answer").addEventListener("input", (event) => {

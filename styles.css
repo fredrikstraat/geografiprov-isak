@@ -586,12 +586,24 @@ body.lesson-focus.focus-step-writing #panel-writing .writing-main {
   margin-top: 0.9rem;
 }
 
-.writing-picker-card {
-  gap: 0.75rem;
-}
-
 .grading-card {
   min-height: 180px;
+}
+
+#writing-context {
+  margin: 0 0 0.35rem;
+}
+
+.writing-structure-card {
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px dashed rgba(31, 42, 48, 0.14);
+}
+
+.writing-structure-card strong {
+  display: block;
+  margin-bottom: 0.55rem;
 }
 
 .grading-chip.is-yes {
