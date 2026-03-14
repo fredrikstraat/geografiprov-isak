@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Geografiprov med Isak</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="background-glow background-glow-left"></div>
+    <div class="background-glow background-glow-right"></div>
+
+    <header class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow">Geografiträning för prov om en vecka</p>
+        <h1>Bygg kunskap steg för steg mot betyget C</h1>
+        <p class="hero-text">
+          Kort läsning, lyssning, quiz och jämförelser i lagom delar. Appen är
+          gjord för att hjälpa Isak hålla fokus och variera hur han lär sig.
+        </p>
+        <div class="hero-pills">
+          <span>Korta pass</span>
+          <span>Lyssna på svenska</span>
+          <span>Quiz med direkt feedback</span>
+          <span>Jämför världsdelar</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="shell app-layout">
+      <section class="guided-runner" id="lesson-coach"></section>
+      <section class="stats-grid" id="stats-grid"></section>
+      <section class="progress-board" id="progress-board"></section>
+
+      <nav class="tab-row" id="tab-row" aria-label="Studielagen">
+        <button class="tab active" data-tab="quickpass">Lektioner</button>
+        <button class="tab" data-tab="learn">Läs</button>
+        <button class="tab" data-tab="listen">Lyssna</button>
+        <button class="tab" data-tab="quiz">Quiz</button>
+        <button class="tab" data-tab="mapquiz">Blindkarta</button>
+        <button class="tab" data-tab="compare">Jämför</button>
+        <button class="tab" data-tab="writing">Skriv</button>
+        <button class="tab" data-tab="book">Bokbilder</button>
+      </nav>
+
+      <section class="panel active" id="panel-quickpass">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Steg för steg</p>
+            <h2>Lektioner på cirka 15 minuter fram till provet</h2>
+          </div>
+          <button class="ghost" id="jump-next-lesson">Starta nästa lektion</button>
+        </div>
+        <div class="lesson-plan" id="quickpass-grid"></div>
+
+        <article class="study-card">
+          <p class="panel-label">Extra träning</p>
+          <h3>GeoGuessr / Seterra-länkar från läraren</h3>
+          <ul class="mini-list">
+            <li><a href="https://www.geoguessr.com/sv/vgp/3154" target="_blank" rel="noopener noreferrer">Världsdelar, hav och kartträning</a></li>
+            <li><a href="https://www.geoguessr.com/sv/vgp/3232" target="_blank" rel="noopener noreferrer">Länder och huvudstäder</a></li>
+          </ul>
+          <p class="microcopy">
+            Bra som extra repetition före eller efter en lektion i appen.
+          </p>
+        </article>
+      </section>
+
+      <section class="panel" id="panel-learn">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Kort läsning</p>
+            <h2>En sak i taget, men med tydliga samband</h2>
+          </div>
+        </div>
+
+        <div class="learn-layout">
+          <aside class="topic-column" id="continent-buttons"></aside>
+
+          <article class="study-card" id="continent-detail"></article>
+        </div>
+
+        <div class="section-heading drill-heading">
+          <div>
+            <p class="panel-label">Namngeografi</p>
+            <h3>Tryck på korten och testa minnet</h3>
+          </div>
+        </div>
+
+        <div class="chip-row" id="drill-category-buttons"></div>
+        <div class="drill-grid" id="drill-grid"></div>
+      </section>
+
+      <section class="panel" id="panel-listen">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Lyssna</p>
+            <h2>Hörselspår med enkla meningar och repetition</h2>
+          </div>
+        </div>
+
+        <div class="listen-layout">
+          <div class="listen-list" id="listen-buttons"></div>
+          <article class="listen-card">
+            <h3 id="listen-title"></h3>
+            <p id="listen-description"></p>
+            <div class="listen-actions">
+              <button class="primary" id="speak-button">Läs upp</button>
+              <button class="ghost" id="stop-speaking">Stoppa</button>
+            </div>
+            <p class="tts-status" id="tts-status">Kontrollerar uppläsningstjänst...</p>
+            <p class="tts-disclosure">
+              När OpenAI används är rösten AI-genererad.
+            </p>
+            <audio class="tts-audio" id="tts-audio" controls preload="none"></audio>
+            <div id="listen-study-content"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-quiz">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Quiz</p>
+            <h2>Snabb kontroll med forklaring efter varje svar</h2>
+          </div>
+          <button class="ghost" id="restart-quiz">Ny runda</button>
+        </div>
+
+        <div class="quiz-shell">
+          <div class="quiz-progress">
+            <div class="quiz-progress-bar">
+              <span id="quiz-progress-fill"></span>
+            </div>
+            <p id="quiz-progress-text"></p>
+          </div>
+
+          <article class="quiz-card" id="quiz-card"></article>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-mapquiz">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Blindkarta</p>
+            <h2>Skriv svaret själv utifrån markören på kartan</h2>
+          </div>
+          <button class="ghost" id="restart-mapquiz">Ny runda</button>
+        </div>
+
+        <div class="quiz-shell">
+          <div class="quiz-progress">
+            <div class="quiz-progress-bar">
+              <span id="mapquiz-progress-fill"></span>
+            </div>
+            <p id="mapquiz-progress-text"></p>
+          </div>
+
+          <div class="mapquiz-layout">
+            <article class="mapquiz-card">
+              <div class="mapquiz-stage" id="mapquiz-stage"></div>
+            </article>
+            <article class="quiz-card" id="mapquiz-card"></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-compare">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Jämför världsdelar</p>
+            <h2>Träning precis som instruktionen från läraren</h2>
+          </div>
+        </div>
+
+        <div class="compare-controls">
+          <label>
+            Första världsdelen
+            <select id="compare-a"></select>
+          </label>
+          <label>
+            Andra världsdelen
+            <select id="compare-b"></select>
+          </label>
+          <button class="ghost" id="listen-comparison">Läs upp jämförelsen</button>
+        </div>
+
+        <div class="compare-checklist">
+          <div class="checklist-card">
+            <h3>Bygg svaret i tre steg</h3>
+            <ol>
+              <li><strong>Vad?</strong> Berätta vad som är lika eller olika.</li>
+              <li><strong>Varför?</strong> Förklara orsaken till att det ser ut så.</li>
+              <li><strong>Exempel?</strong> Ge minst ett tydligt exempel från båda.</li>
+            </ol>
+          </div>
+          <div class="checklist-card">
+            <h3>Jämförelseord</h3>
+            <ul>
+              <li>Däremot är det så att...</li>
+              <li>Till skillnad från...</li>
+              <li>På samma sätt som...</li>
+              <li>Båda världsdelarna har...</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="comparison-grid" id="comparison-grid"></div>
+
+        <article class="sample-answer">
+          <div class="sample-answer-header">
+            <h3>Exempel på jämförelsesvar på C-nivå</h3>
+            <button class="ghost" id="refresh-sample-answer">Visa ny version</button>
+          </div>
+          <p id="sample-answer-text"></p>
+        </article>
+
+        <article class="notes-card">
+          <h3>Egna stödord eller utkast</h3>
+          <label class="notes-label" for="comparison-notes">
+            Skriv med nyckelord för att göra det enklare att minnas.
+          </label>
+          <textarea
+            id="comparison-notes"
+            rows="9"
+            placeholder="Exempel: Europa har mest tempererat klimat medan Afrika har både tropiskt klimat och stora torra områden..."
+          ></textarea>
+          <p class="microcopy">Texten sparas automatiskt på den här enheten.</p>
+        </article>
+      </section>
+
+      <section class="panel" id="panel-writing">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Skrivsvar</p>
+            <h2>Svara med egna ord och få återkoppling mot lärarens mål</h2>
+          </div>
+        </div>
+
+        <div class="writing-layout">
+          <aside class="writing-sidebar" id="writing-prompt-list"></aside>
+
+          <div class="writing-main">
+            <article class="study-card">
+              <p class="panel-label">Fråga i fokus</p>
+              <h3 id="writing-title"></h3>
+              <p id="writing-description"></p>
+              <div class="insight-strip">
+                <strong>Det här ska Isak försöka få med</strong>
+                <ul class="mini-list" id="writing-support-points"></ul>
+              </div>
+            </article>
+
+            <article class="notes-card">
+              <label class="notes-label" for="writing-answer">
+                Skriv ett sammanhängande svar med fakta, förklaringar och exempel.
+              </label>
+              <textarea
+                id="writing-answer"
+                rows="10"
+                placeholder="Exempel: Europa och Afrika skiljer sig åt i klimat eftersom Afrika ligger närmare ekvatorn..."
+              ></textarea>
+              <div class="writing-actions">
+                <button class="primary" id="grade-writing-answer">Bedöm med OpenAI</button>
+                <button class="ghost" id="clear-writing-answer">Rensa svar</button>
+              </div>
+              <p class="microcopy">
+                OpenAI bedömer svaret mot uppgiften från läraren. Bedömningen är AI-genererad och ska användas som stöd.
+              </p>
+            </article>
+
+            <article class="sample-answer grading-card" id="grading-result">
+              <p class="panel-label">Återkoppling</p>
+              <p class="microcopy">
+                Här visas återkoppling när ni skickat in ett svar.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-book">
+        <div class="section-heading">
+          <div>
+            <p class="panel-label">Bokbilder</p>
+            <h2>Lägg in foton på sidor och kartor ni vill repetera</h2>
+          </div>
+        </div>
+
+        <article class="book-intro">
+          <p>
+            Här kan ni spara bilder från boken eller skolans karta. Det är
+            perfekt om provet fokuserar på ett visst urval av länder eller
+            huvudstäder som ni vill träna extra på.
+          </p>
+          <label class="upload-button" for="book-image-input">
+            Välj bilder
+          </label>
+          <input id="book-image-input" type="file" accept="image/*" multiple />
+          <p class="microcopy">
+            Bilderna sparas lokalt i webbläsaren på den här enheten.
+          </p>
+        </article>
+
+        <div class="book-gallery" id="book-gallery"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
