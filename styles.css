@@ -1119,6 +1119,96 @@ body.lesson-focus.focus-step-game #panel-game .reward-card {
   margin-top: 0.2rem;
 }
 
+#listen-quiz-shell[hidden] {
+  display: none;
+}
+
+.listen-quiz-card {
+  margin-top: 0.9rem;
+  border-radius: 22px;
+  border: 1px solid rgba(15, 124, 130, 0.18);
+  background: linear-gradient(180deg, rgba(236, 247, 246, 0.95), rgba(248, 241, 230, 0.98));
+  padding: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.listen-quiz-header,
+.listen-quiz-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.listen-quiz-header h4 {
+  margin: 0.15rem 0 0;
+}
+
+.listen-quiz-badge {
+  border-radius: 999px;
+  background: rgba(15, 124, 130, 0.12);
+  color: var(--teal);
+  font-weight: 700;
+  padding: 0.4rem 0.7rem;
+  white-space: nowrap;
+}
+
+.listen-quiz-question-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.listen-quiz-question {
+  border-radius: 18px;
+  border: 1px solid rgba(31, 42, 48, 0.1);
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.listen-quiz-question.is-correct {
+  border-color: rgba(15, 124, 130, 0.24);
+}
+
+.listen-quiz-question.is-wrong {
+  border-color: rgba(200, 106, 67, 0.24);
+}
+
+.listen-quiz-options {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.listen-quiz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 42, 48, 0.08);
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0.7rem 0.8rem;
+}
+
+.listen-quiz-option input {
+  margin-top: 0.15rem;
+}
+
+.listen-quiz-feedback {
+  margin: 0;
+  font-weight: 700;
+}
+
+.listen-quiz-feedback.is-correct,
+.listen-quiz-score {
+  color: var(--teal);
+}
+
+.listen-quiz-feedback.is-wrong {
+  color: #8f4225;
+}
+
 .quiz-shell {
   display: grid;
   gap: 1rem;

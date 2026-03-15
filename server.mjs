@@ -59,7 +59,9 @@ const MIME_TYPES = {
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
-  ".svg": "image/svg+xml"
+  ".mp3": "audio/mpeg",
+  ".svg": "image/svg+xml",
+  ".wav": "audio/wav"
 };
 
 const server = createServer(async (request, response) => {

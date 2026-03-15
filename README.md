@@ -5,7 +5,7 @@ En statisk studieapp som kan öppnas direkt i webbläsaren. Den är byggd för k
 - ordnade lektioner på cirka 15 minuter
 - progress mot provdatumet
 - läsning i små bitar
-- uppläsning med OpenAI eller webbläsaren som fallback
+- förgenererad AI-uppläsning som ljudfiler i projektet
 - quiz med direkt feedback
 - jämförelse av världsdelar mot C-nivå
 - skrivsvar med OpenAI-baserad återkoppling
@@ -13,7 +13,7 @@ En statisk studieapp som kan öppnas direkt i webbläsaren. Den är byggd för k
 
 ## Starta
 
-För full funktion, särskilt OpenAI-uppläsning och bedömning av skrivsvar, starta den lokala servern:
+För full funktion, särskilt uppläsning, quizstopp mitt i föreläsningen och bedömning av skrivsvar, starta den lokala servern:
 
 1. Kopiera [.env.example](/Users/fredrikstraat/Development/Geografiprov/.env.example) till `.env`
 2. Lägg in er `OPENAI_API_KEY`
@@ -25,7 +25,7 @@ npm start
 
 Besök sedan `http://localhost:4173`.
 
-Om ni bara vill titta på HTML-filerna går det fortfarande att öppna [index.html](/Users/fredrikstraat/Development/Geografiprov/index.html) direkt i en webbläsare, men då används varken OpenAI-uppläsning eller OpenAI-bedömning.
+Om ni bara vill titta på HTML-filerna går det fortfarande att öppna [index.html](/Users/fredrikstraat/Development/Geografiprov/index.html) direkt i en webbläsare, men då används inte de förgenererade ljudfilerna eller OpenAI-bedömningen.
 
 ## Deploy på webben
 
@@ -48,7 +48,7 @@ Observera att Render på gratisnivå är bra för hobbyprojekt och test, men tj�
 Servern i [server.mjs](/Users/fredrikstraat/Development/Geografiprov/server.mjs) gör två saker:
 
 - serverar webbappen lokalt
-- skickar uppläsning och skrivbedömning till OpenAI från serversidan så att API-nyckeln inte hamnar i frontend
+- skickar skrivbedömning till OpenAI från serversidan så att API-nyckeln inte hamnar i frontend
 
 Standardinställningar i `.env`:
 
@@ -57,10 +57,15 @@ Standardinställningar i `.env`:
 - `OPENAI_TTS_SPEED=0.96`
 - `OPENAI_GRADER_MODEL=gpt-4.1-mini`
 
-Om `OPENAI_API_KEY` saknas får ni fortfarande uppläsning via webbläsarens inbyggda röst, men skrivbedömningen fungerar inte.
+Om `OPENAI_API_KEY` saknas fungerar fortfarande de förgenererade föreläsningsljuden, men skrivbedömningen fungerar inte.
 
-I appens flik `Lyssna` används nu en förvald OpenAI-röst för att minska distraktioner.
-Appen använder `alloy` som standard och förladdar ljud i bakgrunden för att minska väntetiden.
+I appens flik `Lyssna` används nu förgenererade ljudfiler i mappen [audio](/Users/fredrikstraat/Development/Geografiprov/audio). De byggs med:
+
+```bash
+npm run build:audio
+```
+
+Bygget skapar ljudspår för alla sju världsdelar och alla valbara jämförelsepar, plus ett manifest med quizfrågor som dyker upp mitt i uppläsningen.
 
 I fliken `Skriv` finns skrivuppgifter på ungefär C-nivå. Där bedömer OpenAI svaret mot lärarens instruktion om `Vad?`, `Varför?` och `Exempel?`, och ger:
 

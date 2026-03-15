@@ -1,0 +1,2313 @@
+{
+  "version": 1,
+  "generatedAt": "2026-03-14T22:43:06.433Z",
+  "provider": "openai",
+  "model": "gpt-4o-mini-tts",
+  "voice": "alloy",
+  "disclosure": "Rösten är AI-genererad via OpenAI och förgenererad i projektet.",
+  "tracks": {
+    "track-europa": {
+      "title": "Europa",
+      "kind": "continent",
+      "trackId": "track-europa",
+      "compareA": "",
+      "compareB": "",
+      "totalDurationSeconds": 173,
+      "segments": [
+        {
+          "file": "audio/track-europa-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "42bdd4655ab2869ff5033ee54cc6271d3c714e164dd267964c6bd13340cc24e2"
+        },
+        {
+          "file": "audio/track-europa-part2.mp3",
+          "durationSeconds": 145,
+          "textHash": "724d154d13c9de4ab69d10470c96ee486d957649dab33b78086212d65ed2d823"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer bäst om klimatet i Europa?",
+            "options": [
+              "Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut.",
+              "Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt.",
+              "Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat.",
+              "Polarklimat i norr, inlandsklimat i stora delar och subtropiskt klimat i söder. Västkusten är mildare tack vare havet."
+            ],
+            "correctIndex": 2,
+            "explanation": "I Europa gäller: Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat."
+          },
+          {
+            "prompt": "Vilket exempel hör till Europa?",
+            "options": [
+              "Alperna",
+              "Sahara",
+              "Himalaya",
+              "Klippiga bergen"
+            ],
+            "correctIndex": 0,
+            "explanation": "Alperna hör till Europa och nämndes i genomgången."
+          }
+        ]
+      }
+    },
+    "track-afrika": {
+      "title": "Afrika",
+      "kind": "continent",
+      "trackId": "track-afrika",
+      "compareA": "",
+      "compareB": "",
+      "totalDurationSeconds": 160,
+      "segments": [
+        {
+          "file": "audio/track-afrika-part1.mp3",
+          "durationSeconds": 26,
+          "textHash": "2d8924b5171bdb62054c34ab2d580ab3f2802f4328d021a950da561b0e1a62c9"
+        },
+        {
+          "file": "audio/track-afrika-part2.mp3",
+          "durationSeconds": 134,
+          "textHash": "e0953235eb4edb60c4242b483308146b418d09802d849a82f82229a215866cc9"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer bäst om klimatet i Afrika?",
+            "options": [
+              "Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat.",
+              "Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt.",
+              "Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut.",
+              "Polarklimat i norr, inlandsklimat i stora delar och subtropiskt klimat i söder. Västkusten är mildare tack vare havet."
+            ],
+            "correctIndex": 2,
+            "explanation": "I Afrika gäller: Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut."
+          },
+          {
+            "prompt": "Vilket exempel hör till Afrika?",
+            "options": [
+              "Alperna",
+              "Himalaya",
+              "Klippiga bergen",
+              "Sahara"
+            ],
+            "correctIndex": 3,
+            "explanation": "Sahara hör till Afrika och nämndes i genomgången."
+          }
+        ]
+      }
+    },
+    "track-asien": {
+      "title": "Asien",
+      "kind": "continent",
+      "trackId": "track-asien",
+      "compareA": "",
+      "compareB": "",
+      "totalDurationSeconds": 169,
+      "segments": [
+        {
+          "file": "audio/track-asien-part1.mp3",
+          "durationSeconds": 26,
+          "textHash": "c03f0a8d960bb3aa1eda764f1b6e625e4ea6a7272667b1cff7cd34200be314c6"
+        },
+        {
+          "file": "audio/track-asien-part2.mp3",
+          "durationSeconds": 143,
+          "textHash": "f71d9bb26a68144ca98281b1d25e306e98626647e39818b7bd29bdf2060c00f5"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer bäst om klimatet i Asien?",
+            "options": [
+              "Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat.",
+              "Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut.",
+              "Polarklimat i norr, inlandsklimat i stora delar och subtropiskt klimat i söder. Västkusten är mildare tack vare havet.",
+              "Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt."
+            ],
+            "correctIndex": 3,
+            "explanation": "I Asien gäller: Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt."
+          },
+          {
+            "prompt": "Vilket exempel hör till Asien?",
+            "options": [
+              "Himalaya",
+              "Alperna",
+              "Sahara",
+              "Klippiga bergen"
+            ],
+            "correctIndex": 0,
+            "explanation": "Himalaya hör till Asien och nämndes i genomgången."
+          }
+        ]
+      }
+    },
+    "track-nordamerika": {
+      "title": "Nordamerika",
+      "kind": "continent",
+      "trackId": "track-nordamerika",
+      "compareA": "",
+      "compareB": "",
+      "totalDurationSeconds": 164,
+      "segments": [
+        {
+          "file": "audio/track-nordamerika-part1.mp3",
+          "durationSeconds": 29,
+          "textHash": "14ad9920eb3e5b846ade7ec6744c113403068d545fb711a3ddc91b1351066324"
+        },
+        {
+          "file": "audio/track-nordamerika-part2.mp3",
+          "durationSeconds": 135,
+          "textHash": "9565acafb533774b91c5122e5cd1bb819c3302df5c67af6bd5fc499839443850"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer bäst om klimatet i Nordamerika?",
+            "options": [
+              "Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat.",
+              "Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut.",
+              "Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt.",
+              "Polarklimat i norr, inlandsklimat i stora delar och subtropiskt klimat i söder. Västkusten är mildare tack vare havet."
+            ],
+            "correctIndex": 3,
+            "explanation": "I Nordamerika gäller: Polarklimat i norr, inlandsklimat i stora delar och subtropiskt klimat i söder. Västkusten är mildare tack vare havet."
+          },
+          {
+            "prompt": "Vilket exempel hör till Nordamerika?",
+            "options": [
+              "Alperna",
+              "Klippiga bergen",
+              "Sahara",
+              "Himalaya"
+            ],
+            "correctIndex": 1,
+            "explanation": "Klippiga bergen hör till Nordamerika och nämndes i genomgången."
+          }
+        ]
+      }
+    },
+    "track-sydamerika": {
+      "title": "Sydamerika",
+      "kind": "continent",
+      "trackId": "track-sydamerika",
+      "compareA": "",
+      "compareB": "",
+      "totalDurationSeconds": 160,
+      "segments": [
+        {
+          "file": "audio/track-sydamerika-part1.mp3",
+          "durationSeconds": 29,
+          "textHash": "fa661aefb99f776361c1b8aac40048d7fb752934818b46e8771d242268fd12f2"
+        },
+        {
+          "file": "audio/track-sydamerika-part2.mp3",
+          "durationSeconds": 131,
+          "textHash": "fb4cb1a3d21bff64f23c086364918239f25d13ef3ed46572a64e6ec0740a555a"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer bäst om klimatet i Sydamerika?",
+            "options": [
+              "Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat.",
+              "Största delen ligger i den tropiska zonen. Söderut finns subtropisk zon och längst i söder tempererad zon.",
+              "Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut.",
+              "Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt."
+            ],
+            "correctIndex": 1,
+            "explanation": "I Sydamerika gäller: Största delen ligger i den tropiska zonen. Söderut finns subtropisk zon och längst i söder tempererad zon."
+          },
+          {
+            "prompt": "Vilket exempel hör till Sydamerika?",
+            "options": [
+              "Alperna",
+              "Anderna",
+              "Sahara",
+              "Himalaya"
+            ],
+            "correctIndex": 1,
+            "explanation": "Anderna hör till Sydamerika och nämndes i genomgången."
+          }
+        ]
+      }
+    },
+    "track-oceanien": {
+      "title": "Oceanien",
+      "kind": "continent",
+      "trackId": "track-oceanien",
+      "compareA": "",
+      "compareB": "",
+      "totalDurationSeconds": 156,
+      "segments": [
+        {
+          "file": "audio/track-oceanien-part1.mp3",
+          "durationSeconds": 24,
+          "textHash": "069cbce277e60f46ec6ba1a0b5ad7bf42c3c7b4023939cb21e524bc1defaa9fe"
+        },
+        {
+          "file": "audio/track-oceanien-part2.mp3",
+          "durationSeconds": 132,
+          "textHash": "f4fc58e34c63c7bfcfb4fc4ef5f0e9012f6bc08808436c8e0bb91381524f9ecb"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer bäst om klimatet i Oceanien?",
+            "options": [
+              "Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat.",
+              "Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut.",
+              "Tropiskt på många öar, torrare i Australiens inland och svalare i delar av Nya Zeeland.",
+              "Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt."
+            ],
+            "correctIndex": 2,
+            "explanation": "I Oceanien gäller: Tropiskt på många öar, torrare i Australiens inland och svalare i delar av Nya Zeeland."
+          },
+          {
+            "prompt": "Vilket exempel hör till Oceanien?",
+            "options": [
+              "Alperna",
+              "Stilla havet",
+              "Sahara",
+              "Himalaya"
+            ],
+            "correctIndex": 1,
+            "explanation": "Stilla havet hör till Oceanien och nämndes i genomgången."
+          }
+        ]
+      }
+    },
+    "track-antarktis": {
+      "title": "Antarktis",
+      "kind": "continent",
+      "trackId": "track-antarktis",
+      "compareA": "",
+      "compareB": "",
+      "totalDurationSeconds": 142,
+      "segments": [
+        {
+          "file": "audio/track-antarktis-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "978ed5d8a348be7412111a4bf5f4d2dad9016e2f0fbb8705210365f20d25cf49"
+        },
+        {
+          "file": "audio/track-antarktis-part2.mp3",
+          "durationSeconds": 115,
+          "textHash": "c61c0dbf6ad700b19905e3590c49e8be8ed3d90b1f5367d2e19de93eb9b88f76"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer bäst om klimatet i Antarktis?",
+            "options": [
+              "Mycket kallt klimat med is, snö, kraftiga vindar och snöstormar. Vintern kan bli kallare än minus 80 grader.",
+              "Polarzon i norr, subtropisk zon i söder och tempererad zon i stora delar. Väster har kustklimat, inlandet inlandsklimat och söderut finns medelhavsklimat.",
+              "Varmt och regnigt kring ekvatorn. Därifrån blir det torrare med savann, stäpp och stora ökenområden längre norrut och söderut.",
+              "Kallt i norr, tempererat i vissa delar och tropiskt i söder. Monsun påverkar syd och öst, medan inlandet kan vara torrt."
+            ],
+            "correctIndex": 0,
+            "explanation": "I Antarktis gäller: Mycket kallt klimat med is, snö, kraftiga vindar och snöstormar. Vintern kan bli kallare än minus 80 grader."
+          },
+          {
+            "prompt": "Vilket exempel hör till Antarktis?",
+            "options": [
+              "Sydpolen",
+              "Alperna",
+              "Sahara",
+              "Himalaya"
+            ],
+            "correctIndex": 0,
+            "explanation": "Sydpolen hör till Antarktis och nämndes i genomgången."
+          }
+        ]
+      }
+    },
+    "track-compare--europa--afrika": {
+      "title": "Jämför Europa och Afrika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "europa",
+      "compareB": "afrika",
+      "totalDurationSeconds": 216,
+      "segments": [
+        {
+          "file": "audio/track-compare--europa--afrika-part1.mp3",
+          "durationSeconds": 29,
+          "textHash": "8a5e5312880c2374be762bccb2e6f78b1efbab6e12d52cc76e0de11b2f681350"
+        },
+        {
+          "file": "audio/track-compare--europa--afrika-part2.mp3",
+          "durationSeconds": 187,
+          "textHash": "f916b9a2c435a0b20d6aa42af18aa9e4c9b73082d02dc43df33d4ae7149dfea5"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Europa och Afrika?",
+            "options": [
+              "Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Europa: varmt, regn vid ekvatorn, savann, stäpp och öken. Afrika: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat.",
+              "Europa: bördig jord, floder, skog, kol och naturgas. Afrika: diamanter, guld, koppar och solenergi.",
+              "Europa: handel, transport och IT. Afrika: boskap, gruvor och turism."
+            ],
+            "correctIndex": 0,
+            "explanation": "I jämförelsen sades att Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till kustklimat i väster och medelhavsklimat i söder?",
+            "options": [
+              "Europa",
+              "Afrika",
+              "Asien",
+              "Nordamerika"
+            ],
+            "correctIndex": 0,
+            "explanation": "kustklimat i väster och medelhavsklimat i söder hörde till Europa i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--europa--asien": {
+      "title": "Jämför Europa och Asien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "europa",
+      "compareB": "asien",
+      "totalDurationSeconds": 224,
+      "segments": [
+        {
+          "file": "audio/track-compare--europa--asien-part1.mp3",
+          "durationSeconds": 19,
+          "textHash": "c47d47f8b71864bacd3549da192d3601fb5c4eec49b31bff8f2df18ce4d78ea3"
+        },
+        {
+          "file": "audio/track-compare--europa--asien-part2.mp3",
+          "durationSeconds": 205,
+          "textHash": "5c39c2892f5bf390f63f95a47a2ae379fa4ab630e075714f8ef9e9338c330120"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Europa och Asien?",
+            "options": [
+              "Europa: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Asien: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat.",
+              "Europa: floder, skog och järnmalm. Asien: Asien har stora tillgångar av olja, kol och naturgas och i vissa delar också mycket bördig jord..",
+              "Europa: handel, transport och IT. Asien: fiske och tjänster.",
+              "Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till kustklimat i väster och medelhavsklimat i söder?",
+            "options": [
+              "Asien",
+              "Afrika",
+              "Europa",
+              "Nordamerika"
+            ],
+            "correctIndex": 2,
+            "explanation": "kustklimat i väster och medelhavsklimat i söder hörde till Europa i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--europa--nordamerika": {
+      "title": "Jämför Europa och Nordamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "europa",
+      "compareB": "nordamerika",
+      "totalDurationSeconds": 218,
+      "segments": [
+        {
+          "file": "audio/track-compare--europa--nordamerika-part1.mp3",
+          "durationSeconds": 19,
+          "textHash": "b922fd72b13b4d515b725ff239c9ba785da42cf588e383fe847461d377b3277e"
+        },
+        {
+          "file": "audio/track-compare--europa--nordamerika-part2.mp3",
+          "durationSeconds": 199,
+          "textHash": "aecd9b9fd4ecb317773c1cfd8182a9a2aea839bd172633697a4767331cd3929d"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Europa och Nordamerika?",
+            "options": [
+              "Europa: polarklimat, subtropiskt och mild västkust. Nordamerika: tempererad zon, kustklimat och medelhavsklimat.",
+              "Europa: floder, skog och kol. Nordamerika: Har mycket bördig jord och stora tillgångar av järnmalm, olja och naturgas..",
+              "Europa: tempererad zon, kustklimat och medelhavsklimat. Nordamerika: polarklimat, subtropiskt och mild västkust.",
+              "Europa: handel, transport och IT. Nordamerika: tjänster."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Europa: tempererad zon, kustklimat och medelhavsklimat. Nordamerika: polarklimat, subtropiskt och mild västkust."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till kustklimat i väster och medelhavsklimat i söder?",
+            "options": [
+              "Nordamerika",
+              "Afrika",
+              "Europa",
+              "Asien"
+            ],
+            "correctIndex": 2,
+            "explanation": "kustklimat i väster och medelhavsklimat i söder hörde till Europa i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--europa--sydamerika": {
+      "title": "Jämför Europa och Sydamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "europa",
+      "compareB": "sydamerika",
+      "totalDurationSeconds": 219,
+      "segments": [
+        {
+          "file": "audio/track-compare--europa--sydamerika-part1.mp3",
+          "durationSeconds": 29,
+          "textHash": "954adb7a2b0295ba1f473b12eb8630ae1aa37a554cca89c4a48276acb66777cd"
+        },
+        {
+          "file": "audio/track-compare--europa--sydamerika-part2.mp3",
+          "durationSeconds": 190,
+          "textHash": "73160ea83b158ff16914e7237875491b6503aa809f24090fe0b7f2aaa9108d51"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Europa och Sydamerika?",
+            "options": [
+              "Europa: tropisk zon och subtropisk zon. Sydamerika: kustklimat, inlandsklimat och medelhavsklimat.",
+              "Europa: floder, kol, naturgas och järnmalm. Sydamerika: metaller och vattenkraft.",
+              "Europa: handel, transport och IT. Sydamerika: boskap, fiske och gruvor.",
+              "Europa: kustklimat, inlandsklimat och medelhavsklimat. Sydamerika: tropisk zon och subtropisk zon."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Europa: kustklimat, inlandsklimat och medelhavsklimat. Sydamerika: tropisk zon och subtropisk zon."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till kustklimat i väster och medelhavsklimat i söder?",
+            "options": [
+              "Europa",
+              "Sydamerika",
+              "Afrika",
+              "Asien"
+            ],
+            "correctIndex": 0,
+            "explanation": "kustklimat i väster och medelhavsklimat i söder hörde till Europa i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--europa--oceanien": {
+      "title": "Jämför Europa och Oceanien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "europa",
+      "compareB": "oceanien",
+      "totalDurationSeconds": 222,
+      "segments": [
+        {
+          "file": "audio/track-compare--europa--oceanien-part1.mp3",
+          "durationSeconds": 19,
+          "textHash": "8fb7a26da125e3a32612ab01897b4c4bb8de9885befe2bc8bf604e4b67f9810f"
+        },
+        {
+          "file": "audio/track-compare--europa--oceanien-part2.mp3",
+          "durationSeconds": 203,
+          "textHash": "e1490d9a45b3ec93f39566f83e612816651dbd02f172b5a20f180042a8254ec9"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Europa och Oceanien?",
+            "options": [
+              "Europa: tropiskt, torrt inland och svalare söderut. Oceanien: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat.",
+              "Europa: bördig jord, floder, skog, olja, kol, naturgas och järnmalm. Oceanien: fisk, jordbruksmark, mineraler och natur.",
+              "Europa: industri, handel, transport och IT. Oceanien: turism, fiske, gruvarbete och tjänster.",
+              "Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Oceanien: tropiskt, torrt inland och svalare söderut."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Oceanien: tropiskt, torrt inland och svalare söderut."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till kustklimat i väster och medelhavsklimat i söder?",
+            "options": [
+              "Oceanien",
+              "Afrika",
+              "Europa",
+              "Asien"
+            ],
+            "correctIndex": 2,
+            "explanation": "kustklimat i väster och medelhavsklimat i söder hörde till Europa i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--europa--antarktis": {
+      "title": "Jämför Europa och Antarktis",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "europa",
+      "compareB": "antarktis",
+      "totalDurationSeconds": 209,
+      "segments": [
+        {
+          "file": "audio/track-compare--europa--antarktis-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "e0c7a8cd20caca7d7d039f79b0de762bc88f85de7315b02d312799b0da58e9b4"
+        },
+        {
+          "file": "audio/track-compare--europa--antarktis-part2.mp3",
+          "durationSeconds": 181,
+          "textHash": "dad128c8439c02d35a54c2c8f05b689b62d7eaeea007e3bb4764f86f4454bda9"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Europa och Antarktis?",
+            "options": [
+              "Europa: mycket kallt, is, snö och stormar. Antarktis: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat.",
+              "Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Antarktis: mycket kallt, is, snö och stormar.",
+              "Europa: bördig jord, floder, skog, olja, kol, naturgas och järnmalm. Antarktis: sötvatten i is och klimatforskning.",
+              "Europa: jordbruk, industri, handel, transport och IT. Antarktis: forskning."
+            ],
+            "correctIndex": 1,
+            "explanation": "I jämförelsen sades att Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Antarktis: mycket kallt, is, snö och stormar."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till kustklimat i väster och medelhavsklimat i söder?",
+            "options": [
+              "Antarktis",
+              "Afrika",
+              "Asien",
+              "Europa"
+            ],
+            "correctIndex": 3,
+            "explanation": "kustklimat i väster och medelhavsklimat i söder hörde till Europa i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--afrika--europa": {
+      "title": "Jämför Afrika och Europa",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "afrika",
+      "compareB": "europa",
+      "totalDurationSeconds": 215,
+      "segments": [
+        {
+          "file": "audio/track-compare--afrika--europa-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "0a6f7e84d2d3a3431d4956851487ab53d1fc68ecabd5dbd954834cc38324616c"
+        },
+        {
+          "file": "audio/track-compare--afrika--europa-part2.mp3",
+          "durationSeconds": 187,
+          "textHash": "eae7022f6c435d06dc01e57ded821b71c2077102ec9a5337fa569a609c8b4d41"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Afrika och Europa?",
+            "options": [
+              "Afrika: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Europa: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Afrika: diamanter, guld, koppar och solenergi. Europa: bördig jord, floder, skog, kol och naturgas.",
+              "Afrika: boskap, gruvor och turism. Europa: handel, transport och IT.",
+              "Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till regn vid ekvatorn men torrare längre bort?",
+            "options": [
+              "Europa",
+              "Asien",
+              "Nordamerika",
+              "Afrika"
+            ],
+            "correctIndex": 3,
+            "explanation": "regn vid ekvatorn men torrare längre bort hörde till Afrika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--afrika--asien": {
+      "title": "Jämför Afrika och Asien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "afrika",
+      "compareB": "asien",
+      "totalDurationSeconds": 211,
+      "segments": [
+        {
+          "file": "audio/track-compare--afrika--asien-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "fbd082f617003cd6b94a3d583c3461f199a2c0dd5ef2400c129141a7d37673c6"
+        },
+        {
+          "file": "audio/track-compare--afrika--asien-part2.mp3",
+          "durationSeconds": 183,
+          "textHash": "a7a43e944b0f5c2df41749b4df2d937de2d6cb9ac97b7f0fb7ccc23d50c8b256"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Afrika och Asien?",
+            "options": [
+              "Afrika: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Asien: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Afrika: diamanter, guld, koppar, järnmalm och solenergi. Asien: kol, naturgas och bördig jord.",
+              "Afrika: boskap, gruvor och turism. Asien: fiske och tjänster."
+            ],
+            "correctIndex": 1,
+            "explanation": "I jämförelsen sades att Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till regn vid ekvatorn men torrare längre bort?",
+            "options": [
+              "Asien",
+              "Afrika",
+              "Europa",
+              "Nordamerika"
+            ],
+            "correctIndex": 1,
+            "explanation": "regn vid ekvatorn men torrare längre bort hörde till Afrika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--afrika--nordamerika": {
+      "title": "Jämför Afrika och Nordamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "afrika",
+      "compareB": "nordamerika",
+      "totalDurationSeconds": 207,
+      "segments": [
+        {
+          "file": "audio/track-compare--afrika--nordamerika-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "776855faccd724731d910beabb84a8f8d5f5dffd97edd29063f5fb6c7e2f8279"
+        },
+        {
+          "file": "audio/track-compare--afrika--nordamerika-part2.mp3",
+          "durationSeconds": 180,
+          "textHash": "da3543cdd5a5a496f64cdd9c50530229d84ddef6f028cce4d2b3bacc43275cfa"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Afrika och Nordamerika?",
+            "options": [
+              "Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust.",
+              "Afrika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Nordamerika: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Afrika: diamanter, guld, koppar och solenergi. Nordamerika: bördig jord och naturgas.",
+              "Afrika: boskap, gruvor och turism. Nordamerika: tjänster."
+            ],
+            "correctIndex": 0,
+            "explanation": "I jämförelsen sades att Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till regn vid ekvatorn men torrare längre bort?",
+            "options": [
+              "Nordamerika",
+              "Europa",
+              "Asien",
+              "Afrika"
+            ],
+            "correctIndex": 3,
+            "explanation": "regn vid ekvatorn men torrare längre bort hörde till Afrika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--afrika--sydamerika": {
+      "title": "Jämför Afrika och Sydamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "afrika",
+      "compareB": "sydamerika",
+      "totalDurationSeconds": 210,
+      "segments": [
+        {
+          "file": "audio/track-compare--afrika--sydamerika-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "bea10f673405bfb31c2bec74b67f273556c9501c7e5068cc5f192220ed96c010"
+        },
+        {
+          "file": "audio/track-compare--afrika--sydamerika-part2.mp3",
+          "durationSeconds": 183,
+          "textHash": "9dad1d1cfa2e0ad438945ef769291e470810d0edf8854516c306016ad6e0483d"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Afrika och Sydamerika?",
+            "options": [
+              "Afrika: tropisk zon, subtropisk zon och tempererad zon. Sydamerika: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Afrika: diamanter, guld, koppar, järnmalm och solenergi. Sydamerika: metaller, bördig jord, vattenkraft och skog.",
+              "Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Sydamerika: tropisk zon, subtropisk zon och tempererad zon.",
+              "Afrika: turism. Sydamerika: fiske."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Sydamerika: tropisk zon, subtropisk zon och tempererad zon."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till regn vid ekvatorn men torrare längre bort?",
+            "options": [
+              "Sydamerika",
+              "Afrika",
+              "Europa",
+              "Asien"
+            ],
+            "correctIndex": 1,
+            "explanation": "regn vid ekvatorn men torrare längre bort hörde till Afrika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--afrika--oceanien": {
+      "title": "Jämför Afrika och Oceanien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "afrika",
+      "compareB": "oceanien",
+      "totalDurationSeconds": 211,
+      "segments": [
+        {
+          "file": "audio/track-compare--afrika--oceanien-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "ae589576f7915898b23063dba0abfbbcfec93bc14b015bfcc9ac58a24da5f528"
+        },
+        {
+          "file": "audio/track-compare--afrika--oceanien-part2.mp3",
+          "durationSeconds": 184,
+          "textHash": "2dd49855a8aeb8d6b7749356a2c21c7dbfe043904caa6057423e70daf81ddc91"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Afrika och Oceanien?",
+            "options": [
+              "Afrika: tropiskt, torrt inland och svalare söderut. Oceanien: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Oceanien: tropiskt, torrt inland och svalare söderut.",
+              "Afrika: diamanter, guld, koppar, järnmalm, olja och solenergi. Oceanien: fisk, jordbruksmark, mineraler och natur.",
+              "Afrika: boskap, gruvor och industri. Oceanien: fiske, gruvarbete och tjänster."
+            ],
+            "correctIndex": 1,
+            "explanation": "I jämförelsen sades att Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Oceanien: tropiskt, torrt inland och svalare söderut."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till regn vid ekvatorn men torrare längre bort?",
+            "options": [
+              "Afrika",
+              "Oceanien",
+              "Europa",
+              "Asien"
+            ],
+            "correctIndex": 0,
+            "explanation": "regn vid ekvatorn men torrare längre bort hörde till Afrika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--afrika--antarktis": {
+      "title": "Jämför Afrika och Antarktis",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "afrika",
+      "compareB": "antarktis",
+      "totalDurationSeconds": 201,
+      "segments": [
+        {
+          "file": "audio/track-compare--afrika--antarktis-part1.mp3",
+          "durationSeconds": 26,
+          "textHash": "bf7f0f661b797c25229fac072ec2f01b1912fd70afb43650eb2a440d919efe5a"
+        },
+        {
+          "file": "audio/track-compare--afrika--antarktis-part2.mp3",
+          "durationSeconds": 175,
+          "textHash": "fa83b94f8506dbf2f97bf731e763acc7c5620c7aa810b1391827fdad0a46e08f"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Afrika och Antarktis?",
+            "options": [
+              "Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Antarktis: mycket kallt, is, snö och stormar.",
+              "Afrika: mycket kallt, is, snö och stormar. Antarktis: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Afrika: diamanter, guld, koppar, järnmalm, olja och solenergi. Antarktis: sötvatten i is och klimatforskning.",
+              "Afrika: jordbruk, boskap, gruvor, industri och turism. Antarktis: forskning."
+            ],
+            "correctIndex": 0,
+            "explanation": "I jämförelsen sades att Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken. Antarktis: mycket kallt, is, snö och stormar."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till regn vid ekvatorn men torrare längre bort?",
+            "options": [
+              "Afrika",
+              "Antarktis",
+              "Europa",
+              "Asien"
+            ],
+            "correctIndex": 0,
+            "explanation": "regn vid ekvatorn men torrare längre bort hörde till Afrika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--asien--europa": {
+      "title": "Jämför Asien och Europa",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "asien",
+      "compareB": "europa",
+      "totalDurationSeconds": 225,
+      "segments": [
+        {
+          "file": "audio/track-compare--asien--europa-part1.mp3",
+          "durationSeconds": 19,
+          "textHash": "8c96139ab3ac6409f353b7bb3abb01d676899b0dcfa7bef403589ebdf719b66c"
+        },
+        {
+          "file": "audio/track-compare--asien--europa-part2.mp3",
+          "durationSeconds": 206,
+          "textHash": "127a446d5ce43a410e117e6a25531dca5d6a69b7f5f7da4030e10b28d924e8a7"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Asien och Europa?",
+            "options": [
+              "Asien: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Europa: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Asien: Asien har stora tillgångar av olja, kol och naturgas och i vissa delar också mycket bördig jord.. Europa: floder, skog och järnmalm.",
+              "Asien: fiske och tjänster. Europa: handel, transport och IT.",
+              "Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till monsun i syd och öst men torrt inland?",
+            "options": [
+              "Europa",
+              "Asien",
+              "Afrika",
+              "Nordamerika"
+            ],
+            "correctIndex": 1,
+            "explanation": "monsun i syd och öst men torrt inland hörde till Asien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--asien--afrika": {
+      "title": "Jämför Asien och Afrika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "asien",
+      "compareB": "afrika",
+      "totalDurationSeconds": 211,
+      "segments": [
+        {
+          "file": "audio/track-compare--asien--afrika-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "0a792fe311c9278120568b5e224cea9d94c7e54a99ea9991389d9922d5b42d78"
+        },
+        {
+          "file": "audio/track-compare--asien--afrika-part2.mp3",
+          "durationSeconds": 183,
+          "textHash": "008623d7a89d50accb09724dff8ae5c048ee49e0a85537dc14553d013bccf00f"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Asien och Afrika?",
+            "options": [
+              "Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Asien: varmt, regn vid ekvatorn, savann, stäpp och öken. Afrika: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Asien: kol, naturgas och bördig jord. Afrika: diamanter, guld, koppar, järnmalm och solenergi.",
+              "Asien: fiske och tjänster. Afrika: boskap, gruvor och turism."
+            ],
+            "correctIndex": 0,
+            "explanation": "I jämförelsen sades att Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till monsun i syd och öst men torrt inland?",
+            "options": [
+              "Asien",
+              "Afrika",
+              "Europa",
+              "Nordamerika"
+            ],
+            "correctIndex": 0,
+            "explanation": "monsun i syd och öst men torrt inland hörde till Asien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--asien--nordamerika": {
+      "title": "Jämför Asien och Nordamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "asien",
+      "compareB": "nordamerika",
+      "totalDurationSeconds": 207,
+      "segments": [
+        {
+          "file": "audio/track-compare--asien--nordamerika-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "f4aeed33e1672b6d9b1ef9a742eed0efd4e9f7cadb9dd636a86f40fb2f7b84dd"
+        },
+        {
+          "file": "audio/track-compare--asien--nordamerika-part2.mp3",
+          "durationSeconds": 179,
+          "textHash": "3f8177274612258557990541000e843cc94c84a550856b2a827a50deb77a5adc"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Asien och Nordamerika?",
+            "options": [
+              "Asien: polarklimat, inlandsklimat, subtropiskt och mild västkust. Nordamerika: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Asien: kol. Nordamerika: järnmalm.",
+              "Asien: fiske. Nordamerika: Många arbetar i industri och tjänster. Jordbruket är också viktigt..",
+              "Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till monsun i syd och öst men torrt inland?",
+            "options": [
+              "Asien",
+              "Nordamerika",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 0,
+            "explanation": "monsun i syd och öst men torrt inland hörde till Asien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--asien--sydamerika": {
+      "title": "Jämför Asien och Sydamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "asien",
+      "compareB": "sydamerika",
+      "totalDurationSeconds": 212,
+      "segments": [
+        {
+          "file": "audio/track-compare--asien--sydamerika-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "6da7d57df46e2301edb66897b54212f717282feb59397dc4f00c616737fef334"
+        },
+        {
+          "file": "audio/track-compare--asien--sydamerika-part2.mp3",
+          "durationSeconds": 184,
+          "textHash": "6bdca578ef22346d526e00f4c2b8355815d54d5c11018816c9e14fb7d4067d07"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Asien och Sydamerika?",
+            "options": [
+              "Asien: tropisk zon, subtropisk zon och tempererad zon. Sydamerika: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Asien: kol och naturgas. Sydamerika: metaller, vattenkraft och skog.",
+              "Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Sydamerika: tropisk zon, subtropisk zon och tempererad zon.",
+              "Asien: tjänster. Sydamerika: boskap och gruvor."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Sydamerika: tropisk zon, subtropisk zon och tempererad zon."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till monsun i syd och öst men torrt inland?",
+            "options": [
+              "Sydamerika",
+              "Europa",
+              "Afrika",
+              "Asien"
+            ],
+            "correctIndex": 3,
+            "explanation": "monsun i syd och öst men torrt inland hörde till Asien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--asien--oceanien": {
+      "title": "Jämför Asien och Oceanien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "asien",
+      "compareB": "oceanien",
+      "totalDurationSeconds": 209,
+      "segments": [
+        {
+          "file": "audio/track-compare--asien--oceanien-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "0924e79a57884b59bc79dfa40301145c8ad1ad44996ffbd82d93d78fd3031c94"
+        },
+        {
+          "file": "audio/track-compare--asien--oceanien-part2.mp3",
+          "durationSeconds": 181,
+          "textHash": "f3c2b2f3866ca96745f95aa71e3c168966f0bbe63807f6b2656b426dc595c055"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Asien och Oceanien?",
+            "options": [
+              "Asien: kallt i norr, tempererat och monsun. Oceanien: svalare söderut.",
+              "Asien: svalare söderut. Oceanien: kallt i norr, tempererat och monsun.",
+              "Asien: olja, kol, naturgas och bördig jord. Oceanien: fisk, jordbruksmark, mineraler och natur.",
+              "Asien: industri. Oceanien: turism och gruvarbete."
+            ],
+            "correctIndex": 0,
+            "explanation": "I jämförelsen sades att Asien: kallt i norr, tempererat och monsun. Oceanien: svalare söderut."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till monsun i syd och öst men torrt inland?",
+            "options": [
+              "Oceanien",
+              "Europa",
+              "Afrika",
+              "Asien"
+            ],
+            "correctIndex": 3,
+            "explanation": "monsun i syd och öst men torrt inland hörde till Asien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--asien--antarktis": {
+      "title": "Jämför Asien och Antarktis",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "asien",
+      "compareB": "antarktis",
+      "totalDurationSeconds": 204,
+      "segments": [
+        {
+          "file": "audio/track-compare--asien--antarktis-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "52c313fa78557a4b5948a4fec76f6b7da19c8bd6fd0b0ccd62faae5a59545e86"
+        },
+        {
+          "file": "audio/track-compare--asien--antarktis-part2.mp3",
+          "durationSeconds": 177,
+          "textHash": "c1c41f71d959dd5c153541fb8c6a17036a5c3ff7fe64b84b12b1c0f4961c0338"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Asien och Antarktis?",
+            "options": [
+              "Asien: mycket kallt, is, snö och stormar. Antarktis: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Asien: olja, kol, naturgas och bördig jord. Antarktis: sötvatten i is och klimatforskning.",
+              "Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Antarktis: mycket kallt, is, snö och stormar.",
+              "Asien: jordbruk, fiske, industri och tjänster. Antarktis: forskning."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Antarktis: mycket kallt, is, snö och stormar."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till monsun i syd och öst men torrt inland?",
+            "options": [
+              "Antarktis",
+              "Europa",
+              "Asien",
+              "Afrika"
+            ],
+            "correctIndex": 2,
+            "explanation": "monsun i syd och öst men torrt inland hörde till Asien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--nordamerika--europa": {
+      "title": "Jämför Nordamerika och Europa",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "nordamerika",
+      "compareB": "europa",
+      "totalDurationSeconds": 218,
+      "segments": [
+        {
+          "file": "audio/track-compare--nordamerika--europa-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "edc0351c9cfb6f9e8bcf7a90092e9fe64dfd1966ebfa79519b3ba8ea7a152a9f"
+        },
+        {
+          "file": "audio/track-compare--nordamerika--europa-part2.mp3",
+          "durationSeconds": 190,
+          "textHash": "c49063b3cc30ce4acb5f7090d0f08597aeb5b13ca0cd830e6481dc4296c407e8"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Nordamerika och Europa?",
+            "options": [
+              "Nordamerika: tempererad zon, kustklimat och medelhavsklimat. Europa: polarklimat, subtropiskt och mild västkust.",
+              "Nordamerika: polarklimat, subtropiskt och mild västkust. Europa: tempererad zon, kustklimat och medelhavsklimat.",
+              "Nordamerika: Har mycket bördig jord och stora tillgångar av järnmalm, olja och naturgas.. Europa: floder, skog och kol.",
+              "Nordamerika: tjänster. Europa: handel, transport och IT."
+            ],
+            "correctIndex": 1,
+            "explanation": "I jämförelsen sades att Nordamerika: polarklimat, subtropiskt och mild västkust. Europa: tempererad zon, kustklimat och medelhavsklimat."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till polarklimat i norr och subtropiskt klimat i söder?",
+            "options": [
+              "Europa",
+              "Afrika",
+              "Nordamerika",
+              "Asien"
+            ],
+            "correctIndex": 2,
+            "explanation": "polarklimat i norr och subtropiskt klimat i söder hörde till Nordamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--nordamerika--afrika": {
+      "title": "Jämför Nordamerika och Afrika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "nordamerika",
+      "compareB": "afrika",
+      "totalDurationSeconds": 208,
+      "segments": [
+        {
+          "file": "audio/track-compare--nordamerika--afrika-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "655ed17dc52967acec4023e1b6b8d65f41017698e8921c2da3f69cb567cfb4e5"
+        },
+        {
+          "file": "audio/track-compare--nordamerika--afrika-part2.mp3",
+          "durationSeconds": 181,
+          "textHash": "21cef45c44a49b665a2586d0a60f67e0b77ba732a94925f999b4b1f5b1088b5e"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Nordamerika och Afrika?",
+            "options": [
+              "Nordamerika: varmt, regn vid ekvatorn, savann, stäpp och öken. Afrika: polarklimat, inlandsklimat, subtropiskt och mild västkust.",
+              "Nordamerika: bördig jord och naturgas. Afrika: diamanter, guld, koppar och solenergi.",
+              "Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Nordamerika: tjänster. Afrika: boskap, gruvor och turism."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till polarklimat i norr och subtropiskt klimat i söder?",
+            "options": [
+              "Afrika",
+              "Europa",
+              "Nordamerika",
+              "Asien"
+            ],
+            "correctIndex": 2,
+            "explanation": "polarklimat i norr och subtropiskt klimat i söder hörde till Nordamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--nordamerika--asien": {
+      "title": "Jämför Nordamerika och Asien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "nordamerika",
+      "compareB": "asien",
+      "totalDurationSeconds": 208,
+      "segments": [
+        {
+          "file": "audio/track-compare--nordamerika--asien-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "8f9023a76dbf61bcb13a298c994a4d73e8d86c169811d0cbd54da59ecbb7f1b9"
+        },
+        {
+          "file": "audio/track-compare--nordamerika--asien-part2.mp3",
+          "durationSeconds": 180,
+          "textHash": "c2fd7c28ddd786df462c8eae55bd8ce7b5e60f299de34fa7faef4166034637f4"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Nordamerika och Asien?",
+            "options": [
+              "Nordamerika: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Asien: polarklimat, inlandsklimat, subtropiskt och mild västkust.",
+              "Nordamerika: järnmalm. Asien: kol.",
+              "Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Nordamerika: Många arbetar i industri och tjänster. Jordbruket är också viktigt.. Asien: fiske."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till polarklimat i norr och subtropiskt klimat i söder?",
+            "options": [
+              "Asien",
+              "Nordamerika",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 1,
+            "explanation": "polarklimat i norr och subtropiskt klimat i söder hörde till Nordamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--nordamerika--sydamerika": {
+      "title": "Jämför Nordamerika och Sydamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "nordamerika",
+      "compareB": "sydamerika",
+      "totalDurationSeconds": 210,
+      "segments": [
+        {
+          "file": "audio/track-compare--nordamerika--sydamerika-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "dc84715550d28c4757fcf9b1b7b3ba342055f5bd87519b96c4f135009ed0cc58"
+        },
+        {
+          "file": "audio/track-compare--nordamerika--sydamerika-part2.mp3",
+          "durationSeconds": 183,
+          "textHash": "56892f8fe24fe56c2a7f2cf1d26b179a1cf74f80ec778fd81bcedcc80bc6bec5"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Nordamerika och Sydamerika?",
+            "options": [
+              "Nordamerika: tropisk zon, subtropisk zon och tempererad zon. Sydamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust.",
+              "Nordamerika: järnmalm och naturgas. Sydamerika: metaller, vattenkraft och skog.",
+              "Nordamerika: tjänster. Sydamerika: boskap, fiske och gruvor.",
+              "Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Sydamerika: tropisk zon, subtropisk zon och tempererad zon."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Sydamerika: tropisk zon, subtropisk zon och tempererad zon."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till polarklimat i norr och subtropiskt klimat i söder?",
+            "options": [
+              "Nordamerika",
+              "Sydamerika",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 0,
+            "explanation": "polarklimat i norr och subtropiskt klimat i söder hörde till Nordamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--nordamerika--oceanien": {
+      "title": "Jämför Nordamerika och Oceanien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "nordamerika",
+      "compareB": "oceanien",
+      "totalDurationSeconds": 210,
+      "segments": [
+        {
+          "file": "audio/track-compare--nordamerika--oceanien-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "b21c1e50f6f0e24d7514c8069d810fe049a0ccc5069abe62495b7bea1296f913"
+        },
+        {
+          "file": "audio/track-compare--nordamerika--oceanien-part2.mp3",
+          "durationSeconds": 183,
+          "textHash": "ca4c260a6436fe4e1a03224fb6c1de636ca48f352d9cedad72b956960acf4349"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Nordamerika och Oceanien?",
+            "options": [
+              "Nordamerika: tropiskt, torrt inland och svalare söderut. Oceanien: polarklimat, inlandsklimat, subtropiskt och mild västkust.",
+              "Nordamerika: bördig jord, järnmalm, olja och naturgas. Oceanien: fisk, jordbruksmark, mineraler och natur.",
+              "Nordamerika: industri. Oceanien: turism, fiske och gruvarbete.",
+              "Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Oceanien: tropiskt, torrt inland och svalare söderut."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Oceanien: tropiskt, torrt inland och svalare söderut."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till polarklimat i norr och subtropiskt klimat i söder?",
+            "options": [
+              "Oceanien",
+              "Europa",
+              "Afrika",
+              "Nordamerika"
+            ],
+            "correctIndex": 3,
+            "explanation": "polarklimat i norr och subtropiskt klimat i söder hörde till Nordamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--nordamerika--antarktis": {
+      "title": "Jämför Nordamerika och Antarktis",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "nordamerika",
+      "compareB": "antarktis",
+      "totalDurationSeconds": 200,
+      "segments": [
+        {
+          "file": "audio/track-compare--nordamerika--antarktis-part1.mp3",
+          "durationSeconds": 26,
+          "textHash": "3e4d3839c4c5e47b56f1035513ff70c23546220b191d354f013bdb29f84f4748"
+        },
+        {
+          "file": "audio/track-compare--nordamerika--antarktis-part2.mp3",
+          "durationSeconds": 174,
+          "textHash": "9c7d875a75156d0f341c767b9419362028e3b18eff3223a9f4ee46fc49ffeb69"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Nordamerika och Antarktis?",
+            "options": [
+              "Nordamerika: mycket kallt, is, snö och stormar. Antarktis: polarklimat, inlandsklimat, subtropiskt och mild västkust.",
+              "Nordamerika: bördig jord, järnmalm, olja och naturgas. Antarktis: sötvatten i is och klimatforskning.",
+              "Nordamerika: industri, tjänster och jordbruk. Antarktis: forskning.",
+              "Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Antarktis: mycket kallt, is, snö och stormar."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Antarktis: mycket kallt, is, snö och stormar."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till polarklimat i norr och subtropiskt klimat i söder?",
+            "options": [
+              "Nordamerika",
+              "Antarktis",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 0,
+            "explanation": "polarklimat i norr och subtropiskt klimat i söder hörde till Nordamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--sydamerika--europa": {
+      "title": "Jämför Sydamerika och Europa",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "sydamerika",
+      "compareB": "europa",
+      "totalDurationSeconds": 219,
+      "segments": [
+        {
+          "file": "audio/track-compare--sydamerika--europa-part1.mp3",
+          "durationSeconds": 18,
+          "textHash": "6ff2607d914089a71ff2b7e65c41808831fdca4c62de3bf63070b8c1aae254df"
+        },
+        {
+          "file": "audio/track-compare--sydamerika--europa-part2.mp3",
+          "durationSeconds": 201,
+          "textHash": "23100a00c88ef6434b756fb866a51bd5c4cc6d99d5025e7ce64ff20a8420f33f"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Sydamerika och Europa?",
+            "options": [
+              "Sydamerika: kustklimat, inlandsklimat och medelhavsklimat. Europa: tropisk zon och subtropisk zon.",
+              "Sydamerika: metaller och vattenkraft. Europa: floder, kol, naturgas och järnmalm.",
+              "Sydamerika: boskap, fiske och gruvor. Europa: handel, transport och IT.",
+              "Sydamerika: tropisk zon och subtropisk zon. Europa: kustklimat, inlandsklimat och medelhavsklimat."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Sydamerika: tropisk zon och subtropisk zon. Europa: kustklimat, inlandsklimat och medelhavsklimat."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropisk zon i stora delar och tempererad zon längst i söder?",
+            "options": [
+              "Europa",
+              "Afrika",
+              "Sydamerika",
+              "Asien"
+            ],
+            "correctIndex": 2,
+            "explanation": "tropisk zon i stora delar och tempererad zon längst i söder hörde till Sydamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--sydamerika--afrika": {
+      "title": "Jämför Sydamerika och Afrika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "sydamerika",
+      "compareB": "afrika",
+      "totalDurationSeconds": 210,
+      "segments": [
+        {
+          "file": "audio/track-compare--sydamerika--afrika-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "f52413597741b749ef13d60f161188e2ff5ea2d0cfa842db5ffd988f06084c1a"
+        },
+        {
+          "file": "audio/track-compare--sydamerika--afrika-part2.mp3",
+          "durationSeconds": 182,
+          "textHash": "1f226dfdf3eb76c793fb50b8544add2fb07398756a6df44ba926a7232b7c26a8"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Sydamerika och Afrika?",
+            "options": [
+              "Sydamerika: varmt, regn vid ekvatorn, savann, stäpp och öken. Afrika: tropisk zon, subtropisk zon och tempererad zon.",
+              "Sydamerika: metaller, bördig jord, vattenkraft och skog. Afrika: diamanter, guld, koppar, järnmalm och solenergi.",
+              "Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken.",
+              "Sydamerika: fiske. Afrika: turism."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropisk zon i stora delar och tempererad zon längst i söder?",
+            "options": [
+              "Afrika",
+              "Europa",
+              "Sydamerika",
+              "Asien"
+            ],
+            "correctIndex": 2,
+            "explanation": "tropisk zon i stora delar och tempererad zon längst i söder hörde till Sydamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--sydamerika--asien": {
+      "title": "Jämför Sydamerika och Asien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "sydamerika",
+      "compareB": "asien",
+      "totalDurationSeconds": 212,
+      "segments": [
+        {
+          "file": "audio/track-compare--sydamerika--asien-part1.mp3",
+          "durationSeconds": 29,
+          "textHash": "a7b8218655c6f492ec8df54eedee74d5da3d43068d3f7d9edbd5af98e100a6ce"
+        },
+        {
+          "file": "audio/track-compare--sydamerika--asien-part2.mp3",
+          "durationSeconds": 183,
+          "textHash": "b50913ab2699eea5363189b573152fec8b2d65ca383f24be303ecd9da2e6d194"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Sydamerika och Asien?",
+            "options": [
+              "Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Sydamerika: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Asien: tropisk zon, subtropisk zon och tempererad zon.",
+              "Sydamerika: metaller, vattenkraft och skog. Asien: kol och naturgas.",
+              "Sydamerika: boskap och gruvor. Asien: tjänster."
+            ],
+            "correctIndex": 0,
+            "explanation": "I jämförelsen sades att Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropisk zon i stora delar och tempererad zon längst i söder?",
+            "options": [
+              "Asien",
+              "Sydamerika",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 1,
+            "explanation": "tropisk zon i stora delar och tempererad zon längst i söder hörde till Sydamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--sydamerika--nordamerika": {
+      "title": "Jämför Sydamerika och Nordamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "sydamerika",
+      "compareB": "nordamerika",
+      "totalDurationSeconds": 209,
+      "segments": [
+        {
+          "file": "audio/track-compare--sydamerika--nordamerika-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "e7b77eb72d59c5c6d31d034c9229dbbfa4558795ef8ad56f5fc7a5eb6f863a3b"
+        },
+        {
+          "file": "audio/track-compare--sydamerika--nordamerika-part2.mp3",
+          "durationSeconds": 181,
+          "textHash": "3f52d8af4fa82e6555b9bbbdbe14c605878e0ff7d04db0c2353ae7f655866760"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Sydamerika och Nordamerika?",
+            "options": [
+              "Sydamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust. Nordamerika: tropisk zon, subtropisk zon och tempererad zon.",
+              "Sydamerika: metaller, vattenkraft och skog. Nordamerika: järnmalm och naturgas.",
+              "Sydamerika: boskap, fiske och gruvor. Nordamerika: tjänster.",
+              "Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropisk zon i stora delar och tempererad zon längst i söder?",
+            "options": [
+              "Nordamerika",
+              "Sydamerika",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 1,
+            "explanation": "tropisk zon i stora delar och tempererad zon längst i söder hörde till Sydamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--sydamerika--oceanien": {
+      "title": "Jämför Sydamerika och Oceanien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "sydamerika",
+      "compareB": "oceanien",
+      "totalDurationSeconds": 213,
+      "segments": [
+        {
+          "file": "audio/track-compare--sydamerika--oceanien-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "73de4c0f6a0c4e0c54428203e0ba683f2ed79c287a336eeaa8bf9d6b69fc7a96"
+        },
+        {
+          "file": "audio/track-compare--sydamerika--oceanien-part2.mp3",
+          "durationSeconds": 185,
+          "textHash": "8539bf3f80fc45579e1b3b7b901d061efc4c137d83946fb6ee9d1b1b210dc7d6"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Sydamerika och Oceanien?",
+            "options": [
+              "Sydamerika: tropiskt, torrt inland och svalare söderut. Oceanien: tropisk zon, subtropisk zon och tempererad zon.",
+              "Sydamerika: olja, metaller, bördig jord, vattenkraft och skog. Oceanien: fisk, jordbruksmark, mineraler och natur.",
+              "Sydamerika: boskap, gruvor och industri. Oceanien: turism, gruvarbete och tjänster.",
+              "Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Oceanien: tropiskt, torrt inland och svalare söderut."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Oceanien: tropiskt, torrt inland och svalare söderut."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropisk zon i stora delar och tempererad zon längst i söder?",
+            "options": [
+              "Oceanien",
+              "Europa",
+              "Sydamerika",
+              "Afrika"
+            ],
+            "correctIndex": 2,
+            "explanation": "tropisk zon i stora delar och tempererad zon längst i söder hörde till Sydamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--sydamerika--antarktis": {
+      "title": "Jämför Sydamerika och Antarktis",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "sydamerika",
+      "compareB": "antarktis",
+      "totalDurationSeconds": 203,
+      "segments": [
+        {
+          "file": "audio/track-compare--sydamerika--antarktis-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "cf37027be0686b06e4b35e889adbf69ab29ceb63b8f60a57fadc3386fde799b1"
+        },
+        {
+          "file": "audio/track-compare--sydamerika--antarktis-part2.mp3",
+          "durationSeconds": 176,
+          "textHash": "3b85fa76ca1021e5d745349294f49ab64e79bc4b994d6641bd4a6332645e377b"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Sydamerika och Antarktis?",
+            "options": [
+              "Sydamerika: mycket kallt, is, snö och stormar. Antarktis: tropisk zon, subtropisk zon och tempererad zon.",
+              "Sydamerika: olja, metaller, bördig jord, vattenkraft och skog. Antarktis: sötvatten i is och klimatforskning.",
+              "Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Antarktis: mycket kallt, is, snö och stormar.",
+              "Sydamerika: jordbruk, boskap, fiske, gruvor och industri. Antarktis: forskning."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Sydamerika: tropisk zon, subtropisk zon och tempererad zon. Antarktis: mycket kallt, is, snö och stormar."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropisk zon i stora delar och tempererad zon längst i söder?",
+            "options": [
+              "Antarktis",
+              "Europa",
+              "Afrika",
+              "Sydamerika"
+            ],
+            "correctIndex": 3,
+            "explanation": "tropisk zon i stora delar och tempererad zon längst i söder hörde till Sydamerika i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--oceanien--europa": {
+      "title": "Jämför Oceanien och Europa",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "oceanien",
+      "compareB": "europa",
+      "totalDurationSeconds": 222,
+      "segments": [
+        {
+          "file": "audio/track-compare--oceanien--europa-part1.mp3",
+          "durationSeconds": 19,
+          "textHash": "0a2a8d39b16cef38c2bf6a21e82fca209e740fbd19cfac6383be5936ca63db73"
+        },
+        {
+          "file": "audio/track-compare--oceanien--europa-part2.mp3",
+          "durationSeconds": 203,
+          "textHash": "baabcae765f95372e1fc125260e935aa292ddbf9d9b53d26d60bf364bd6e6a59"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Oceanien och Europa?",
+            "options": [
+              "Oceanien: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Europa: tropiskt, torrt inland och svalare söderut.",
+              "Oceanien: fisk, jordbruksmark, mineraler och natur. Europa: bördig jord, floder, skog, olja, kol, naturgas och järnmalm.",
+              "Oceanien: tropiskt, torrt inland och svalare söderut. Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat.",
+              "Oceanien: turism, fiske, gruvarbete och tjänster. Europa: industri, handel, transport och IT."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Oceanien: tropiskt, torrt inland och svalare söderut. Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropiskt på många öar men torrare i Australiens inland?",
+            "options": [
+              "Europa",
+              "Afrika",
+              "Oceanien",
+              "Asien"
+            ],
+            "correctIndex": 2,
+            "explanation": "tropiskt på många öar men torrare i Australiens inland hörde till Oceanien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--oceanien--afrika": {
+      "title": "Jämför Oceanien och Afrika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "oceanien",
+      "compareB": "afrika",
+      "totalDurationSeconds": 211,
+      "segments": [
+        {
+          "file": "audio/track-compare--oceanien--afrika-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "d6d9f1d24674ec50630f016fc2978a56d3003f7463b5e10d22e52d1ccf71e35e"
+        },
+        {
+          "file": "audio/track-compare--oceanien--afrika-part2.mp3",
+          "durationSeconds": 183,
+          "textHash": "dc7a04b78a6c71d29b5e1abe1e9fb0af56c58d11604cd4127bf4c831018e353e"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Oceanien och Afrika?",
+            "options": [
+              "Oceanien: varmt, regn vid ekvatorn, savann, stäpp och öken. Afrika: tropiskt, torrt inland och svalare söderut.",
+              "Oceanien: fisk, jordbruksmark, mineraler och natur. Afrika: diamanter, guld, koppar, järnmalm, olja och solenergi.",
+              "Oceanien: fiske, gruvarbete och tjänster. Afrika: boskap, gruvor och industri.",
+              "Oceanien: tropiskt, torrt inland och svalare söderut. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Oceanien: tropiskt, torrt inland och svalare söderut. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropiskt på många öar men torrare i Australiens inland?",
+            "options": [
+              "Afrika",
+              "Europa",
+              "Oceanien",
+              "Asien"
+            ],
+            "correctIndex": 2,
+            "explanation": "tropiskt på många öar men torrare i Australiens inland hörde till Oceanien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--oceanien--asien": {
+      "title": "Jämför Oceanien och Asien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "oceanien",
+      "compareB": "asien",
+      "totalDurationSeconds": 210,
+      "segments": [
+        {
+          "file": "audio/track-compare--oceanien--asien-part1.mp3",
+          "durationSeconds": 29,
+          "textHash": "a357a5bb1ef2cedb452129b756422f976068fc2b6b231c3eea063197377aa57b"
+        },
+        {
+          "file": "audio/track-compare--oceanien--asien-part2.mp3",
+          "durationSeconds": 181,
+          "textHash": "380cd7320ce6dde102131dce02e7b3c2e9f57b42b5b318c0b32df8c02fdb9e20"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Oceanien och Asien?",
+            "options": [
+              "Oceanien: kallt i norr, tempererat och monsun. Asien: svalare söderut.",
+              "Oceanien: fisk, jordbruksmark, mineraler och natur. Asien: olja, kol, naturgas och bördig jord.",
+              "Oceanien: turism och gruvarbete. Asien: industri.",
+              "Oceanien: svalare söderut. Asien: kallt i norr, tempererat och monsun."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Oceanien: svalare söderut. Asien: kallt i norr, tempererat och monsun."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropiskt på många öar men torrare i Australiens inland?",
+            "options": [
+              "Asien",
+              "Europa",
+              "Oceanien",
+              "Afrika"
+            ],
+            "correctIndex": 2,
+            "explanation": "tropiskt på många öar men torrare i Australiens inland hörde till Oceanien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--oceanien--nordamerika": {
+      "title": "Jämför Oceanien och Nordamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "oceanien",
+      "compareB": "nordamerika",
+      "totalDurationSeconds": 210,
+      "segments": [
+        {
+          "file": "audio/track-compare--oceanien--nordamerika-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "964896d6d9f2efd019dc0c860a825d97da021a1c819188d7c919742829708b9e"
+        },
+        {
+          "file": "audio/track-compare--oceanien--nordamerika-part2.mp3",
+          "durationSeconds": 182,
+          "textHash": "e2b542d455850d5efc221cf80f50272bd643dfd87772cbd8788dd74470707fc3"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Oceanien och Nordamerika?",
+            "options": [
+              "Oceanien: polarklimat, inlandsklimat, subtropiskt och mild västkust. Nordamerika: tropiskt, torrt inland och svalare söderut.",
+              "Oceanien: fisk, jordbruksmark, mineraler och natur. Nordamerika: bördig jord, järnmalm, olja och naturgas.",
+              "Oceanien: turism, fiske och gruvarbete. Nordamerika: industri.",
+              "Oceanien: tropiskt, torrt inland och svalare söderut. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Oceanien: tropiskt, torrt inland och svalare söderut. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropiskt på många öar men torrare i Australiens inland?",
+            "options": [
+              "Nordamerika",
+              "Oceanien",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 1,
+            "explanation": "tropiskt på många öar men torrare i Australiens inland hörde till Oceanien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--oceanien--sydamerika": {
+      "title": "Jämför Oceanien och Sydamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "oceanien",
+      "compareB": "sydamerika",
+      "totalDurationSeconds": 213,
+      "segments": [
+        {
+          "file": "audio/track-compare--oceanien--sydamerika-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "161273b3ca9194e20e7ec0fa84f4b90cabf65a213f895820f359a59506ca811c"
+        },
+        {
+          "file": "audio/track-compare--oceanien--sydamerika-part2.mp3",
+          "durationSeconds": 185,
+          "textHash": "30c119da5da036681425b57efa95f2c681de2710f47da0e7b367fac41c6e6836"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Oceanien och Sydamerika?",
+            "options": [
+              "Oceanien: tropisk zon, subtropisk zon och tempererad zon. Sydamerika: tropiskt, torrt inland och svalare söderut.",
+              "Oceanien: tropiskt, torrt inland och svalare söderut. Sydamerika: tropisk zon, subtropisk zon och tempererad zon.",
+              "Oceanien: fisk, jordbruksmark, mineraler och natur. Sydamerika: olja, metaller, bördig jord, vattenkraft och skog.",
+              "Oceanien: turism, gruvarbete och tjänster. Sydamerika: boskap, gruvor och industri."
+            ],
+            "correctIndex": 1,
+            "explanation": "I jämförelsen sades att Oceanien: tropiskt, torrt inland och svalare söderut. Sydamerika: tropisk zon, subtropisk zon och tempererad zon."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropiskt på många öar men torrare i Australiens inland?",
+            "options": [
+              "Sydamerika",
+              "Europa",
+              "Afrika",
+              "Oceanien"
+            ],
+            "correctIndex": 3,
+            "explanation": "tropiskt på många öar men torrare i Australiens inland hörde till Oceanien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--oceanien--antarktis": {
+      "title": "Jämför Oceanien och Antarktis",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "oceanien",
+      "compareB": "antarktis",
+      "totalDurationSeconds": 201,
+      "segments": [
+        {
+          "file": "audio/track-compare--oceanien--antarktis-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "adef93f9b95fb7649d7c54b16b572bff42c845c865fe4b36766863d6266756e6"
+        },
+        {
+          "file": "audio/track-compare--oceanien--antarktis-part2.mp3",
+          "durationSeconds": 174,
+          "textHash": "831d206074a2920c4dfc827e6f756c41e5d910a76994c8eeed4153deb23b44bb"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Oceanien och Antarktis?",
+            "options": [
+              "Oceanien: mycket kallt, is, snö och stormar. Antarktis: tropiskt, torrt inland och svalare söderut.",
+              "Oceanien: fisk, jordbruksmark, mineraler och natur. Antarktis: sötvatten i is och klimatforskning.",
+              "Oceanien: turism, jordbruk, fiske, gruvarbete och tjänster. Antarktis: forskning.",
+              "Oceanien: tropiskt, torrt inland och svalare söderut. Antarktis: mycket kallt, is, snö och stormar."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Oceanien: tropiskt, torrt inland och svalare söderut. Antarktis: mycket kallt, is, snö och stormar."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till tropiskt på många öar men torrare i Australiens inland?",
+            "options": [
+              "Antarktis",
+              "Oceanien",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 1,
+            "explanation": "tropiskt på många öar men torrare i Australiens inland hörde till Oceanien i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--antarktis--europa": {
+      "title": "Jämför Antarktis och Europa",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "antarktis",
+      "compareB": "europa",
+      "totalDurationSeconds": 209,
+      "segments": [
+        {
+          "file": "audio/track-compare--antarktis--europa-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "0ef36b0ea59f540e92c02743aabc0a00376e4e911a8539d6e7ae3abf62d5a725"
+        },
+        {
+          "file": "audio/track-compare--antarktis--europa-part2.mp3",
+          "durationSeconds": 181,
+          "textHash": "e919b1e9dfccf3b65727ecfc5eb604261a8f4c848047e27d4ec92b0eb718a2b0"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Antarktis och Europa?",
+            "options": [
+              "Antarktis: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat. Europa: mycket kallt, is, snö och stormar.",
+              "Antarktis: sötvatten i is och klimatforskning. Europa: bördig jord, floder, skog, olja, kol, naturgas och järnmalm.",
+              "Antarktis: forskning. Europa: jordbruk, industri, handel, transport och IT.",
+              "Antarktis: mycket kallt, is, snö och stormar. Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Antarktis: mycket kallt, is, snö och stormar. Europa: tempererad zon, kustklimat, inlandsklimat och medelhavsklimat."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till extrem kyla, kraftiga vindar och snöstormar?",
+            "options": [
+              "Europa",
+              "Antarktis",
+              "Afrika",
+              "Asien"
+            ],
+            "correctIndex": 1,
+            "explanation": "extrem kyla, kraftiga vindar och snöstormar hörde till Antarktis i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--antarktis--afrika": {
+      "title": "Jämför Antarktis och Afrika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "antarktis",
+      "compareB": "afrika",
+      "totalDurationSeconds": 201,
+      "segments": [
+        {
+          "file": "audio/track-compare--antarktis--afrika-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "109951c1a8350931ba501a2a63892045838307f0df30b2d75408847381b34dcc"
+        },
+        {
+          "file": "audio/track-compare--antarktis--afrika-part2.mp3",
+          "durationSeconds": 174,
+          "textHash": "d9147b19f3de347d7845da12ea26a2fac18e620a0afcf3eba43f3f00010a5e05"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Antarktis och Afrika?",
+            "options": [
+              "Antarktis: varmt, regn vid ekvatorn, savann, stäpp och öken. Afrika: mycket kallt, is, snö och stormar.",
+              "Antarktis: sötvatten i is och klimatforskning. Afrika: diamanter, guld, koppar, järnmalm, olja och solenergi.",
+              "Antarktis: forskning. Afrika: jordbruk, boskap, gruvor, industri och turism.",
+              "Antarktis: mycket kallt, is, snö och stormar. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Antarktis: mycket kallt, is, snö och stormar. Afrika: varmt, regn vid ekvatorn, savann, stäpp och öken."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till extrem kyla, kraftiga vindar och snöstormar?",
+            "options": [
+              "Afrika",
+              "Europa",
+              "Asien",
+              "Antarktis"
+            ],
+            "correctIndex": 3,
+            "explanation": "extrem kyla, kraftiga vindar och snöstormar hörde till Antarktis i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--antarktis--asien": {
+      "title": "Jämför Antarktis och Asien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "antarktis",
+      "compareB": "asien",
+      "totalDurationSeconds": 205,
+      "segments": [
+        {
+          "file": "audio/track-compare--antarktis--asien-part1.mp3",
+          "durationSeconds": 28,
+          "textHash": "867e76c64690f1fa9d6609b6da011469662ccca0a530d4d41f77aedc42476852"
+        },
+        {
+          "file": "audio/track-compare--antarktis--asien-part2.mp3",
+          "durationSeconds": 177,
+          "textHash": "ecf2a9faf0d83fc215984863eca9dec59df981262503d393ea428d4f0564a452"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Antarktis och Asien?",
+            "options": [
+              "Antarktis: kallt i norr, tempererat, tropiskt, monsun och torrt inland. Asien: mycket kallt, is, snö och stormar.",
+              "Antarktis: sötvatten i is och klimatforskning. Asien: olja, kol, naturgas och bördig jord.",
+              "Antarktis: mycket kallt, is, snö och stormar. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland.",
+              "Antarktis: forskning. Asien: jordbruk, fiske, industri och tjänster."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Antarktis: mycket kallt, is, snö och stormar. Asien: kallt i norr, tempererat, tropiskt, monsun och torrt inland."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till extrem kyla, kraftiga vindar och snöstormar?",
+            "options": [
+              "Asien",
+              "Antarktis",
+              "Europa",
+              "Afrika"
+            ],
+            "correctIndex": 1,
+            "explanation": "extrem kyla, kraftiga vindar och snöstormar hörde till Antarktis i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--antarktis--nordamerika": {
+      "title": "Jämför Antarktis och Nordamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "antarktis",
+      "compareB": "nordamerika",
+      "totalDurationSeconds": 200,
+      "segments": [
+        {
+          "file": "audio/track-compare--antarktis--nordamerika-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "9931692488a20c1312c4915eb6f5b4be50bb0651694e7df9d9ade871b0323a7b"
+        },
+        {
+          "file": "audio/track-compare--antarktis--nordamerika-part2.mp3",
+          "durationSeconds": 173,
+          "textHash": "db2fd0b4011a68ea62410fa4ca39d32a188476398e76b042e89ec94cac2bf72b"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Antarktis och Nordamerika?",
+            "options": [
+              "Antarktis: polarklimat, inlandsklimat, subtropiskt och mild västkust. Nordamerika: mycket kallt, is, snö och stormar.",
+              "Antarktis: sötvatten i is och klimatforskning. Nordamerika: bördig jord, järnmalm, olja och naturgas.",
+              "Antarktis: forskning. Nordamerika: industri, tjänster och jordbruk.",
+              "Antarktis: mycket kallt, is, snö och stormar. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Antarktis: mycket kallt, is, snö och stormar. Nordamerika: polarklimat, inlandsklimat, subtropiskt och mild västkust."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till extrem kyla, kraftiga vindar och snöstormar?",
+            "options": [
+              "Nordamerika",
+              "Europa",
+              "Afrika",
+              "Antarktis"
+            ],
+            "correctIndex": 3,
+            "explanation": "extrem kyla, kraftiga vindar och snöstormar hörde till Antarktis i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--antarktis--sydamerika": {
+      "title": "Jämför Antarktis och Sydamerika",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "antarktis",
+      "compareB": "sydamerika",
+      "totalDurationSeconds": 203,
+      "segments": [
+        {
+          "file": "audio/track-compare--antarktis--sydamerika-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "701e28d4dabb5f1d23ae6ab3e49c91f3f6ba6ce46140a6f63a7fb7f8452023c1"
+        },
+        {
+          "file": "audio/track-compare--antarktis--sydamerika-part2.mp3",
+          "durationSeconds": 176,
+          "textHash": "0310f73de420600fc531b622fff2b7fe23a5ea32b041de2b9b1868e9eb380409"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Antarktis och Sydamerika?",
+            "options": [
+              "Antarktis: tropisk zon, subtropisk zon och tempererad zon. Sydamerika: mycket kallt, is, snö och stormar.",
+              "Antarktis: sötvatten i is och klimatforskning. Sydamerika: olja, metaller, bördig jord, vattenkraft och skog.",
+              "Antarktis: mycket kallt, is, snö och stormar. Sydamerika: tropisk zon, subtropisk zon och tempererad zon.",
+              "Antarktis: forskning. Sydamerika: jordbruk, boskap, fiske, gruvor och industri."
+            ],
+            "correctIndex": 2,
+            "explanation": "I jämförelsen sades att Antarktis: mycket kallt, is, snö och stormar. Sydamerika: tropisk zon, subtropisk zon och tempererad zon."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till extrem kyla, kraftiga vindar och snöstormar?",
+            "options": [
+              "Sydamerika",
+              "Europa",
+              "Antarktis",
+              "Afrika"
+            ],
+            "correctIndex": 2,
+            "explanation": "extrem kyla, kraftiga vindar och snöstormar hörde till Antarktis i jämförelsen."
+          }
+        ]
+      }
+    },
+    "track-compare--antarktis--oceanien": {
+      "title": "Jämför Antarktis och Oceanien",
+      "kind": "compare",
+      "trackId": "track-compare",
+      "compareA": "antarktis",
+      "compareB": "oceanien",
+      "totalDurationSeconds": 201,
+      "segments": [
+        {
+          "file": "audio/track-compare--antarktis--oceanien-part1.mp3",
+          "durationSeconds": 27,
+          "textHash": "9759da24b5b33867fd96d42e22ea436091871a81d03ffc71798d919c044ad823"
+        },
+        {
+          "file": "audio/track-compare--antarktis--oceanien-part2.mp3",
+          "durationSeconds": 174,
+          "textHash": "fd054b85fa5c010fee0150ec48ee442f7cae8077fcad7320af9bf85458acc585"
+        }
+      ],
+      "checkpointQuiz": {
+        "afterSegment": 0,
+        "questions": [
+          {
+            "prompt": "Vilket påstående stämmer om klimatet när man jämför Antarktis och Oceanien?",
+            "options": [
+              "Antarktis: tropiskt, torrt inland och svalare söderut. Oceanien: mycket kallt, is, snö och stormar.",
+              "Antarktis: sötvatten i is och klimatforskning. Oceanien: fisk, jordbruksmark, mineraler och natur.",
+              "Antarktis: forskning. Oceanien: turism, jordbruk, fiske, gruvarbete och tjänster.",
+              "Antarktis: mycket kallt, is, snö och stormar. Oceanien: tropiskt, torrt inland och svalare söderut."
+            ],
+            "correctIndex": 3,
+            "explanation": "I jämförelsen sades att Antarktis: mycket kallt, is, snö och stormar. Oceanien: tropiskt, torrt inland och svalare söderut."
+          },
+          {
+            "prompt": "Vilken världsdel kopplades till extrem kyla, kraftiga vindar och snöstormar?",
+            "options": [
+              "Oceanien",
+              "Europa",
+              "Antarktis",
+              "Afrika"
+            ],
+            "correctIndex": 2,
+            "explanation": "extrem kyla, kraftiga vindar och snöstormar hörde till Antarktis i jämförelsen."
+          }
+        ]
+      }
+    }
+  }
+}

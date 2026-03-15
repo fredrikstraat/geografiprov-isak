@@ -1154,6 +1154,8 @@ const lessons = [
   }
 ];
 
+const STATIC_AUDIO_MANIFEST_PATH = "./audio/manifest.json";
+
 const appState = {
   activeTab: "quickpass",
   selectedLessonId: "",
@@ -1171,6 +1173,19 @@ const appState = {
   drillDrafts: {},
   drillResults: {},
   listenTrackId: "track-europa",
+  staticAudioManifest: null,
+  staticAudioLoading: false,
+  staticAudioError: "",
+  staticAudioEnabled: false,
+  listenPlaybackTrackKey: "",
+  listenPlaybackSegmentIndex: -1,
+  listenResumeSegmentIndex: -1,
+  listenQuizVisible: false,
+  listenQuizTrackKey: "",
+  listenQuizQuestions: [],
+  listenQuizSelections: {},
+  listenQuizSubmitted: false,
+  listenQuizScore: 0,
   quizBank: [],
   quizRound: [],
   quizIndex: 0,
@@ -1733,7 +1748,7 @@ function applyGuidedAutostart() {
   if (step.action.type === "listen") {
     const track = listenTracks.find((item) => item.id === appState.listenTrackId);
     if (track) {
-      speakText(getListenTrackPresentation(track).speechText, { kind: "lesson" }).catch((error) => {
+      beginListenPlayback(track).catch((error) => {
         console.warn("Could not auto-play lesson audio", error);
       });
     }
@@ -2918,6 +2933,319 @@ function getListenTrackPresentation(track) {
   };
 }
 
+function getListenTrackKey(track) {
+  if (!track) {
+    return "";
+  }
+
+  if (track.kind === "compare") {
+    const first = continentById(appState.compareA);
+    const second = continentById(appState.compareB);
+    if (!first || !second) {
+      return "";
+    }
+    return `track-compare--${first.id}--${second.id}`;
+  }
+
+  return track.id;
+}
+
+function getStaticAudioTrack(trackKey) {
+  if (!trackKey || !appState.staticAudioManifest?.tracks) {
+    return null;
+  }
+
+  return appState.staticAudioManifest.tracks[trackKey] || null;
+}
+
+function resetListenQuizState() {
+  appState.listenQuizVisible = false;
+  appState.listenQuizTrackKey = "";
+  appState.listenQuizQuestions = [];
+  appState.listenQuizSelections = {};
+  appState.listenQuizSubmitted = false;
+  appState.listenQuizScore = 0;
+  appState.listenResumeSegmentIndex = -1;
+  renderListenQuiz();
+}
+
+function showListenQuiz(trackKey, questions, nextSegmentIndex) {
+  appState.listenQuizVisible = true;
+  appState.listenQuizTrackKey = trackKey;
+  appState.listenQuizQuestions = questions;
+  appState.listenQuizSelections = {};
+  appState.listenQuizSubmitted = false;
+  appState.listenQuizScore = 0;
+  appState.listenResumeSegmentIndex = nextSegmentIndex;
+  setTtsStatus("Kort paus. Svara på frågorna och fortsätt sedan lyssna.", "ready");
+  renderListenQuiz();
+}
+
+function renderListenQuiz() {
+  const shell = document.querySelector("#listen-quiz-shell");
+  if (!shell) {
+    return;
+  }
+
+  if (!appState.listenQuizVisible || !appState.listenQuizQuestions.length) {
+    shell.hidden = true;
+    shell.innerHTML = "";
+    return;
+  }
+
+  const totalQuestions = appState.listenQuizQuestions.length;
+  const answeredQuestions = Object.keys(appState.listenQuizSelections).length;
+  shell.hidden = false;
+  shell.innerHTML = `
+    <article class="listen-quiz-card">
+      <div class="listen-quiz-header">
+        <div>
+          <p class="panel-label">Kort stopp</p>
+          <h4>Checka att det sitter, Isak</h4>
+        </div>
+        <span class="listen-quiz-badge">${answeredQuestions}/${totalQuestions} svar</span>
+      </div>
+      <p class="microcopy">
+        Svara på frågorna i lugn takt. När du är klar fortsätter resten av uppläsningen.
+      </p>
+      <div class="listen-quiz-question-list">
+        ${appState.listenQuizQuestions
+          .map((question, questionIndex) => {
+            const selectedIndex = appState.listenQuizSelections[questionIndex];
+            const isCorrect = selectedIndex === question.correctIndex;
+            return `
+              <article class="listen-quiz-question ${appState.listenQuizSubmitted ? (isCorrect ? "is-correct" : "is-wrong") : ""}">
+                <p><strong>Fråga ${questionIndex + 1}.</strong> ${question.prompt}</p>
+                <div class="listen-quiz-options">
+                  ${question.options
+                    .map((option, optionIndex) => {
+                      const inputId = `listen-quiz-${questionIndex}-${optionIndex}`;
+                      const checked = selectedIndex === optionIndex ? "checked" : "";
+                      const disabled = appState.listenQuizSubmitted ? "disabled" : "";
+                      return `
+                        <label class="listen-quiz-option" for="${inputId}">
+                          <input
+                            id="${inputId}"
+                            type="radio"
+                            name="listen-quiz-${questionIndex}"
+                            value="${optionIndex}"
+                            data-listen-quiz-question="${questionIndex}"
+                            data-listen-quiz-option="${optionIndex}"
+                            ${checked}
+                            ${disabled}
+                          />
+                          <span>${option}</span>
+                        </label>
+                      `;
+                    })
+                    .join("")}
+                </div>
+                ${
+                  appState.listenQuizSubmitted
+                    ? `
+                      <p class="listen-quiz-feedback ${isCorrect ? "is-correct" : "is-wrong"}">
+                        ${isCorrect ? "Rätt jobbat." : "Bra försök."}
+                      </p>
+                      <p class="microcopy">${question.explanation}</p>
+                    `
+                    : ""
+                }
+              </article>
+            `;
+          })
+          .join("")}
+      </div>
+      <div class="listen-quiz-footer">
+        ${
+          appState.listenQuizSubmitted
+            ? `<p class="listen-quiz-score">Du fick ${appState.listenQuizScore} av ${totalQuestions} rätt.</p>`
+            : `<p class="microcopy">Två korta frågor räcker. Sedan fortsätter rösten direkt.</p>`
+        }
+        <button class="primary" id="listen-quiz-submit">
+          ${appState.listenQuizSubmitted ? "Fortsätt lyssna" : "Rätta och fortsätt"}
+        </button>
+      </div>
+    </article>
+  `;
+}
+
+async function hydrateStaticAudioManifest() {
+  if (window.location.protocol === "file:") {
+    return false;
+  }
+
+  appState.staticAudioLoading = true;
+  try {
+    const response = await fetch(STATIC_AUDIO_MANIFEST_PATH, {
+      headers: { Accept: "application/json" }
+    });
+
+    if (!response.ok) {
+      throw new Error("Manifest saknas");
+    }
+
+    const payload = await response.json();
+    appState.staticAudioManifest = payload;
+    appState.staticAudioEnabled = Boolean(payload?.tracks);
+    appState.staticAudioError = "";
+    setTtsStatus("Förinspelad AI-röst redo.", "ready");
+    return true;
+  } catch (error) {
+    appState.staticAudioManifest = null;
+    appState.staticAudioEnabled = false;
+    appState.staticAudioError = error instanceof Error ? error.message : String(error);
+    return false;
+  } finally {
+    appState.staticAudioLoading = false;
+  }
+}
+
+function remainingTrackDuration(trackData, startIndex) {
+  const remainingSeconds = (trackData?.segments || [])
+    .slice(startIndex)
+    .reduce((total, segment) => total + (Number(segment.durationSeconds) || 0), 0);
+  return Math.max(12, Math.round(remainingSeconds));
+}
+
+function playStaticTrackSegment(trackKey, segmentIndex, playToken) {
+  if (appState.ttsPlayToken !== playToken) {
+    return;
+  }
+
+  const trackData = getStaticAudioTrack(trackKey);
+  const segment = trackData?.segments?.[segmentIndex];
+  if (!trackData || !segment) {
+    appState.listenPlaybackTrackKey = "";
+    appState.listenPlaybackSegmentIndex = -1;
+    setTtsStatus("Förinspelad AI-röst redo.", "ready");
+    return;
+  }
+
+  const audioElement = appState.ttsAudio || document.querySelector("#tts-audio");
+  appState.ttsAudio = audioElement;
+  if (!audioElement) {
+    setTtsStatus("Kunde inte spela upp ljudfilen.", "error");
+    return;
+  }
+
+  appState.listenPlaybackTrackKey = trackKey;
+  appState.listenPlaybackSegmentIndex = segmentIndex;
+  syncGuidedListenDuration(remainingTrackDuration(trackData, segmentIndex));
+  setTtsStatus(
+    `Förinspelad AI-röst spelar del ${segmentIndex + 1} av ${trackData.segments.length}.`,
+    "ready"
+  );
+
+  audioElement.pause();
+  audioElement.onended = null;
+  audioElement.onerror = null;
+  audioElement.src = segment.file;
+  audioElement.currentTime = 0;
+  audioElement.load();
+
+  audioElement.onended = () => {
+    if (appState.ttsPlayToken !== playToken) {
+      return;
+    }
+
+    const shouldPauseForQuiz =
+      trackData.checkpointQuiz?.afterSegment === segmentIndex &&
+      Array.isArray(trackData.checkpointQuiz.questions) &&
+      trackData.checkpointQuiz.questions.length > 0 &&
+      segmentIndex + 1 < trackData.segments.length;
+
+    if (shouldPauseForQuiz) {
+      showListenQuiz(trackKey, trackData.checkpointQuiz.questions, segmentIndex + 1);
+      return;
+    }
+
+    if (segmentIndex + 1 < trackData.segments.length) {
+      playStaticTrackSegment(trackKey, segmentIndex + 1, playToken);
+      return;
+    }
+
+    appState.listenPlaybackTrackKey = "";
+    appState.listenPlaybackSegmentIndex = -1;
+    setTtsStatus("Förinspelad AI-röst redo.", "ready");
+  };
+
+  audioElement.onerror = () => {
+    if (appState.ttsPlayToken !== playToken) {
+      return;
+    }
+    setTtsStatus("Kunde inte spela upp den sparade ljudfilen.", "error");
+  };
+
+  const playPromise = audioElement.play();
+  if (playPromise?.catch) {
+    playPromise.catch(() => {
+      if (appState.ttsPlayToken !== playToken) {
+        return;
+      }
+      setTtsStatus("Ljudet kunde inte starta automatiskt. Tryck på Läs upp igen.", "error");
+    });
+  }
+}
+
+function startStaticTrackPlayback(track) {
+  const trackKey = getListenTrackKey(track);
+  const trackData = getStaticAudioTrack(trackKey);
+  if (!trackData) {
+    return false;
+  }
+
+  stopSpeaking({ keepStatus: true });
+  const playToken = appState.ttsPlayToken;
+  playStaticTrackSegment(trackKey, 0, playToken);
+  return true;
+}
+
+async function beginListenPlayback(track) {
+  if (!track) {
+    return;
+  }
+
+  if (appState.staticAudioEnabled && startStaticTrackPlayback(track)) {
+    return;
+  }
+
+  const presentation = getListenTrackPresentation(track);
+  await speakText(presentation.speechText, {
+    kind: track.kind === "compare" ? "comparison" : "lesson"
+  });
+}
+
+function handleListenQuizSubmit() {
+  if (!appState.listenQuizVisible) {
+    return;
+  }
+
+  if (!appState.listenQuizSubmitted) {
+    const unanswered = appState.listenQuizQuestions.some(
+      (_question, questionIndex) => !(questionIndex in appState.listenQuizSelections)
+    );
+    if (unanswered) {
+      alert("Svara på alla frågorna först, Isak.");
+      return;
+    }
+
+    appState.listenQuizScore = appState.listenQuizQuestions.reduce((score, question, questionIndex) => {
+      return score + (appState.listenQuizSelections[questionIndex] === question.correctIndex ? 1 : 0);
+    }, 0);
+    appState.listenQuizSubmitted = true;
+    renderListenQuiz();
+    return;
+  }
+
+  const nextSegmentIndex = appState.listenResumeSegmentIndex;
+  const trackKey = appState.listenQuizTrackKey;
+  const playToken = appState.ttsPlayToken;
+  resetListenQuizState();
+  if (nextSegmentIndex >= 0 && trackKey) {
+    playStaticTrackSegment(trackKey, nextSegmentIndex, playToken);
+  }
+}
+
 function renderListenTracks() {
   const buttons = document.querySelector("#listen-buttons");
   const visibleTracks = getVisibleListenTracks();
@@ -2941,6 +3269,7 @@ function renderListenTracks() {
   document.querySelector("#listen-title").textContent = presentation.title;
   document.querySelector("#listen-description").textContent = presentation.description;
   document.querySelector("#listen-study-content").innerHTML = presentation.html;
+  renderListenQuiz();
 }
 
 function createCountryQuestion(item) {
@@ -3719,6 +4048,7 @@ function openLessonStep(lessonId, stepIndex, options = {}) {
     renderContinentDetail();
     setActiveTab("learn");
   } else if (step.action.type === "listen") {
+    stopSpeaking();
     if (step.action.compareA && step.action.compareB) {
       setComparisonPair(step.action.compareA, step.action.compareB);
       renderComparison();
@@ -4178,9 +4508,14 @@ function setTtsStatus(message, tone = "muted") {
 }
 
 async function hydrateTtsStatus() {
+  const hasStaticAudio = await hydrateStaticAudioManifest();
+  if (hasStaticAudio) {
+    return;
+  }
+
   if (window.location.protocol === "file:") {
     setTtsStatus(
-      "OpenAI-uppläsning kräver att appen körs via den lokala servern. Annars används webbläsarröst.",
+      "Förinspelad uppläsning kräver att appen körs via servern. Annars används webbläsarröst.",
       "warning"
     );
     return;
@@ -4230,9 +4565,15 @@ function stopSpeaking(options = {}) {
   }
 
   stopOpenAiBufferPlayback();
+  resetListenQuizState();
+  appState.listenPlaybackTrackKey = "";
+  appState.listenPlaybackSegmentIndex = -1;
+  appState.listenResumeSegmentIndex = -1;
 
   if (appState.ttsAudio) {
     appState.ttsAudio.pause();
+    appState.ttsAudio.onended = null;
+    appState.ttsAudio.onerror = null;
     appState.ttsAudio.currentTime = 0;
     appState.ttsAudio.removeAttribute("src");
     appState.ttsAudio.load();
@@ -4244,7 +4585,9 @@ function stopSpeaking(options = {}) {
   }
 
   if (!options.keepStatus) {
-    if (appState.ttsAvailable) {
+    if (appState.staticAudioEnabled) {
+      setTtsStatus("Förinspelad AI-röst redo.", "ready");
+    } else if (appState.ttsAvailable) {
       setTtsStatus("OpenAI-röst redo.", "ready");
     } else {
       setTtsStatus("Webbläsarröst redo.", "warning");
@@ -4522,6 +4865,7 @@ function bindEvents() {
     if (!button) {
       return;
     }
+    stopSpeaking();
     appState.listenTrackId = button.dataset.listenId;
     renderListenTracks();
     scheduleTtsWarmup();
@@ -4532,9 +4876,26 @@ function bindEvents() {
     if (!track) {
       return;
     }
-    await speakText(getListenTrackPresentation(track).speechText, { kind: "lesson" });
+    await beginListenPlayback(track);
   });
   document.querySelector("#stop-speaking").addEventListener("click", stopSpeaking);
+
+  document.querySelector("#listen-quiz-shell").addEventListener("change", (event) => {
+    const input = event.target.closest("[data-listen-quiz-question]");
+    if (!input || appState.listenQuizSubmitted) {
+      return;
+    }
+    appState.listenQuizSelections[input.dataset.listenQuizQuestion] = Number(
+      input.dataset.listenQuizOption
+    );
+    renderListenQuiz();
+  });
+
+  document.querySelector("#listen-quiz-shell").addEventListener("click", (event) => {
+    if (event.target.closest("#listen-quiz-submit")) {
+      handleListenQuizSubmit();
+    }
+  });
 
   document.querySelector("#compare-a").addEventListener("change", (event) => {
     updateComparisonSelection("a", event.target.value);
@@ -4545,12 +4906,15 @@ function bindEvents() {
   });
 
   document.querySelector("#listen-comparison").addEventListener("click", async () => {
-    const speechText = buildComparisonSpeechText();
-    if (!speechText) {
+    const track = listenTracks.find((item) => item.id === "track-compare");
+    if (!track || !buildComparisonSpeechText()) {
       setTtsStatus("Välj två världsdelar först, så kan appen läsa upp jämförelsen.", "warning");
       return;
     }
-    await speakText(speechText, { kind: "comparison" });
+    appState.listenTrackId = "track-compare";
+    renderListenTracks();
+    setActiveTab("listen");
+    await beginListenPlayback(track);
   });
 
   document.querySelector("#refresh-sample-answer").addEventListener("click", () => {
