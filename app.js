@@ -1182,8 +1182,11 @@ const appState = {
   listenResumeSegmentIndex: -1,
   listenQuizVisible: false,
   listenQuizTrackKey: "",
-  listenQuizQuestion: null,
-  listenQuizSelection: null,
+  listenQuizTitle: "",
+  listenQuizQuestions: [],
+  listenQuizSelections: {},
+  listenQuizFeedback: "",
+  listenQuizFeedbackTone: "muted",
   listenQuizFeedbackTimeout: null,
   quizBank: [],
   quizRound: [],
@@ -2974,8 +2977,11 @@ function getStaticAudioTrack(trackKey) {
 function resetListenQuizState() {
   appState.listenQuizVisible = false;
   appState.listenQuizTrackKey = "";
-  appState.listenQuizQuestion = null;
-  appState.listenQuizSelection = null;
+  appState.listenQuizTitle = "";
+  appState.listenQuizQuestions = [];
+  appState.listenQuizSelections = {};
+  appState.listenQuizFeedback = "";
+  appState.listenQuizFeedbackTone = "muted";
   appState.listenResumeSegmentIndex = -1;
   if (appState.listenQuizFeedbackTimeout) {
     clearTimeout(appState.listenQuizFeedbackTimeout);
@@ -2984,13 +2990,16 @@ function resetListenQuizState() {
   renderListenQuiz();
 }
 
-function showListenQuiz(trackKey, question, nextSegmentIndex) {
+function showListenQuiz(trackKey, quizGroup, nextSegmentIndex) {
   appState.listenQuizVisible = true;
   appState.listenQuizTrackKey = trackKey;
-  appState.listenQuizQuestion = question;
-  appState.listenQuizSelection = null;
+  appState.listenQuizTitle = quizGroup.label || "Quiz";
+  appState.listenQuizQuestions = Array.isArray(quizGroup.questions) ? quizGroup.questions : [];
+  appState.listenQuizSelections = {};
+  appState.listenQuizFeedback = "";
+  appState.listenQuizFeedbackTone = "muted";
   appState.listenResumeSegmentIndex = nextSegmentIndex;
-  setTtsStatus("Kort paus. Svara på frågan så fortsätter uppläsningen.", "ready");
+  setTtsStatus("Kort paus. Svara på frågorna så fortsätter uppläsningen.", "ready");
   renderListenQuiz();
 }
 
@@ -3000,13 +3009,13 @@ function renderListenQuiz() {
     return;
   }
 
-  if (!appState.listenQuizVisible || !appState.listenQuizQuestion) {
+  if (!appState.listenQuizVisible || !appState.listenQuizQuestions.length) {
     shell.hidden = true;
     shell.innerHTML = "";
     return;
   }
 
-  const question = appState.listenQuizQuestion;
+  const questions = appState.listenQuizQuestions;
   shell.hidden = false;
   shell.innerHTML = `
     <div class="listen-quiz-backdrop"></div>
@@ -3016,33 +3025,50 @@ function renderListenQuiz() {
           <p class="panel-label">Kort stopp</p>
           <h4 id="listen-quiz-title">Checka att det sitter, Isak</h4>
         </div>
-        <span class="listen-quiz-badge">${question.label}</span>
+        <span class="listen-quiz-badge">${appState.listenQuizTitle}</span>
       </div>
       <p class="microcopy">
-        Svara på en snabb fråga om det du just lyssnade på. Sedan fortsätter uppläsningen direkt.
+        Svara på två snabba frågor om det du just lyssnade på. När båda är rätt fortsätter uppläsningen direkt.
       </p>
-      <article class="listen-quiz-question">
-        <p><strong>Fråga.</strong> ${question.prompt}</p>
-        <div class="listen-quiz-options">
-          ${question.options
-            .map((option, optionIndex) => {
-              const inputId = `listen-quiz-option-${optionIndex}`;
-              return `
-                <label class="listen-quiz-option" for="${inputId}">
-                  <input
-                    id="${inputId}"
-                    type="radio"
-                    name="listen-quiz-current"
-                    value="${optionIndex}"
-                    data-listen-quiz-option="${optionIndex}"
-                  />
-                  <span>${option}</span>
-                </label>
-              `;
-            })
-            .join("")}
-        </div>
-      </article>
+      <div class="listen-quiz-question-list">
+        ${questions
+          .map((question, questionIndex) => {
+            const selectedIndex = appState.listenQuizSelections[questionIndex];
+            return `
+              <article class="listen-quiz-question">
+                <p><strong>Fråga ${questionIndex + 1}.</strong> ${question.prompt}</p>
+                <div class="listen-quiz-options">
+                  ${question.options
+                    .map((option, optionIndex) => {
+                      const inputId = `listen-quiz-option-${questionIndex}-${optionIndex}`;
+                      return `
+                        <label class="listen-quiz-option" for="${inputId}">
+                          <input
+                            id="${inputId}"
+                            type="radio"
+                            name="listen-quiz-current-${questionIndex}"
+                            value="${optionIndex}"
+                            data-listen-quiz-question="${questionIndex}"
+                            data-listen-quiz-option="${optionIndex}"
+                            ${selectedIndex === optionIndex ? "checked" : ""}
+                          />
+                          <span>${option}</span>
+                        </label>
+                      `;
+                    })
+                    .join("")}
+                </div>
+              </article>
+            `;
+          })
+          .join("")}
+      </div>
+      <div class="listen-quiz-footer">
+        <p class="listen-quiz-feedback ${appState.listenQuizFeedbackTone === "ready" ? "is-correct" : appState.listenQuizFeedbackTone === "error" ? "is-wrong" : ""}">
+          ${appState.listenQuizFeedback || "Välj ett svar på båda frågorna och klicka sedan på Rätta."}
+        </p>
+        <button class="primary" id="listen-quiz-submit">Rätta</button>
+      </div>
     </article>
   `;
 }
@@ -3126,11 +3152,11 @@ function playStaticTrackSegment(trackKey, segmentIndex, playToken) {
       return;
     }
 
-    const quizQuestion = trackData.segmentQuizzes?.[segmentIndex] || null;
-    if (quizQuestion) {
+    const quizGroup = trackData.segmentQuizzes?.[segmentIndex] || null;
+    if (quizGroup) {
       showListenQuiz(
         trackKey,
-        quizQuestion,
+        quizGroup,
         segmentIndex + 1 < trackData.segments.length ? segmentIndex + 1 : -1
       );
       return;
@@ -3193,28 +3219,46 @@ async function beginListenPlayback(track) {
 }
 
 function handleListenQuizSubmit() {
-  if (!appState.listenQuizVisible || !appState.listenQuizQuestion) {
+  if (!appState.listenQuizVisible || !appState.listenQuizQuestions.length) {
     return;
   }
 
-  const isCorrect = appState.listenQuizSelection === appState.listenQuizQuestion.correctIndex;
+  const allAnswered = appState.listenQuizQuestions.every(
+    (_question, questionIndex) => questionIndex in appState.listenQuizSelections
+  );
+  if (!allAnswered) {
+    appState.listenQuizFeedback = "Svara på båda frågorna först.";
+    appState.listenQuizFeedbackTone = "error";
+    renderListenQuiz();
+    return;
+  }
+
+  const isCorrect = appState.listenQuizQuestions.every(
+    (question, questionIndex) => appState.listenQuizSelections[questionIndex] === question.correctIndex
+  );
   const nextSegmentIndex = appState.listenResumeSegmentIndex;
   const trackKey = appState.listenQuizTrackKey;
   const playToken = appState.ttsPlayToken;
-  const explanation = appState.listenQuizQuestion.explanation;
-  resetListenQuizState();
-  setTtsStatus(
-    isCorrect ? `Rätt jobbat. ${explanation}` : `Bra försök. ${explanation}`,
-    isCorrect ? "ready" : "warning"
-  );
+  if (!isCorrect) {
+    appState.listenQuizFeedback = "Fel svar, försök igen.";
+    appState.listenQuizFeedbackTone = "error";
+    renderListenQuiz();
+    return;
+  }
+
+  appState.listenQuizFeedback = "Rätt svar.";
+  appState.listenQuizFeedbackTone = "ready";
+  renderListenQuiz();
   appState.listenQuizFeedbackTimeout = window.setTimeout(() => {
     appState.listenQuizFeedbackTimeout = null;
+    resetListenQuizState();
+    setTtsStatus("Rätt svar.", "ready");
     if (nextSegmentIndex >= 0 && trackKey) {
       playStaticTrackSegment(trackKey, nextSegmentIndex, playToken);
       return;
     }
     setTtsStatus("Förinspelad AI-röst redo.", "ready");
-  }, 700);
+  }, 650);
 }
 
 function renderListenTracks() {
@@ -4865,12 +4909,19 @@ function bindEvents() {
   document.querySelector("#stop-speaking").addEventListener("click", stopSpeaking);
 
   document.querySelector("#listen-quiz-shell").addEventListener("change", (event) => {
-    const input = event.target.closest("[data-listen-quiz-option]");
+    const input = event.target.closest("[data-listen-quiz-question]");
     if (!input || !appState.listenQuizVisible) {
       return;
     }
-    appState.listenQuizSelection = Number(input.dataset.listenQuizOption);
-    handleListenQuizSubmit();
+    appState.listenQuizSelections[input.dataset.listenQuizQuestion] = Number(
+      input.dataset.listenQuizOption
+    );
+  });
+
+  document.querySelector("#listen-quiz-shell").addEventListener("click", (event) => {
+    if (event.target.closest("#listen-quiz-submit")) {
+      handleListenQuizSubmit();
+    }
   });
 
   document.querySelector("#compare-a").addEventListener("change", (event) => {

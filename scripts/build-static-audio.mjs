@@ -17,8 +17,9 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 const OPENAI_TTS_MODEL = process.env.OPENAI_TTS_MODEL || "gpt-4o-mini-tts";
 const OPENAI_TTS_VOICE = process.env.OPENAI_TTS_VOICE || "alloy";
 const OPENAI_TTS_SPEED = clampSpeed(process.env.OPENAI_TTS_SPEED || "0.96");
+const SKIP_AUDIO = process.env.SKIP_AUDIO === "1";
 
-if (!OPENAI_API_KEY) {
+if (!SKIP_AUDIO && !OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY saknas. Lägg nyckeln i .env innan du bygger ljudfilerna.");
 }
 
@@ -44,7 +45,9 @@ for (const track of trackDefinitions) {
   for (const [index, segment] of track.segments.entries()) {
     const fileName = `${track.key}-part${index + 1}.mp3`;
     const filePath = path.join(audioDir, fileName);
-    await writeSpeechFile(segment.text, filePath, track.instructions);
+    if (!SKIP_AUDIO) {
+      await writeSpeechFile(segment.text, filePath, track.instructions);
+    }
     renderedSegments.push({
       key: segment.key,
       label: segment.label,
@@ -271,19 +274,35 @@ function buildContinentQuizzes(api, continent) {
 
   return areaKeys.map((areaKey) => {
     const correct = continent.dimensions[areaKey].summary;
-    const options = createOptions(
+    const summaryOptions = createOptions(
       correct,
       otherContinents.map((item) => item.dimensions[areaKey]?.summary).filter(Boolean),
-      `${continent.id}-${areaKey}`
+      `${continent.id}-${areaKey}-summary`
+    );
+    const exampleCorrect = areaExampleFor(continent, areaKey);
+    const exampleOptions = createOptions(
+      exampleCorrect,
+      otherContinents.map((item) => areaExampleFor(item, areaKey)).filter(Boolean),
+      `${continent.id}-${areaKey}-example`
     );
 
     return {
       key: areaKey,
       label: areaLabel(areaKey),
-      prompt: `Vilket påstående stämmer bäst om ${areaLabel(areaKey).toLowerCase()} i ${continent.name}?`,
-      options,
-      correctIndex: options.indexOf(correct),
-      explanation: `I ${continent.name} gäller: ${correct}`
+      questions: [
+        {
+          prompt: `Vilket påstående stämmer bäst om ${areaLabel(areaKey).toLowerCase()} i ${continent.name}?`,
+          options: summaryOptions,
+          correctIndex: summaryOptions.indexOf(correct),
+          explanation: `I ${continent.name} gäller: ${correct}`
+        },
+        {
+          prompt: `Vilket exempel hör till ${areaLabel(areaKey).toLowerCase()} i ${continent.name}?`,
+          options: exampleOptions,
+          correctIndex: exampleOptions.indexOf(exampleCorrect),
+          explanation: `${exampleCorrect} hör till ${continent.name} i delen om ${areaLabel(areaKey).toLowerCase()}.`
+        }
+      ]
     };
   });
 }
@@ -294,23 +313,43 @@ function buildComparisonQuizzes(api, first, second) {
 
   return rows.map((row) => {
     const correct = `${first.name}: ${row.first}. ${second.name}: ${row.second}.`;
-    const options = createOptions(
+    const summaryOptions = createOptions(
       correct,
       [
         `${first.name}: ${row.second}. ${second.name}: ${row.first}.`,
         `${first.name}: ${row.firstExamples}. ${second.name}: ${row.secondExamples}.`,
         `${first.name}: ${row.firstReason}. ${second.name}: ${row.secondReason}.`
       ],
-      `${first.id}-${second.id}-${row.key}`
+      `${first.id}-${second.id}-${row.key}-summary`
+    );
+    const exampleCorrect = `${first.name}: ${row.firstExamples}. ${second.name}: ${row.secondExamples}.`;
+    const exampleOptions = createOptions(
+      exampleCorrect,
+      [
+        `${first.name}: ${row.secondExamples}. ${second.name}: ${row.firstExamples}.`,
+        `${first.name}: ${row.first}. ${second.name}: ${row.second}.`,
+        `${first.name}: ${row.firstReason}. ${second.name}: ${row.secondReason}.`
+      ],
+      `${first.id}-${second.id}-${row.key}-example`
     );
 
     return {
       key: row.key,
       label: row.label,
-      prompt: `Vilket påstående stämmer om ${row.label.toLowerCase()} när man jämför ${first.name} och ${second.name}?`,
-      options,
-      correctIndex: options.indexOf(correct),
-      explanation: `I jämförelsen sades att ${correct}`
+      questions: [
+        {
+          prompt: `Vilket påstående stämmer om ${row.label.toLowerCase()} när man jämför ${first.name} och ${second.name}?`,
+          options: summaryOptions,
+          correctIndex: summaryOptions.indexOf(correct),
+          explanation: `I jämförelsen sades att ${correct}`
+        },
+        {
+          prompt: `Vilka exempel hör till ${row.label.toLowerCase()} när man jämför ${first.name} och ${second.name}?`,
+          options: exampleOptions,
+          correctIndex: exampleOptions.indexOf(exampleCorrect),
+          explanation: `Exemplen i jämförelsen var: ${exampleCorrect}`
+        }
+      ]
     };
   });
 }
@@ -375,4 +414,17 @@ function areaLabel(areaKey) {
   };
 
   return labels[areaKey] || areaKey;
+}
+
+function areaExampleFor(continent, areaKey) {
+  const exampleByArea = {
+    location: continent.keyPlaces[0] || continent.name,
+    climate: continent.dimensions.climate.tags[0] || continent.dimensions.climate.summary,
+    vegetation: continent.dimensions.vegetation.tags[0] || continent.dimensions.vegetation.summary,
+    population: continent.dimensions.population.tags[0] || continent.dimensions.population.summary,
+    livelihoods: continent.dimensions.livelihoods.tags[0] || continent.dimensions.livelihoods.summary,
+    resources: continent.dimensions.resources.tags[0] || continent.dimensions.resources.summary
+  };
+
+  return exampleByArea[areaKey] || continent.name;
 }
