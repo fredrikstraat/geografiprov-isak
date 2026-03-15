@@ -1123,18 +1123,36 @@ body.lesson-focus.focus-step-game #panel-game .reward-card {
   display: none;
 }
 
+#listen-quiz-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+}
+
+.listen-quiz-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 27, 38, 0.45);
+  backdrop-filter: blur(4px);
+}
+
 .listen-quiz-card {
-  margin-top: 0.9rem;
+  position: relative;
+  z-index: 1;
+  width: min(560px, 100%);
   border-radius: 22px;
   border: 1px solid rgba(15, 124, 130, 0.18);
   background: linear-gradient(180deg, rgba(236, 247, 246, 0.95), rgba(248, 241, 230, 0.98));
-  padding: 1rem;
+  box-shadow: 0 24px 60px rgba(17, 27, 38, 0.28);
+  padding: 1.1rem;
   display: grid;
   gap: 0.9rem;
 }
 
-.listen-quiz-header,
-.listen-quiz-footer {
+.listen-quiz-header {
   display: flex;
   align-items: center;
   justify-content: space-between;

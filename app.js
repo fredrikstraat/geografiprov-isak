@@ -1182,10 +1182,9 @@ const appState = {
   listenResumeSegmentIndex: -1,
   listenQuizVisible: false,
   listenQuizTrackKey: "",
-  listenQuizQuestions: [],
-  listenQuizSelections: {},
-  listenQuizSubmitted: false,
-  listenQuizScore: 0,
+  listenQuizQuestion: null,
+  listenQuizSelection: null,
+  listenQuizFeedbackTimeout: null,
   quizBank: [],
   quizRound: [],
   quizIndex: 0,
@@ -2649,15 +2648,7 @@ function buildContinentStudyContent(continent) {
     })
     .join("");
 
-  const speechSections = guideAreas.map((area) => {
-    const dimension = continent.dimensions[area.key];
-    return [
-      `${area.label}.`,
-      `I ${continent.name} ser man att ${dimension.summary.toLowerCase()}.`,
-      `Det hänger ihop med att ${dimension.reason.toLowerCase()}.`,
-      `Tänk på ${areaExamplesText(continent, area)}.`
-    ].join(" ");
-  });
+  const speechSections = buildContinentSpeechSections(continent).map((section) => section.text);
 
   return {
     html: `
@@ -2707,6 +2698,28 @@ function buildContinentStudyContent(continent) {
       `Bra jobbat Isak. Nu är du redo för nästa steg.`
     ].join(" ")
   };
+}
+
+function buildContinentSpeechSections(continent) {
+  return guideAreas.map((area, index) => {
+    const dimension = continent.dimensions[area.key];
+    const opening =
+      index === 0
+        ? `${continent.name}. Vi tar en kort genomgång med det viktigaste du behöver kunna. ${area.label}.`
+        : `${area.label}.`;
+
+    return {
+      key: area.key,
+      label: area.label,
+      prompt: area.prompt,
+      text: [
+        opening,
+        `I ${continent.name} ser man att ${dimension.summary.toLowerCase()}.`,
+        `Det hänger ihop med att ${dimension.reason.toLowerCase()}.`,
+        `Tänk på ${areaExamplesText(continent, area)}.`
+      ].join(" ")
+    };
+  });
 }
 
 function renderDrillCategories() {
@@ -2961,23 +2974,23 @@ function getStaticAudioTrack(trackKey) {
 function resetListenQuizState() {
   appState.listenQuizVisible = false;
   appState.listenQuizTrackKey = "";
-  appState.listenQuizQuestions = [];
-  appState.listenQuizSelections = {};
-  appState.listenQuizSubmitted = false;
-  appState.listenQuizScore = 0;
+  appState.listenQuizQuestion = null;
+  appState.listenQuizSelection = null;
   appState.listenResumeSegmentIndex = -1;
+  if (appState.listenQuizFeedbackTimeout) {
+    clearTimeout(appState.listenQuizFeedbackTimeout);
+    appState.listenQuizFeedbackTimeout = null;
+  }
   renderListenQuiz();
 }
 
-function showListenQuiz(trackKey, questions, nextSegmentIndex) {
+function showListenQuiz(trackKey, question, nextSegmentIndex) {
   appState.listenQuizVisible = true;
   appState.listenQuizTrackKey = trackKey;
-  appState.listenQuizQuestions = questions;
-  appState.listenQuizSelections = {};
-  appState.listenQuizSubmitted = false;
-  appState.listenQuizScore = 0;
+  appState.listenQuizQuestion = question;
+  appState.listenQuizSelection = null;
   appState.listenResumeSegmentIndex = nextSegmentIndex;
-  setTtsStatus("Kort paus. Svara på frågorna och fortsätt sedan lyssna.", "ready");
+  setTtsStatus("Kort paus. Svara på frågan så fortsätter uppläsningen.", "ready");
   renderListenQuiz();
 }
 
@@ -2987,84 +3000,49 @@ function renderListenQuiz() {
     return;
   }
 
-  if (!appState.listenQuizVisible || !appState.listenQuizQuestions.length) {
+  if (!appState.listenQuizVisible || !appState.listenQuizQuestion) {
     shell.hidden = true;
     shell.innerHTML = "";
     return;
   }
 
-  const totalQuestions = appState.listenQuizQuestions.length;
-  const answeredQuestions = Object.keys(appState.listenQuizSelections).length;
+  const question = appState.listenQuizQuestion;
   shell.hidden = false;
   shell.innerHTML = `
-    <article class="listen-quiz-card">
+    <div class="listen-quiz-backdrop"></div>
+    <article class="listen-quiz-card" role="dialog" aria-modal="true" aria-labelledby="listen-quiz-title">
       <div class="listen-quiz-header">
         <div>
           <p class="panel-label">Kort stopp</p>
-          <h4>Checka att det sitter, Isak</h4>
+          <h4 id="listen-quiz-title">Checka att det sitter, Isak</h4>
         </div>
-        <span class="listen-quiz-badge">${answeredQuestions}/${totalQuestions} svar</span>
+        <span class="listen-quiz-badge">${question.label}</span>
       </div>
       <p class="microcopy">
-        Svara på frågorna i lugn takt. När du är klar fortsätter resten av uppläsningen.
+        Svara på en snabb fråga om det du just lyssnade på. Sedan fortsätter uppläsningen direkt.
       </p>
-      <div class="listen-quiz-question-list">
-        ${appState.listenQuizQuestions
-          .map((question, questionIndex) => {
-            const selectedIndex = appState.listenQuizSelections[questionIndex];
-            const isCorrect = selectedIndex === question.correctIndex;
-            return `
-              <article class="listen-quiz-question ${appState.listenQuizSubmitted ? (isCorrect ? "is-correct" : "is-wrong") : ""}">
-                <p><strong>Fråga ${questionIndex + 1}.</strong> ${question.prompt}</p>
-                <div class="listen-quiz-options">
-                  ${question.options
-                    .map((option, optionIndex) => {
-                      const inputId = `listen-quiz-${questionIndex}-${optionIndex}`;
-                      const checked = selectedIndex === optionIndex ? "checked" : "";
-                      const disabled = appState.listenQuizSubmitted ? "disabled" : "";
-                      return `
-                        <label class="listen-quiz-option" for="${inputId}">
-                          <input
-                            id="${inputId}"
-                            type="radio"
-                            name="listen-quiz-${questionIndex}"
-                            value="${optionIndex}"
-                            data-listen-quiz-question="${questionIndex}"
-                            data-listen-quiz-option="${optionIndex}"
-                            ${checked}
-                            ${disabled}
-                          />
-                          <span>${option}</span>
-                        </label>
-                      `;
-                    })
-                    .join("")}
-                </div>
-                ${
-                  appState.listenQuizSubmitted
-                    ? `
-                      <p class="listen-quiz-feedback ${isCorrect ? "is-correct" : "is-wrong"}">
-                        ${isCorrect ? "Rätt jobbat." : "Bra försök."}
-                      </p>
-                      <p class="microcopy">${question.explanation}</p>
-                    `
-                    : ""
-                }
-              </article>
-            `;
-          })
-          .join("")}
-      </div>
-      <div class="listen-quiz-footer">
-        ${
-          appState.listenQuizSubmitted
-            ? `<p class="listen-quiz-score">Du fick ${appState.listenQuizScore} av ${totalQuestions} rätt.</p>`
-            : `<p class="microcopy">Två korta frågor räcker. Sedan fortsätter rösten direkt.</p>`
-        }
-        <button class="primary" id="listen-quiz-submit">
-          ${appState.listenQuizSubmitted ? "Fortsätt lyssna" : "Rätta och fortsätt"}
-        </button>
-      </div>
+      <article class="listen-quiz-question">
+        <p><strong>Fråga.</strong> ${question.prompt}</p>
+        <div class="listen-quiz-options">
+          ${question.options
+            .map((option, optionIndex) => {
+              const inputId = `listen-quiz-option-${optionIndex}`;
+              return `
+                <label class="listen-quiz-option" for="${inputId}">
+                  <input
+                    id="${inputId}"
+                    type="radio"
+                    name="listen-quiz-current"
+                    value="${optionIndex}"
+                    data-listen-quiz-option="${optionIndex}"
+                  />
+                  <span>${option}</span>
+                </label>
+              `;
+            })
+            .join("")}
+        </div>
+      </article>
     </article>
   `;
 }
@@ -3148,14 +3126,13 @@ function playStaticTrackSegment(trackKey, segmentIndex, playToken) {
       return;
     }
 
-    const shouldPauseForQuiz =
-      trackData.checkpointQuiz?.afterSegment === segmentIndex &&
-      Array.isArray(trackData.checkpointQuiz.questions) &&
-      trackData.checkpointQuiz.questions.length > 0 &&
-      segmentIndex + 1 < trackData.segments.length;
-
-    if (shouldPauseForQuiz) {
-      showListenQuiz(trackKey, trackData.checkpointQuiz.questions, segmentIndex + 1);
+    const quizQuestion = trackData.segmentQuizzes?.[segmentIndex] || null;
+    if (quizQuestion) {
+      showListenQuiz(
+        trackKey,
+        quizQuestion,
+        segmentIndex + 1 < trackData.segments.length ? segmentIndex + 1 : -1
+      );
       return;
     }
 
@@ -3216,34 +3193,28 @@ async function beginListenPlayback(track) {
 }
 
 function handleListenQuizSubmit() {
-  if (!appState.listenQuizVisible) {
+  if (!appState.listenQuizVisible || !appState.listenQuizQuestion) {
     return;
   }
 
-  if (!appState.listenQuizSubmitted) {
-    const unanswered = appState.listenQuizQuestions.some(
-      (_question, questionIndex) => !(questionIndex in appState.listenQuizSelections)
-    );
-    if (unanswered) {
-      alert("Svara på alla frågorna först, Isak.");
-      return;
-    }
-
-    appState.listenQuizScore = appState.listenQuizQuestions.reduce((score, question, questionIndex) => {
-      return score + (appState.listenQuizSelections[questionIndex] === question.correctIndex ? 1 : 0);
-    }, 0);
-    appState.listenQuizSubmitted = true;
-    renderListenQuiz();
-    return;
-  }
-
+  const isCorrect = appState.listenQuizSelection === appState.listenQuizQuestion.correctIndex;
   const nextSegmentIndex = appState.listenResumeSegmentIndex;
   const trackKey = appState.listenQuizTrackKey;
   const playToken = appState.ttsPlayToken;
+  const explanation = appState.listenQuizQuestion.explanation;
   resetListenQuizState();
-  if (nextSegmentIndex >= 0 && trackKey) {
-    playStaticTrackSegment(trackKey, nextSegmentIndex, playToken);
-  }
+  setTtsStatus(
+    isCorrect ? `Rätt jobbat. ${explanation}` : `Bra försök. ${explanation}`,
+    isCorrect ? "ready" : "warning"
+  );
+  appState.listenQuizFeedbackTimeout = window.setTimeout(() => {
+    appState.listenQuizFeedbackTimeout = null;
+    if (nextSegmentIndex >= 0 && trackKey) {
+      playStaticTrackSegment(trackKey, nextSegmentIndex, playToken);
+      return;
+    }
+    setTtsStatus("Förinspelad AI-röst redo.", "ready");
+  }, 700);
 }
 
 function renderListenTracks() {
@@ -4364,21 +4335,34 @@ function splitTextForTts(text, options = {}) {
 }
 
 function buildComparisonSpeechText() {
-  const rows = buildComparisonRows();
-  if (!rows.length) {
+  const sections = buildComparisonSpeechSections();
+  if (!sections.length) {
     return "";
   }
+  return sections.map((section) => section.text).join(" ");
+}
+
+function buildComparisonSpeechSections() {
+  const rows = buildComparisonRows();
+  if (!rows.length) {
+    return [];
+  }
+
   const first = continentById(appState.compareA);
   const second = continentById(appState.compareB);
-  return [
-    `Din guide för att jämföra ${first.name} och ${second.name}.`,
-    "Bygg svaret i tre steg: vad, varför och exempel.",
-    ...rows.map(
-      (row) =>
-        `${row.label}. ${first.name} har ${row.first}, medan ${second.name} har ${row.second}. Det beror på att ${row.firstName} ${row.firstReason.toLowerCase()}, medan ${row.secondName} ${row.secondReason.toLowerCase()}. Tänk på ${row.firstExamples} och ${row.secondExamples}.`
-    ),
-    `När du skriver börjar du med vad som skiljer sig, sedan varför, och sist exempel.`
-  ].join(" ");
+
+  return rows.map((row, index) => ({
+    key: row.key,
+    label: row.label,
+    text: [
+      index === 0
+        ? `Din guide för att jämföra ${first.name} och ${second.name}. Bygg svaret i tre steg: vad, varför och exempel. ${row.label}.`
+        : `${row.label}.`,
+      `${first.name} har ${row.first}, medan ${second.name} har ${row.second}.`,
+      `Det beror på att ${row.firstName} ${row.firstReason.toLowerCase()}, medan ${row.secondName} ${row.secondReason.toLowerCase()}.`,
+      `Tänk på ${row.firstExamples} och ${row.secondExamples}.`
+    ].join(" ")
+  }));
 }
 
 function waitForAudioMetadata(audioElement) {
@@ -4881,20 +4865,12 @@ function bindEvents() {
   document.querySelector("#stop-speaking").addEventListener("click", stopSpeaking);
 
   document.querySelector("#listen-quiz-shell").addEventListener("change", (event) => {
-    const input = event.target.closest("[data-listen-quiz-question]");
-    if (!input || appState.listenQuizSubmitted) {
+    const input = event.target.closest("[data-listen-quiz-option]");
+    if (!input || !appState.listenQuizVisible) {
       return;
     }
-    appState.listenQuizSelections[input.dataset.listenQuizQuestion] = Number(
-      input.dataset.listenQuizOption
-    );
-    renderListenQuiz();
-  });
-
-  document.querySelector("#listen-quiz-shell").addEventListener("click", (event) => {
-    if (event.target.closest("#listen-quiz-submit")) {
-      handleListenQuizSubmit();
-    }
+    appState.listenQuizSelection = Number(input.dataset.listenQuizOption);
+    handleListenQuizSubmit();
   });
 
   document.querySelector("#compare-a").addEventListener("change", (event) => {

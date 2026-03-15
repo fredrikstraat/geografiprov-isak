@@ -28,7 +28,7 @@ const trackDefinitions = buildTrackDefinitions(studyApi);
 await mkdir(audioDir, { recursive: true });
 
 const manifest = {
-  version: 1,
+  version: 2,
   generatedAt: new Date().toISOString(),
   provider: "openai",
   model: OPENAI_TTS_MODEL,
@@ -39,17 +39,18 @@ const manifest = {
 
 for (const track of trackDefinitions) {
   console.log(`Building ${track.key}...`);
-  const segments = splitTrackSpeech(track.speechText);
   const renderedSegments = [];
 
-  for (const [index, segmentText] of segments.entries()) {
+  for (const [index, segment] of track.segments.entries()) {
     const fileName = `${track.key}-part${index + 1}.mp3`;
     const filePath = path.join(audioDir, fileName);
-    await writeSpeechFile(segmentText, filePath, track.instructions);
+    await writeSpeechFile(segment.text, filePath, track.instructions);
     renderedSegments.push({
+      key: segment.key,
+      label: segment.label,
       file: `audio/${fileName}`,
-      durationSeconds: estimateSpeechDuration(segmentText),
-      textHash: hashText(segmentText)
+      durationSeconds: estimateSpeechDuration(segment.text),
+      textHash: hashText(segment.text)
     });
   }
 
@@ -64,10 +65,7 @@ for (const track of trackDefinitions) {
       0
     ),
     segments: renderedSegments,
-    checkpointQuiz: {
-      afterSegment: 0,
-      questions: track.questions
-    }
+    segmentQuizzes: track.segmentQuizzes
   };
 }
 
@@ -173,15 +171,12 @@ async function loadStudyApi() {
     `${source}
 globalThis.__studyExport = {
   continents,
-  appState,
-  areaExamplesByContinent,
   buildComparisonRows,
-  buildComparisonSpeechText,
-  buildContinentStudyContent,
+  buildComparisonSpeechSections,
+  buildContinentSpeechSections,
   buildSpeechInstructions,
   continentById,
-  setComparisonPair,
-  splitTextForTts
+  setComparisonPair
 };`,
     context,
     { filename: "app.js" }
@@ -228,18 +223,15 @@ function createStubElement() {
 }
 
 function buildTrackDefinitions(api) {
-  const continentTracks = api.continents.map((continent) => {
-    const content = api.buildContinentStudyContent(continent);
-    return {
-      key: `track-${continent.id}`,
-      trackId: `track-${continent.id}`,
-      title: continent.name,
-      kind: "continent",
-      speechText: content.speechText,
-      instructions: api.buildSpeechInstructions("lesson"),
-      questions: buildContinentQuiz(api, continent)
-    };
-  });
+  const continentTracks = api.continents.map((continent) => ({
+    key: `track-${continent.id}`,
+    trackId: `track-${continent.id}`,
+    title: continent.name,
+    kind: "continent",
+    segments: api.buildContinentSpeechSections(continent),
+    instructions: api.buildSpeechInstructions("lesson"),
+    segmentQuizzes: buildContinentQuizzes(api, continent)
+  }));
 
   const compareTracks = [];
   for (const first of api.continents) {
@@ -256,9 +248,9 @@ function buildTrackDefinitions(api) {
         kind: "compare",
         compareA: first.id,
         compareB: second.id,
-        speechText: api.buildComparisonSpeechText(),
+        segments: api.buildComparisonSpeechSections(),
         instructions: api.buildSpeechInstructions("comparison"),
-        questions: buildComparisonQuiz(api, first, second)
+        segmentQuizzes: buildComparisonQuizzes(api, first, second)
       });
     }
   }
@@ -266,81 +258,61 @@ function buildTrackDefinitions(api) {
   return [...continentTracks, ...compareTracks];
 }
 
-function buildContinentQuiz(api, continent) {
+function buildContinentQuizzes(api, continent) {
   const otherContinents = api.continents.filter((item) => item.id !== continent.id);
-  const climateCorrect = continent.dimensions.climate.summary;
-  const climateOptions = createOptions(
-    climateCorrect,
-    otherContinents.map((item) => item.dimensions.climate.summary),
-    `${continent.id}-climate`
-  );
-  const exampleCorrect =
-    continent.keyPlaces[0] || api.areaExamplesByContinent[continent.id]?.resources || continent.name;
-  const exampleOptions = createOptions(
-    exampleCorrect,
-    otherContinents
-      .map((item) => item.keyPlaces[0] || api.areaExamplesByContinent[item.id]?.resources)
-      .filter(Boolean),
-    `${continent.id}-example`
-  );
-
-  return [
-    {
-      prompt: `Vilket påstående stämmer bäst om klimatet i ${continent.name}?`,
-      options: climateOptions,
-      correctIndex: climateOptions.indexOf(climateCorrect),
-      explanation: `I ${continent.name} gäller: ${climateCorrect}`
-    },
-    {
-      prompt: `Vilket exempel hör till ${continent.name}?`,
-      options: exampleOptions,
-      correctIndex: exampleOptions.indexOf(exampleCorrect),
-      explanation: `${exampleCorrect} hör till ${continent.name} och nämndes i genomgången.`
-    }
+  const areaKeys = [
+    "location",
+    "climate",
+    "vegetation",
+    "population",
+    "livelihoods",
+    "resources"
   ];
+
+  return areaKeys.map((areaKey) => {
+    const correct = continent.dimensions[areaKey].summary;
+    const options = createOptions(
+      correct,
+      otherContinents.map((item) => item.dimensions[areaKey]?.summary).filter(Boolean),
+      `${continent.id}-${areaKey}`
+    );
+
+    return {
+      key: areaKey,
+      label: areaLabel(areaKey),
+      prompt: `Vilket påstående stämmer bäst om ${areaLabel(areaKey).toLowerCase()} i ${continent.name}?`,
+      options,
+      correctIndex: options.indexOf(correct),
+      explanation: `I ${continent.name} gäller: ${correct}`
+    };
+  });
 }
 
-function buildComparisonQuiz(api, first, second) {
+function buildComparisonQuizzes(api, first, second) {
   api.setComparisonPair(first.id, second.id);
   const rows = api.buildComparisonRows();
-  const climateRow = rows.find((row) => row.key === "climate") || rows[0];
-  const resourcesRow = rows.find((row) => row.key === "resources") || rows[1] || rows[0];
-  const livelihoodsRow = rows.find((row) => row.key === "livelihoods") || rows[2] || rows[0];
-  const correctComparison = `${first.name}: ${climateRow.first}. ${second.name}: ${climateRow.second}.`;
-  const comparisonOptions = createOptions(
-    correctComparison,
-    [
-      `${first.name}: ${climateRow.second}. ${second.name}: ${climateRow.first}.`,
-      `${first.name}: ${resourcesRow.first}. ${second.name}: ${resourcesRow.second}.`,
-      `${first.name}: ${livelihoodsRow.first}. ${second.name}: ${livelihoodsRow.second}.`
-    ],
-    `${first.id}-${second.id}-comparison`
-  );
 
-  const exampleCorrect = climateRow.firstExamples;
-  const otherNames = api.continents
-    .filter((continent) => continent.id !== first.id && continent.id !== second.id)
-    .map((continent) => continent.name);
-  const exampleOptions = createOptions(
-    first.name,
-    [second.name, ...otherNames],
-    `${first.id}-${second.id}-example`
-  );
+  return rows.map((row) => {
+    const correct = `${first.name}: ${row.first}. ${second.name}: ${row.second}.`;
+    const options = createOptions(
+      correct,
+      [
+        `${first.name}: ${row.second}. ${second.name}: ${row.first}.`,
+        `${first.name}: ${row.firstExamples}. ${second.name}: ${row.secondExamples}.`,
+        `${first.name}: ${row.firstReason}. ${second.name}: ${row.secondReason}.`
+      ],
+      `${first.id}-${second.id}-${row.key}`
+    );
 
-  return [
-    {
-      prompt: `Vilket påstående stämmer om klimatet när man jämför ${first.name} och ${second.name}?`,
-      options: comparisonOptions,
-      correctIndex: comparisonOptions.indexOf(correctComparison),
-      explanation: `I jämförelsen sades att ${correctComparison}`
-    },
-    {
-      prompt: `Vilken världsdel kopplades till ${exampleCorrect}?`,
-      options: exampleOptions,
-      correctIndex: exampleOptions.indexOf(first.name),
-      explanation: `${exampleCorrect} hörde till ${first.name} i jämförelsen.`
-    }
-  ];
+    return {
+      key: row.key,
+      label: row.label,
+      prompt: `Vilket påstående stämmer om ${row.label.toLowerCase()} när man jämför ${first.name} och ${second.name}?`,
+      options,
+      correctIndex: options.indexOf(correct),
+      explanation: `I jämförelsen sades att ${correct}`
+    };
+  });
 }
 
 function createOptions(correct, distractors, seed) {
@@ -352,19 +324,6 @@ function createOptions(correct, distractors, seed) {
   const insertIndex = Number.parseInt(hashText(seed).slice(0, 2), 16) % (uniqueDistractors.length + 1);
   options.splice(insertIndex, 0, correct);
   return options;
-}
-
-function splitTrackSpeech(text) {
-  const chunks = studyApi.splitTextForTts(text, {
-    firstChunkWords: 60,
-    firstChunkChars: 950
-  });
-
-  if (chunks.length <= 1) {
-    return chunks;
-  }
-
-  return [chunks[0], chunks.slice(1).join(" ")];
 }
 
 async function writeSpeechFile(text, outputPath, instructions) {
@@ -398,9 +357,22 @@ function estimateSpeechDuration(text) {
     .trim()
     .split(/\s+/)
     .filter(Boolean).length;
-  return Math.max(12, Math.round((words / 125) * 60));
+  return Math.max(10, Math.round((words / 125) * 60));
 }
 
 function hashText(text) {
   return createHash("sha256").update(String(text)).digest("hex");
+}
+
+function areaLabel(areaKey) {
+  const labels = {
+    location: "Läge",
+    climate: "Klimat",
+    vegetation: "Vegetation",
+    population: "Befolkning",
+    livelihoods: "Försörjning",
+    resources: "Naturresurser"
+  };
+
+  return labels[areaKey] || areaKey;
 }
