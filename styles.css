@@ -1188,10 +1188,12 @@ body.lesson-focus.focus-step-game #panel-game .reward-card {
 
 .listen-quiz-question.is-correct {
   border-color: rgba(15, 124, 130, 0.24);
+  background: rgba(236, 249, 245, 0.96);
 }
 
 .listen-quiz-question.is-wrong {
   border-color: rgba(200, 106, 67, 0.24);
+  background: rgba(255, 244, 238, 0.96);
 }
 
 .listen-quiz-options {
@@ -1209,6 +1211,16 @@ body.lesson-focus.focus-step-game #panel-game .reward-card {
   padding: 0.7rem 0.8rem;
 }
 
+.listen-quiz-option.is-correct {
+  border-color: rgba(15, 124, 130, 0.3);
+  background: rgba(230, 247, 241, 0.95);
+}
+
+.listen-quiz-option.is-wrong {
+  border-color: rgba(200, 106, 67, 0.3);
+  background: rgba(255, 240, 234, 0.96);
+}
+
 .listen-quiz-option input {
   margin-top: 0.15rem;
 }
@@ -1224,6 +1236,19 @@ body.lesson-focus.focus-step-game #panel-game .reward-card {
 }
 
 .listen-quiz-feedback.is-wrong {
+  color: #8f4225;
+}
+
+.listen-quiz-inline-feedback {
+  margin: 0;
+  font-weight: 700;
+}
+
+.listen-quiz-inline-feedback.is-correct {
+  color: var(--teal);
+}
+
+.listen-quiz-inline-feedback.is-wrong {
   color: #8f4225;
 }
 

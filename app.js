@@ -1185,6 +1185,7 @@ const appState = {
   listenQuizTitle: "",
   listenQuizQuestions: [],
   listenQuizSelections: {},
+  listenQuizResults: {},
   listenQuizFeedback: "",
   listenQuizFeedbackTone: "muted",
   listenQuizFeedbackTimeout: null,
@@ -2206,13 +2207,14 @@ const rewardGameConfig = {
   width: 760,
   height: 320,
   globeX: 150,
-  globeRadius: 20,
-  gravity: 820,
-  boost: -290,
-  obstacleWidth: 66,
-  obstacleGap: 118,
-  obstacleSpeed: 180,
-  spawnSpacing: 260
+  globeRadius: 22,
+  collisionRadius: 17,
+  gravity: 700,
+  boost: -250,
+  obstacleWidth: 60,
+  obstacleGap: 144,
+  obstacleSpeed: 148,
+  spawnSpacing: 280
 };
 
 function rewardGameStatusText() {
@@ -2328,7 +2330,7 @@ function resetRewardGameState() {
   appState.rewardGameGlobeY = rewardGameConfig.height / 2;
   appState.rewardGameGlobeVelocity = 0;
   appState.rewardGameObstacles = [];
-  appState.rewardGameMessage = "Tryck på start och hjälp globen mellan öarna.";
+  appState.rewardGameMessage = "Tryck på start och hjälp jordgloben mjukt mellan öarna.";
 }
 
 function stopRewardGameLoop() {
@@ -2340,7 +2342,7 @@ function stopRewardGameLoop() {
 }
 
 function createRewardObstacle(x) {
-  const safeMargin = 46;
+  const safeMargin = 54;
   const gapRange = rewardGameConfig.height - rewardGameConfig.obstacleGap - safeMargin * 2;
   const gapTop = safeMargin + Math.random() * gapRange;
   return {
@@ -2356,7 +2358,7 @@ function startRewardGame() {
   resetRewardGameState();
   appState.rewardGameStarted = true;
   appState.rewardGameRunning = true;
-  appState.rewardGameMessage = "Nu kör vi, Isak. Ta dig mellan öarna.";
+  appState.rewardGameMessage = "Nu kör vi, Isak. Ta dig lugnt mellan öarna.";
   appState.rewardGameObstacles = [
     createRewardObstacle(rewardGameConfig.width + 120),
     createRewardObstacle(rewardGameConfig.width + 120 + rewardGameConfig.spawnSpacing),
@@ -2375,17 +2377,19 @@ function queueRewardGameBoost() {
 }
 
 function rewardGameBoundsHit() {
+  const radius = rewardGameConfig.collisionRadius;
   return (
-    appState.rewardGameGlobeY - rewardGameConfig.globeRadius <= 0 ||
-    appState.rewardGameGlobeY + rewardGameConfig.globeRadius >= rewardGameConfig.height
+    appState.rewardGameGlobeY - radius <= 6 ||
+    appState.rewardGameGlobeY + radius >= rewardGameConfig.height - 6
   );
 }
 
 function rewardGameObstacleHit(obstacle) {
-  const globeLeft = rewardGameConfig.globeX - rewardGameConfig.globeRadius;
-  const globeRight = rewardGameConfig.globeX + rewardGameConfig.globeRadius;
-  const globeTop = appState.rewardGameGlobeY - rewardGameConfig.globeRadius;
-  const globeBottom = appState.rewardGameGlobeY + rewardGameConfig.globeRadius;
+  const radius = rewardGameConfig.collisionRadius;
+  const globeLeft = rewardGameConfig.globeX - radius;
+  const globeRight = rewardGameConfig.globeX + radius;
+  const globeTop = appState.rewardGameGlobeY - radius;
+  const globeBottom = appState.rewardGameGlobeY + radius;
   const obstacleRight = obstacle.x + obstacle.width;
   const gapBottom = obstacle.gapTop + rewardGameConfig.obstacleGap;
   const overlapsX = globeRight > obstacle.x && globeLeft < obstacleRight;
@@ -2401,7 +2405,7 @@ function finishRewardGame(crashed = false) {
     saveJson("geografi-reward-game-best", appState.rewardGameBest);
   }
   appState.rewardGameMessage = crashed
-    ? `Du fick ${appState.rewardGameScore} poäng. Bra kämpat, Isak.`
+    ? `Du fick ${appState.rewardGameScore} poäng. Bra kämpat, Isak. Testa igen.`
     : `Snyggt, Isak. Du avslutade på ${appState.rewardGameScore} poäng.`;
   updateRewardGameHud();
   drawRewardGameFrame();
@@ -2422,6 +2426,7 @@ function runRewardGameFrame(timestamp) {
   }
 
   appState.rewardGameGlobeVelocity += rewardGameConfig.gravity * delta;
+  appState.rewardGameGlobeVelocity = Math.min(appState.rewardGameGlobeVelocity, 320);
   appState.rewardGameGlobeY += appState.rewardGameGlobeVelocity * delta;
 
   let rightmostX = 0;
@@ -2432,7 +2437,7 @@ function runRewardGameFrame(timestamp) {
       if (!nextObstacle.scored && nextObstacle.x + nextObstacle.width < rewardGameConfig.globeX) {
         nextObstacle.scored = true;
         appState.rewardGameScore += 1;
-        appState.rewardGameMessage = `Snyggt, Isak. Nu har du ${appState.rewardGameScore} poäng.`;
+        appState.rewardGameMessage = `Snyggt, Isak. Nu har du ${appState.rewardGameScore} poäng. Fortsätt så.`;
       }
       return nextObstacle;
     })
@@ -2534,23 +2539,48 @@ function drawRewardGameFrame() {
   context.save();
   context.translate(globeX, appState.rewardGameGlobeY);
   context.rotate(Math.max(-0.35, Math.min(0.35, appState.rewardGameGlobeVelocity / 400)));
-  context.fillStyle = "#2b8db7";
+
+  context.shadowColor = "rgba(22, 53, 76, 0.22)";
+  context.shadowBlur = 18;
+  context.shadowOffsetY = 8;
+  const globeGradient = context.createRadialGradient(-6, -8, 4, 0, 0, globeRadius);
+  globeGradient.addColorStop(0, "#7fd4ff");
+  globeGradient.addColorStop(0.55, "#2b8db7");
+  globeGradient.addColorStop(1, "#16547a");
+  context.fillStyle = globeGradient;
   context.beginPath();
   context.arc(0, 0, globeRadius, 0, Math.PI * 2);
   context.fill();
-  context.fillStyle = "#8fbd68";
+  context.shadowColor = "transparent";
+
+  context.fillStyle = "#88bd63";
   context.beginPath();
-  context.ellipse(-5, -3, 8, 5, 0.3, 0, Math.PI * 2);
-  context.ellipse(7, 4, 6, 4, -0.5, 0, Math.PI * 2);
-  context.ellipse(-2, 10, 5, 3, 0.1, 0, Math.PI * 2);
+  context.ellipse(-7, -5, 9, 6, 0.22, 0, Math.PI * 2);
+  context.ellipse(8, 3, 7, 5, -0.45, 0, Math.PI * 2);
+  context.ellipse(-1, 10, 6, 3.6, 0.08, 0, Math.PI * 2);
+  context.ellipse(4, -11, 4.8, 2.8, 0.4, 0, Math.PI * 2);
   context.fill();
-  context.strokeStyle = "rgba(255, 255, 255, 0.85)";
-  context.lineWidth = 1.5;
+
+  context.strokeStyle = "rgba(255, 255, 255, 0.72)";
+  context.lineWidth = 1.35;
   context.beginPath();
-  context.arc(0, 0, globeRadius - 4, 0.6, 2.4);
+  context.arc(0, 0, globeRadius - 3.8, 0.5, 2.55);
   context.stroke();
   context.beginPath();
-  context.arc(0, 0, globeRadius - 8, -1.1, 1.2);
+  context.arc(0, 0, globeRadius - 8.2, -1.05, 1.15);
+  context.stroke();
+  context.beginPath();
+  context.moveTo(-globeRadius + 6, -2);
+  context.quadraticCurveTo(0, -globeRadius + 5, globeRadius - 4, -3);
+  context.stroke();
+  context.beginPath();
+  context.moveTo(-globeRadius + 5, 7);
+  context.quadraticCurveTo(1, 1, globeRadius - 5, 8);
+  context.stroke();
+
+  context.fillStyle = "rgba(255, 255, 255, 0.22)";
+  context.beginPath();
+  context.ellipse(-8, -9, 7, 5, -0.45, 0, Math.PI * 2);
   context.stroke();
   context.restore();
 }
@@ -2980,6 +3010,7 @@ function resetListenQuizState() {
   appState.listenQuizTitle = "";
   appState.listenQuizQuestions = [];
   appState.listenQuizSelections = {};
+  appState.listenQuizResults = {};
   appState.listenQuizFeedback = "";
   appState.listenQuizFeedbackTone = "muted";
   appState.listenResumeSegmentIndex = -1;
@@ -2996,6 +3027,7 @@ function showListenQuiz(trackKey, quizGroup, nextSegmentIndex) {
   appState.listenQuizTitle = quizGroup.label || "Quiz";
   appState.listenQuizQuestions = Array.isArray(quizGroup.questions) ? quizGroup.questions : [];
   appState.listenQuizSelections = {};
+  appState.listenQuizResults = {};
   appState.listenQuizFeedback = "";
   appState.listenQuizFeedbackTone = "muted";
   appState.listenResumeSegmentIndex = nextSegmentIndex;
@@ -3034,15 +3066,19 @@ function renderListenQuiz() {
         ${questions
           .map((question, questionIndex) => {
             const selectedIndex = appState.listenQuizSelections[questionIndex];
+            const result = appState.listenQuizResults[questionIndex] || null;
             return `
-              <article class="listen-quiz-question">
+              <article class="listen-quiz-question ${result === true ? "is-correct" : result === false ? "is-wrong" : ""}">
                 <p><strong>Fråga ${questionIndex + 1}.</strong> ${question.prompt}</p>
                 <div class="listen-quiz-options">
                   ${question.options
                     .map((option, optionIndex) => {
                       const inputId = `listen-quiz-option-${questionIndex}-${optionIndex}`;
+                      const isCorrectOption = result !== null && optionIndex === question.correctIndex;
+                      const isWrongSelected =
+                        result === false && selectedIndex === optionIndex && optionIndex !== question.correctIndex;
                       return `
-                        <label class="listen-quiz-option" for="${inputId}">
+                        <label class="listen-quiz-option ${isCorrectOption ? "is-correct" : ""} ${isWrongSelected ? "is-wrong" : ""}" for="${inputId}">
                           <input
                             id="${inputId}"
                             type="radio"
@@ -3058,6 +3094,13 @@ function renderListenQuiz() {
                     })
                     .join("")}
                 </div>
+                ${
+                  result === true
+                    ? `<p class="listen-quiz-inline-feedback is-correct">Rätt svar.</p>`
+                    : result === false
+                      ? `<p class="listen-quiz-inline-feedback is-wrong">Fel svar på fråga ${questionIndex + 1}, försök igen.</p>`
+                      : ""
+                }
               </article>
             `;
           })
@@ -3227,15 +3270,20 @@ function handleListenQuizSubmit() {
     (_question, questionIndex) => questionIndex in appState.listenQuizSelections
   );
   if (!allAnswered) {
+    appState.listenQuizResults = {};
     appState.listenQuizFeedback = "Svara på båda frågorna först.";
     appState.listenQuizFeedbackTone = "error";
     renderListenQuiz();
     return;
   }
 
-  const isCorrect = appState.listenQuizQuestions.every(
-    (question, questionIndex) => appState.listenQuizSelections[questionIndex] === question.correctIndex
+  appState.listenQuizResults = Object.fromEntries(
+    appState.listenQuizQuestions.map((question, questionIndex) => [
+      questionIndex,
+      appState.listenQuizSelections[questionIndex] === question.correctIndex
+    ])
   );
+  const isCorrect = Object.values(appState.listenQuizResults).every(Boolean);
   const nextSegmentIndex = appState.listenResumeSegmentIndex;
   const trackKey = appState.listenQuizTrackKey;
   const playToken = appState.ttsPlayToken;
