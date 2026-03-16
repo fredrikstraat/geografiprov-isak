@@ -1448,20 +1448,30 @@ function renderListenPopup() {
           class="beta-textarea beta-popup-textarea"
           id="beta-listen-answer"
           placeholder="${spec.placeholder}"
-          ${appState.listenQuestionLoading ? "disabled" : ""}
+          ${appState.listenQuestionLoading || appState.listenQuestionAccepted ? "disabled" : ""}
         >${appState.listenQuestionAnswer}</textarea>
         <div class="beta-popup-footer">
           <p class="beta-status ${feedbackClass}">
             ${
               appState.listenQuestionFeedback ||
-              "Skriv kort. När kärnan sitter stängs rutan och nästa del fortsätter."
+              "Skriv kort. När kärnan sitter kan du fortsätta till nästa del."
             }
           </p>
-          <button class="beta-button beta-button-primary" id="beta-submit-listen-answer" ${
-            appState.listenQuestionLoading ? "disabled" : ""
-          }>
-            ${appState.listenQuestionLoading ? "Kollar..." : "Skicka svar"}
-          </button>
+          ${
+            appState.listenQuestionAccepted
+              ? `
+                <button class="beta-button beta-button-primary" id="beta-close-listen-popup">
+                  Stäng och fortsätt
+                </button>
+              `
+              : `
+                <button class="beta-button beta-button-primary" id="beta-submit-listen-answer" ${
+                  appState.listenQuestionLoading ? "disabled" : ""
+                }>
+                  ${appState.listenQuestionLoading ? "Kollar..." : "Skicka svar"}
+                </button>
+              `
+          }
         </div>
       </section>
     </div>
@@ -1816,12 +1826,6 @@ async function submitListenAnswer() {
         appState.listenQuestionAccepted = fallbackResult.accepted;
         appState.listenQuestionFeedback = fallbackResult.feedback;
         renderListenPopup();
-
-        if (fallbackResult.accepted) {
-          window.setTimeout(() => {
-            advanceFromCheckpoint();
-          }, 1200);
-        }
         return;
       }
 
@@ -1835,12 +1839,6 @@ async function submitListenAnswer() {
       ? `Rätt svar. ${result.feedback || result.matchedFacts?.[0] || "Du fick med kärnan."}`
       : `Inte riktigt än. ${result.feedback || result.nudge || "Få med lite mer av det viktigaste."}`;
     renderListenPopup();
-
-    if (result.accepted) {
-      window.setTimeout(() => {
-        advanceFromCheckpoint();
-      }, 1200);
-    }
   } catch (error) {
     appState.listenQuestionAccepted = false;
     appState.listenQuestionFeedback = error.message || "Det gick inte att kolla svaret just nu.";
@@ -2076,6 +2074,11 @@ function bindEvents() {
 
     if (event.target.closest("#beta-submit-listen-answer")) {
       submitListenAnswer();
+      return;
+    }
+
+    if (event.target.closest("#beta-close-listen-popup")) {
+      advanceFromCheckpoint();
     }
   });
 
