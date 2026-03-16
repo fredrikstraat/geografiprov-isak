@@ -1,9 +1,8 @@
 import { createServer } from "node:http";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { createHash } from "node:crypto";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,27 +11,7 @@ loadDotEnv();
 const PORT = Number(process.env.PORT || 4173);
 const HOST = process.env.HOST || "127.0.0.1";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
-const OPENAI_TTS_MODEL = process.env.OPENAI_TTS_MODEL || "gpt-4o-mini-tts";
 const OPENAI_GRADER_MODEL = process.env.OPENAI_GRADER_MODEL || "gpt-4.1-mini";
-const OPENAI_TTS_VOICE = process.env.OPENAI_TTS_VOICE || "alloy";
-const OPENAI_TTS_SPEED = clampSpeed(process.env.OPENAI_TTS_SPEED || "0.96");
-const OPENAI_TTS_VOICES = [
-  "alloy",
-  "ash",
-  "ballad",
-  "coral",
-  "echo",
-  "fable",
-  "nova",
-  "onyx",
-  "sage",
-  "shimmer",
-  "verse"
-];
-const TTS_CACHE_DIR = process.env.TTS_CACHE_DIR || path.join("/tmp", "geografiprov-tts-cache");
-const OPENAI_TTS_INSTRUCTIONS =
-  process.env.OPENAI_TTS_INSTRUCTIONS ||
-  "Speak in Swedish with a warm, encouraging tone for a 12-year-old student. Keep the pacing calm, the pronunciation clear, and the intonation lively enough to hold attention without sounding rushed.";
 const TEACHER_CONTEXT = `
 Provet handlar om namngeografi på världsdelar, världshav, stora bergskedjor, floder, regioner samt ett urval av länder och huvudstäder.
 Det innehåller också en del där eleven ska jämföra två världsdelar utifrån natur, klimat, befolkning, naturresurser samt försörjning.
@@ -74,116 +53,6 @@ const server = createServer(async (request, response) => {
         service: "geografiprov",
         timestamp: new Date().toISOString()
       });
-    }
-
-    if (requestUrl.pathname === "/api/tts/status") {
-      return sendJson(response, 200, {
-        configured: Boolean(OPENAI_API_KEY),
-        provider: "openai",
-        model: OPENAI_TTS_MODEL,
-        graderModel: OPENAI_GRADER_MODEL,
-        voice: OPENAI_TTS_VOICE,
-        availableVoices: OPENAI_TTS_VOICES,
-        disclosure: "Rösten är AI-genererad via OpenAI."
-      });
-    }
-
-    if (requestUrl.pathname === "/api/tts") {
-      if (request.method !== "POST") {
-        return sendJson(response, 405, { error: "Method not allowed" });
-      }
-
-      if (!OPENAI_API_KEY) {
-        return sendJson(response, 503, {
-          error: "OPENAI_API_KEY saknas på serversidan."
-        });
-      }
-
-      const body = await readJsonBody(request);
-      const text = String(body.text || "").trim();
-      const instructions = String(body.instructions || OPENAI_TTS_INSTRUCTIONS).trim();
-      const requestedVoice = normalizeVoice(body.voice);
-
-      if (!text) {
-        return sendJson(response, 400, { error: "Ingen text att läsa upp." });
-      }
-
-      if (text.length > 4096) {
-        return sendJson(response, 400, {
-          error: "Texten är för lång för ett enskilt TTS-anrop."
-        });
-      }
-
-      console.log(
-        `[tts] request voice=${requestedVoice} chars=${text.length} instructions=${instructions.length}`
-      );
-
-      const cachePath = buildTtsCachePath({
-        text,
-        voice: requestedVoice,
-        instructions,
-        model: OPENAI_TTS_MODEL,
-        speed: OPENAI_TTS_SPEED
-      });
-
-      try {
-        const cachedAudio = await readFile(cachePath);
-        response.writeHead(200, {
-          "Content-Type": "audio/wav",
-          "Cache-Control": "no-store",
-          "X-TTS-Cache": "hit"
-        });
-        response.end(cachedAudio);
-        console.log(`[tts] cache_hit voice=${requestedVoice} chars=${text.length}`);
-        return;
-      } catch (_error) {
-        // Cache miss, continue to OpenAI.
-      }
-
-      const upstreamResponse = await fetch("https://api.openai.com/v1/audio/speech", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          model: OPENAI_TTS_MODEL,
-          voice: requestedVoice,
-          input: text,
-          instructions,
-          response_format: "wav",
-          speed: OPENAI_TTS_SPEED
-        })
-      });
-
-      if (!upstreamResponse.ok) {
-        const errorText = await upstreamResponse.text();
-        console.error(`[tts] upstream_error status=${upstreamResponse.status} details=${errorText}`);
-        return sendJson(response, upstreamResponse.status, {
-          error: "OpenAI TTS misslyckades.",
-          details: errorText
-        });
-      }
-
-      response.writeHead(200, {
-        "Content-Type": upstreamResponse.headers.get("content-type") || "audio/mpeg",
-        "Cache-Control": "no-store",
-        "X-TTS-Cache": "miss"
-      });
-
-      const audioBuffer = Buffer.from(await upstreamResponse.arrayBuffer());
-      try {
-        await mkdir(TTS_CACHE_DIR, { recursive: true });
-        await writeFile(cachePath, audioBuffer);
-      } catch (error) {
-        console.warn(
-          `[tts] cache_write_failed path=${cachePath} details=${
-            error instanceof Error ? error.message : String(error)
-          }`
-        );
-      }
-      response.end(audioBuffer);
-      return;
     }
 
     if (requestUrl.pathname === "/api/check-short-answer") {
@@ -657,13 +526,26 @@ Coacha eleven vidare. Ge inte ett helt färdigt svar. Håll tonen enkel, varm oc
 server.listen(PORT, HOST, () => {
   console.log(`Geografiprov server running on http://${HOST}:${PORT}`);
   if (!OPENAI_API_KEY) {
-    console.log("OPENAI_API_KEY is not set. OpenAI TTS will fallback in the browser.");
+    console.log("OPENAI_API_KEY is not set. OpenAI grading and coaching will be unavailable.");
   }
 });
 
 function resolveStaticPath(pathname) {
   const normalizedPath = pathname === "/" ? "/index.html" : pathname;
   const decodedPath = decodeURIComponent(normalizedPath);
+  const allowedRootFiles = new Set([
+    "/index.html",
+    "/app.js",
+    "/styles.css",
+    "/favicon.svg"
+  ]);
+
+  if (!allowedRootFiles.has(decodedPath) && !decodedPath.startsWith("/audio/")) {
+    const error = new Error("Missing file");
+    error.code = "ENOENT";
+    throw error;
+  }
+
   const unsafePath = path.join(__dirname, decodedPath);
   const safePath = path.normalize(unsafePath);
 
@@ -688,35 +570,6 @@ function sendJson(response, statusCode, payload) {
     "Cache-Control": "no-store"
   });
   response.end(JSON.stringify(payload));
-}
-
-function clampSpeed(rawValue) {
-  const parsed = Number(rawValue);
-  if (!Number.isFinite(parsed)) {
-    return 1;
-  }
-  return Math.min(4, Math.max(0.25, parsed));
-}
-
-function buildTtsCachePath({ text, voice, instructions, model, speed }) {
-  const hash = createHash("sha256")
-    .update(
-      JSON.stringify({
-        text,
-        voice,
-        instructions,
-        model,
-        speed
-      })
-    )
-    .digest("hex");
-
-  return path.join(TTS_CACHE_DIR, `${hash}.wav`);
-}
-
-function normalizeVoice(rawVoice) {
-  const voice = String(rawVoice || OPENAI_TTS_VOICE).trim().toLowerCase();
-  return OPENAI_TTS_VOICES.includes(voice) ? voice : OPENAI_TTS_VOICE;
 }
 
 async function readJsonBody(request) {

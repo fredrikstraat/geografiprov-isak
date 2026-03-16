@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check app.js && node --check server.mjs && node --check scripts/build-static-audio.mjs",
-    "build:audio": "node scripts/build-static-audio.mjs"
+    "check": "node --check app.js && node --check server.mjs"
   }
 }
