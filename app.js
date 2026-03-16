@@ -1018,13 +1018,9 @@ function overallProgress() {
     if (appState.currentStep === 1) {
       const fractionOfTime = appState.examStarted ? (1 - appState.examRemainingMs / (30 * 60 * 1000)) : 0;
       fraction = (1 + Math.max(0.05, fractionOfTime)) / totalSteps;
-      text = !appState.examStarted
-        ? appState.mode === "practiceExam"
-          ? "Starta övningsprovet när du är redo."
-          : "Starta provet när du är redo."
-        : appState.examExpired
-          ? "Tiden är slut. Lämna in provet för bedömning."
-          : `${appState.mode === "practiceExam" ? "Övningsprovet" : "Provet"} pågår. ${formatExamTime(appState.examRemainingMs)} kvar.`;
+      text = appState.examExpired
+        ? "Tiden är slut. Lämna in provet för bedömning."
+        : `${appState.mode === "practiceExam" ? "Övningsprovet" : "Provet"} pågår. ${formatExamTime(appState.examRemainingMs)} kvar.`;
     } else if (appState.currentStep >= 2) {
       fraction = 1;
       text = appState.mode === "practiceExam" ? "Övningsprovet är bedömt." : "Provbedömningen är klar.";
@@ -1304,22 +1300,20 @@ function renderExamStep() {
             <p class="beta-label">Tid kvar</p>
             <h3 class="beta-exam-time ${appState.examExpired ? "is-expired" : ""}">${formatExamTime(appState.examRemainingMs)}</h3>
           </div>
-          <button class="beta-button beta-button-secondary" id="beta-start-exam" ${appState.examStarted ? "disabled" : ""}>
-            ${appState.examStarted ? "Provet är igång" : "Starta 30 min prov"}
-          </button>
+          <div class="beta-exam-state-pill">
+            ${appState.examExpired ? "Tiden är ute" : "Provet är igång"}
+          </div>
         </div>
         <div class="beta-support-card">
           <p class="beta-small">
             ${
-              !appState.examStarted
-                ? "När du startar börjar timern direkt. Du kan lämna in när du vill innan tiden är slut."
-                : appState.examExpired
-                  ? "Tiden är slut. Nu är det bara att lämna in provet för bedömning."
-                  : "Skriv lugnt. Få med vad som är lika eller olika, varför det blir så och exempel från båda världsdelarna."
+              appState.examExpired
+                ? "Tiden är slut. Nu är det bara att lämna in provet för bedömning."
+                : "Timern startade direkt när du valde provet. Skriv lugnt och få med vad som är lika eller olika, varför det blir så och exempel från båda världsdelarna."
             }
           </p>
         </div>
-        <textarea class="beta-textarea beta-exam-textarea" id="beta-writing-answer" ${!appState.examStarted || appState.examExpired ? "readonly" : ""}>${value}</textarea>
+        <textarea class="beta-textarea beta-exam-textarea" id="beta-writing-answer" ${appState.examExpired ? "readonly" : ""}>${value}</textarea>
         <button class="beta-button beta-button-primary" id="beta-grade-answer" ${(appState.gradingLoading || !canSubmit) ? "disabled" : ""}>
           ${appState.gradingLoading ? "Bedömer..." : "Lämna in provet"}
         </button>
@@ -1356,11 +1350,20 @@ function renderPracticeExamStep() {
             <p class="beta-label">Tid kvar</p>
             <h3 class="beta-exam-time ${appState.examExpired ? "is-expired" : ""}">${formatExamTime(appState.examRemainingMs)}</h3>
           </div>
-          <button class="beta-button beta-button-secondary" id="beta-start-exam" ${appState.examStarted ? "disabled" : ""}>
-            ${appState.examStarted ? "Övningsprovet är igång" : "Starta 30 min övningsprov"}
-          </button>
+          <div class="beta-exam-state-pill">
+            ${appState.examExpired ? "Tiden är ute" : "Övningsprovet är igång"}
+          </div>
         </div>
-        <textarea class="beta-textarea beta-exam-textarea" id="beta-writing-answer" ${!appState.examStarted || appState.examExpired ? "readonly" : ""}>${value}</textarea>
+        <div class="beta-support-card">
+          <p class="beta-small">
+            ${
+              appState.examExpired
+                ? "Tiden är slut. Nu kan du inte skriva mer, men du kan fortfarande lämna in och få bedömning."
+                : "Timern startade direkt när du valde övningsprovet. Skriv som i ett riktigt prov och använd coachningen om du fastnar."
+            }
+          </p>
+        </div>
+        <textarea class="beta-textarea beta-exam-textarea" id="beta-writing-answer" ${appState.examExpired ? "readonly" : ""}>${value}</textarea>
         <div class="beta-exam-actions">
           <button class="beta-button beta-button-secondary" id="beta-coach-answer" ${(appState.coachingLoading || !appState.examStarted || appState.examExpired) ? "disabled" : ""}>
             ${appState.coachingLoading ? "Coachar..." : "Coacha mitt svar"}
@@ -1566,6 +1569,97 @@ function renderFeedbackStep() {
       : appState.mode === "practiceExam"
         ? "Nivå i övningsprovet"
         : "Nivå just nu";
+  const topStrengths = result.strengths.slice(0, 2);
+  const extraStrengths = result.strengths.slice(2);
+  const topImprovements = result.improvements.slice(0, 2);
+  const extraImprovements = result.improvements.slice(2);
+  const isExamMode = appState.mode === "exam" || appState.mode === "practiceExam";
+
+  if (isExamMode) {
+    return `
+      <div class="beta-feedback-stack">
+        <div class="beta-feedback-card beta-feedback-card-hero">
+          <p class="beta-label">${feedbackLabel}</p>
+          <h3>${result.shortVerdict}</h3>
+          <p class="beta-feedback-summary">${result.summary}</p>
+          <div class="beta-checks">
+            ${Object.entries(result.checks)
+              .map(
+                ([key, passed]) =>
+                  `<span class="beta-check ${passed ? "is-yes" : "is-no"}">${labelForCheck(key)}: ${passed ? "Ja" : "Inte än"}</span>`
+              )
+              .join("")}
+          </div>
+          <div class="beta-feedback-meta">
+            <div>
+              <p class="beta-label">${levelLabel}</p>
+              <strong>${result.levelEstimate}</strong>
+            </div>
+            <div>
+              <p class="beta-label">Match mot uppgiften</p>
+              <strong>${result.scorePercent}%</strong>
+            </div>
+          </div>
+        </div>
+        <div class="beta-feedback-card">
+          <p class="beta-label">Gör detta nu</p>
+          <h3>Ett litet steg till</h3>
+          <div class="beta-mini-steps">
+            ${topImprovements
+              .map(
+                (item, index) => `
+                  <div class="beta-mini-step">
+                    <span class="beta-mini-step-number">${index + 1}</span>
+                    <p>${item}</p>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+          <p class="beta-small">${result.nextStep}</p>
+        </div>
+        <div class="beta-feedback-card">
+          <p class="beta-label">Det här sitter redan</p>
+          <ul class="beta-bullet-list">
+            ${topStrengths.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        </div>
+        <details class="beta-feedback-more">
+          <summary>Visa mer feedback</summary>
+          <div class="beta-feedback-more-body">
+            ${
+              extraImprovements.length
+                ? `
+                  <div class="beta-feedback-card">
+                    <p class="beta-label">Mer att förbättra</p>
+                    <ul class="beta-bullet-list">
+                      ${extraImprovements.map((item) => `<li>${item}</li>`).join("")}
+                    </ul>
+                  </div>
+                `
+                : ""
+            }
+            ${
+              extraStrengths.length
+                ? `
+                  <div class="beta-feedback-card">
+                    <p class="beta-label">Mer som fungerar</p>
+                    <ul class="beta-bullet-list">
+                      ${extraStrengths.map((item) => `<li>${item}</li>`).join("")}
+                    </ul>
+                  </div>
+                `
+                : ""
+            }
+            <div class="beta-feedback-card">
+              <p class="beta-label">Exempel på starkare svar</p>
+              <p class="beta-feedback-summary">${result.modelAnswer}</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    `;
+  }
 
   return `
     <div class="beta-feedback-grid">
@@ -2051,6 +2145,7 @@ function bindEvents() {
       if (appState.mode === "exam" || appState.mode === "practiceExam") {
         resetExamState();
         appState.coachingResult = null;
+        startExamTimer();
       }
       render();
       return;
@@ -2061,10 +2156,6 @@ function bindEvents() {
       return;
     }
 
-    if (event.target.closest("#beta-start-exam")) {
-      startExamTimer();
-      return;
-    }
   });
 
   dom.overlayShell.addEventListener("click", (event) => {
@@ -2115,6 +2206,7 @@ function bindEvents() {
     if ((appState.mode === "exam" || appState.mode === "practiceExam") && appState.currentStep === 1) {
       resetExamState();
       appState.coachingResult = null;
+      startExamTimer();
     }
     render();
   });

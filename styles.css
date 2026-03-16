@@ -718,6 +718,20 @@ h3 {
   color: #ff9875;
 }
 
+.beta-exam-state-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(211, 255, 88, 0.2);
+  background: rgba(211, 255, 88, 0.08);
+  color: #eaffb0;
+  font-weight: 700;
+  text-align: center;
+}
+
 .beta-exam-textarea {
   min-height: 340px;
 }
@@ -730,6 +744,84 @@ h3 {
 .beta-coach-section {
   display: grid;
   gap: 0.45rem;
+}
+
+.beta-feedback-stack {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.beta-feedback-card-hero {
+  gap: 0.85rem;
+}
+
+.beta-feedback-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.beta-feedback-meta strong {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.beta-mini-steps {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.beta-mini-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: start;
+  padding: 0.8rem 0.85rem;
+  border-radius: 16px;
+  border: 1px solid var(--beta-line);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.beta-mini-step p {
+  margin: 0;
+}
+
+.beta-mini-step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--beta-purple), var(--beta-pink));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 8px 18px rgba(141, 92, 255, 0.28);
+}
+
+.beta-feedback-more {
+  border-radius: 20px;
+  border: 1px solid var(--beta-line);
+  background: rgba(255, 255, 255, 0.025);
+  padding: 0.9rem 1rem;
+}
+
+.beta-feedback-more summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--beta-ink);
+  list-style: none;
+}
+
+.beta-feedback-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.beta-feedback-more-body {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 0.85rem;
 }
 
 .beta-support-list,
@@ -914,6 +1006,7 @@ h3 {
   .beta-grid,
   .beta-writing-layout,
   .beta-feedback-grid,
+  .beta-feedback-meta,
   .beta-reading-grid,
   .beta-compare-grid,
   .beta-comparison-sides,
