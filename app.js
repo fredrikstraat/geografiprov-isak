@@ -2202,13 +2202,29 @@ function bindEvents() {
     if (dom.nextStep.disabled) {
       return;
     }
-    appState.currentStep = Math.min(appState.currentStep + 1, stepSets[appState.mode].length - 1);
+    const nextStep = Math.min(appState.currentStep + 1, stepSets[appState.mode].length - 1);
+    const shouldAutoplayListen = appState.currentStep === 0 && nextStep === 1 && appState.mode !== "exam" && appState.mode !== "practiceExam";
+
+    appState.currentStep = nextStep;
+
     if ((appState.mode === "exam" || appState.mode === "practiceExam") && appState.currentStep === 1) {
       resetExamState();
       appState.coachingResult = null;
       startExamTimer();
     }
+
+    if (shouldAutoplayListen) {
+      stopAudio();
+      appState.currentSegmentIndex = 0;
+      appState.currentTrackKey = "";
+      resetListenCheckpointState();
+    }
+
     render();
+
+    if (shouldAutoplayListen) {
+      playCurrentTrack();
+    }
   });
 
   appState.audio.addEventListener("ended", () => {
