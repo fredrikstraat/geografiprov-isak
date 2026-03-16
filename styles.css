@@ -310,6 +310,17 @@ h3 {
   padding-bottom: 3rem;
 }
 
+.beta-entry {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0 0 1rem;
+}
+
+.beta-entry-link {
+  width: fit-content;
+  text-decoration: none;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1717,6 +1728,12 @@ textarea {
 @media (max-width: 640px) {
   .shell {
     width: min(100% - 1rem, 1180px);
+  }
+
+  .beta-entry-link {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
   }
 
   .app-layout {

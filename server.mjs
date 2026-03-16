@@ -186,6 +186,134 @@ const server = createServer(async (request, response) => {
       return;
     }
 
+    if (requestUrl.pathname === "/api/check-short-answer") {
+      if (request.method !== "POST") {
+        return sendJson(response, 405, { error: "Method not allowed" });
+      }
+
+      if (!OPENAI_API_KEY) {
+        return sendJson(response, 503, {
+          error: "OPENAI_API_KEY saknas på serversidan."
+        });
+      }
+
+      const body = await readJsonBody(request);
+      const answer = String(body.answer || "").trim();
+      const questionTitle = String(body.questionTitle || "").trim();
+      const questionPrompt = String(body.questionPrompt || "").trim();
+      const referenceFacts = Array.isArray(body.referenceFacts) ? body.referenceFacts : [];
+
+      if (!answer || !questionTitle || !questionPrompt || !referenceFacts.length) {
+        return sendJson(response, 400, {
+          error: "Fråga, svar och referensfakta behövs för att kunna kolla svaret."
+        });
+      }
+
+      const checkpointSchema = {
+        name: "geography_short_answer_check",
+        strict: true,
+        schema: {
+          type: "object",
+          additionalProperties: false,
+          properties: {
+            accepted: { type: "boolean" },
+            feedback: { type: "string" },
+            nudge: { type: "string" },
+            matchedFacts: {
+              type: "array",
+              items: { type: "string" },
+              minItems: 1,
+              maxItems: 2
+            }
+          },
+          required: ["accepted", "feedback", "nudge", "matchedFacts"]
+        }
+      };
+
+      const upstreamResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: OPENAI_GRADER_MODEL,
+          max_completion_tokens: 260,
+          response_format: {
+            type: "json_schema",
+            json_schema: checkpointSchema
+          },
+          messages: [
+            {
+              role: "system",
+              content:
+                "Du är en varm, tydlig geografilärare för en svensk 12-åring. Bedöm ett mycket kort skrivsvar om geografi. Använd bara referensfakta som skickas in. Godkänn korta och enkla svar om de fångar kärnan. Stavning och perfekta meningar är inte viktiga. Om svaret inte riktigt räcker, ge en kort och lugn hint i enkel svenska utan att avslöja hela svaret."
+            },
+            {
+              role: "user",
+              content: `
+${TEACHER_CONTEXT}
+
+Deluppgift: ${questionTitle}
+Fråga: ${questionPrompt}
+Referensfakta. Detta är den enda tillåtna faktakällan:
+${referenceFacts.map((fact) => `- ${fact}`).join("\n")}
+
+Elevens korta svar:
+${answer}
+
+Svara mycket kort. "accepted" ska vara true om eleven verkar ha förstått kärnan i just detta delområde.
+              `.trim()
+            }
+          ]
+        })
+      });
+
+      if (!upstreamResponse.ok) {
+        const errorText = await upstreamResponse.text();
+        return sendJson(response, upstreamResponse.status, {
+          error: "OpenAI-kollen för delsvaret misslyckades.",
+          details: errorText
+        });
+      }
+
+      const completion = await upstreamResponse.json();
+      const message = completion?.choices?.[0]?.message || {};
+      if (message.refusal) {
+        return sendJson(response, 502, {
+          error: "OpenAI avböjde att kolla delsvaret just nu.",
+          details: message.refusal
+        });
+      }
+
+      const content =
+        typeof message.content === "string"
+          ? message.content
+          : Array.isArray(message.content)
+            ? message.content
+                .map((part) => (typeof part?.text === "string" ? part.text : ""))
+                .join("")
+            : "";
+
+      if (!content.trim()) {
+        return sendJson(response, 502, {
+          error: "OpenAI skickade inget innehåll för delsvaret."
+        });
+      }
+
+      let parsed;
+      try {
+        parsed = JSON.parse(content);
+      } catch (error) {
+        return sendJson(response, 502, {
+          error: "Kunde inte tolka OpenAI-svaret för delsvaret.",
+          details: error.message
+        });
+      }
+
+      return sendJson(response, 200, parsed);
+    }
+
     if (requestUrl.pathname === "/api/grade-answer") {
       if (request.method !== "POST") {
         return sendJson(response, 405, { error: "Method not allowed" });
@@ -348,6 +476,148 @@ Bedöm hur väl svaret når ungefär C-nivå i just jämförelsen. Lyft vad som 
       } catch (error) {
         return sendJson(response, 502, {
           error: "Kunde inte tolka OpenAI-bedömningen som JSON.",
+          details: error instanceof Error ? error.message : String(error)
+        });
+      }
+
+      return sendJson(response, 200, parsed);
+    }
+
+    if (requestUrl.pathname === "/api/coach-answer") {
+      if (request.method !== "POST") {
+        return sendJson(response, 405, { error: "Method not allowed" });
+      }
+
+      if (!OPENAI_API_KEY) {
+        return sendJson(response, 503, {
+          error: "OPENAI_API_KEY saknas på serversidan."
+        });
+      }
+
+      const body = await readJsonBody(request);
+      const answer = String(body.answer || "").trim();
+      const questionTitle = String(body.questionTitle || "").trim();
+      const questionDescription = String(body.questionDescription || "").trim();
+      const supportPoints = Array.isArray(body.supportPoints) ? body.supportPoints : [];
+      const referenceFacts = Array.isArray(body.referenceFacts) ? body.referenceFacts : [];
+
+      if (!answer || !questionTitle || !questionDescription) {
+        return sendJson(response, 400, {
+          error: "Fråga och svar behövs för att kunna coacha."
+        });
+      }
+
+      const coachSchema = {
+        name: "geography_answer_coaching",
+        strict: true,
+        schema: {
+          type: "object",
+          additionalProperties: false,
+          properties: {
+            coachVerdict: { type: "string" },
+            whatWorks: {
+              type: "array",
+              items: { type: "string" },
+              minItems: 2,
+              maxItems: 3
+            },
+            missingNow: {
+              type: "array",
+              items: { type: "string" },
+              minItems: 2,
+              maxItems: 3
+            },
+            nextStep: { type: "string" },
+            sentenceStarters: {
+              type: "array",
+              items: { type: "string" },
+              minItems: 2,
+              maxItems: 3
+            }
+          },
+          required: ["coachVerdict", "whatWorks", "missingNow", "nextStep", "sentenceStarters"]
+        }
+      };
+
+      const upstreamResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: OPENAI_GRADER_MODEL,
+          max_completion_tokens: 500,
+          response_format: {
+            type: "json_schema",
+            json_schema: coachSchema
+          },
+          messages: [
+            {
+              role: "system",
+              content:
+                "Du är en varm, tydlig geografilärare som coachar en svensk 12-åring mitt under ett övningsprov. Använd bara referensfakta som skickas in. Ge inte ett färdigt facit. Visa i stället vad som redan fungerar, vad som saknas just nu och ge enkla meningstarter som hjälper eleven vidare."
+            },
+            {
+              role: "user",
+              content: `
+${TEACHER_CONTEXT}
+
+Uppgift: ${questionTitle}
+Beskrivning: ${questionDescription}
+Stödord:
+${supportPoints.map((point) => `- ${point}`).join("\n")}
+Referensfakta. Detta är den enda tillåtna faktakällan:
+${referenceFacts.length ? referenceFacts.map((fact) => `- ${fact}`).join("\n") : "- Inga extra referensfakta skickades med."}
+
+Elevens utkast:
+${answer}
+
+Coacha eleven vidare. Ge inte ett helt färdigt svar. Håll tonen enkel, varm och tydlig.
+              `.trim()
+            }
+          ]
+        })
+      });
+
+      if (!upstreamResponse.ok) {
+        const errorText = await upstreamResponse.text();
+        return sendJson(response, upstreamResponse.status, {
+          error: "OpenAI-coachningen misslyckades.",
+          details: errorText
+        });
+      }
+
+      const completion = await upstreamResponse.json();
+      const message = completion?.choices?.[0]?.message || {};
+      if (message.refusal) {
+        return sendJson(response, 502, {
+          error: "OpenAI avböjde att coacha svaret just nu.",
+          details: message.refusal
+        });
+      }
+
+      const content =
+        typeof message.content === "string"
+          ? message.content
+          : Array.isArray(message.content)
+            ? message.content
+                .map((part) => (typeof part?.text === "string" ? part.text : ""))
+                .join("")
+            : "";
+
+      if (!content.trim()) {
+        return sendJson(response, 502, {
+          error: "OpenAI returnerade ingen coachning att tolka."
+        });
+      }
+
+      let parsed;
+      try {
+        parsed = JSON.parse(content);
+      } catch (error) {
+        return sendJson(response, 502, {
+          error: "Kunde inte tolka OpenAI-coachningen.",
           details: error instanceof Error ? error.message : String(error)
         });
       }
