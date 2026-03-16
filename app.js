@@ -320,6 +320,7 @@ const appState = {
 
 const dom = {};
 let examTimerId = 0;
+let popupReplayAudio = null;
 
 appState.audio.preload = "none";
 
@@ -586,6 +587,64 @@ function supportPoints() {
   ];
 }
 
+function ensureDifferentSecond(firstId) {
+  return continents.find((continent) => continent.id !== firstId)?.id || "";
+}
+
+function recommendedNextMove() {
+  if (appState.mode === "continent") {
+    const first = continentById(appState.selectedA);
+    return {
+      eyebrow: "Nästa moment",
+      title: "Jämför två världsdelar",
+      summary: first
+        ? `Bra jobbat. Nu har du grunden i ${first.name}. Nästa steg är att jämföra ${first.name} med en annan världsdel och träna på vad, varför och exempel.`
+        : "Bra jobbat. Nästa steg är att jämföra två världsdelar och träna på vad, varför och exempel.",
+      button: "Till jämförelsen"
+    };
+  }
+
+  if (appState.mode === "compare") {
+    return {
+      eyebrow: "Nästa moment",
+      title: "Övningsprov",
+      summary: "Nu har du jämfört världsdelarna. Nästa steg är att skriva ett helt svar i övningsprovet med coachning på vägen.",
+      button: "Till övningsprov"
+    };
+  }
+
+  return null;
+}
+
+function moveToRecommendedNext() {
+  stopAudio();
+  resetListenCheckpointState();
+  appState.currentSegmentIndex = 0;
+  appState.currentTrackKey = "";
+  appState.gradingResult = null;
+  appState.coachingResult = null;
+  resetExamState();
+
+  if (appState.mode === "continent") {
+    appState.mode = "compare";
+    if (!continentById(appState.selectedB) || appState.selectedA === appState.selectedB) {
+      appState.selectedB = ensureDifferentSecond(appState.selectedA);
+    }
+    appState.currentStep = 0;
+    render();
+    return;
+  }
+
+  if (appState.mode === "compare") {
+    appState.mode = "practiceExam";
+    if (!continentById(appState.selectedB) || appState.selectedA === appState.selectedB) {
+      appState.selectedB = ensureDifferentSecond(appState.selectedA);
+    }
+    appState.currentStep = 0;
+    render();
+  }
+}
+
 function promptPayload() {
   const first = continentById(appState.selectedA);
   const second = continentById(appState.selectedB);
@@ -641,6 +700,12 @@ function stopAudio() {
   appState.audio.currentTime = 0;
   appState.isPlaying = false;
   appState.loadingAudio = false;
+
+  if (popupReplayAudio) {
+    popupReplayAudio.pause();
+    popupReplayAudio.currentTime = 0;
+    popupReplayAudio = null;
+  }
 }
 
 function resetExamState() {
@@ -811,6 +876,11 @@ function listenStepProgress() {
 function advanceFromCheckpoint() {
   const track = currentTrack();
   const nextIndex = appState.listenQuestionSegmentIndex + 1;
+  if (popupReplayAudio) {
+    popupReplayAudio.pause();
+    popupReplayAudio.currentTime = 0;
+    popupReplayAudio = null;
+  }
   resetListenCheckpointState();
 
   if (!track?.segments?.length || nextIndex >= track.segments.length) {
@@ -822,6 +892,28 @@ function advanceFromCheckpoint() {
 
   appState.currentSegmentIndex = nextIndex;
   playCurrentTrack();
+}
+
+async function replayCheckpointSegment() {
+  const track = currentTrack();
+  const segment = track?.segments?.[appState.listenQuestionSegmentIndex];
+
+  if (!segment?.file) {
+    return;
+  }
+
+  if (popupReplayAudio) {
+    popupReplayAudio.pause();
+    popupReplayAudio.currentTime = 0;
+  }
+
+  try {
+    popupReplayAudio = new Audio(segment.file);
+    popupReplayAudio.preload = "auto";
+    await popupReplayAudio.play();
+  } catch (error) {
+    console.warn("Replay audio failed", error);
+  }
 }
 
 function listenSummaryCards() {
@@ -836,7 +928,9 @@ function listenSummaryCards() {
     const continent = continentById(appState.selectedA);
     return guideAreas
       .slice(0, revealedCount)
-      .map((area, index) => {
+      .map((area, index) => ({ area, index }))
+      .reverse()
+      .map(({ area, index }) => {
         const info = continent.dimensions[area.key];
         const stateClass =
           index < completedCount
@@ -860,7 +954,9 @@ function listenSummaryCards() {
 
   return buildCompareRows()
     .slice(0, revealedCount)
-    .map((row, index) => {
+    .map((row, index) => ({ row, index }))
+    .reverse()
+    .map(({ row, index }) => {
       const stateClass =
         index < completedCount
           ? "is-done"
@@ -1275,7 +1371,7 @@ function renderListenStep() {
           <p class="beta-small">Här landar nyckelorden efter varje del. Då slipper du hålla allt i huvudet samtidigt.</p>
         </div>
         <div class="beta-stack">
-          ${listenSummaryCards() || `<article class="beta-support-card"><p class="beta-small">När första delen startar dyker den första sammanfattningen upp här.</p></article>`}
+          ${listenSummaryCards() || `<article class="beta-support-card"><p class="beta-small">När första delen startar dyker den första sammanfattningen upp här, med den senaste överst.</p></article>`}
         </div>
       </div>
     </div>
@@ -1460,21 +1556,28 @@ function renderListenPopup() {
               "Skriv kort. När kärnan sitter kan du fortsätta till nästa del."
             }
           </p>
-          ${
-            appState.listenQuestionAccepted
-              ? `
-                <button class="beta-button beta-button-primary" id="beta-close-listen-popup">
-                  Stäng och fortsätt
-                </button>
-              `
-              : `
-                <button class="beta-button beta-button-primary" id="beta-submit-listen-answer" ${
-                  appState.listenQuestionLoading ? "disabled" : ""
-                }>
-                  ${appState.listenQuestionLoading ? "Kollar..." : "Skicka svar"}
-                </button>
-              `
-          }
+          <div class="beta-popup-actions">
+            <button class="beta-button beta-button-secondary" id="beta-replay-listen-segment" ${
+              appState.listenQuestionLoading ? "disabled" : ""
+            }>
+              Hör delen igen
+            </button>
+            ${
+              appState.listenQuestionAccepted
+                ? `
+                  <button class="beta-button beta-button-primary" id="beta-close-listen-popup">
+                    Stäng och fortsätt
+                  </button>
+                `
+                : `
+                  <button class="beta-button beta-button-primary" id="beta-submit-listen-answer" ${
+                    appState.listenQuestionLoading ? "disabled" : ""
+                  }>
+                    ${appState.listenQuestionLoading ? "Kollar..." : "Skicka svar"}
+                  </button>
+                `
+            }
+          </div>
         </div>
       </section>
     </div>
@@ -1574,6 +1677,7 @@ function renderFeedbackStep() {
   const topImprovements = result.improvements.slice(0, 2);
   const extraImprovements = result.improvements.slice(2);
   const isExamMode = appState.mode === "exam" || appState.mode === "practiceExam";
+  const nextMove = recommendedNextMove();
 
   if (isExamMode) {
     return `
@@ -1698,6 +1802,20 @@ function renderFeedbackStep() {
         <p class="beta-label">Exempel på starkare svar</p>
         <p class="beta-feedback-summary">${result.modelAnswer}</p>
       </div>
+      ${
+        nextMove
+          ? `
+            <div class="beta-support-card beta-next-moment-card">
+              <p class="beta-label">${nextMove.eyebrow}</p>
+              <h3>${nextMove.title}</h3>
+              <p class="beta-small">${nextMove.summary}</p>
+              <button class="beta-button beta-button-primary" id="beta-go-next-moment">
+                ${nextMove.button}
+              </button>
+            </div>
+          `
+          : ""
+      }
     </div>
   `;
 }
@@ -1791,8 +1909,9 @@ function updateButtons() {
     dom.nextStep.textContent = "Skicka svaret först";
     dom.nextStep.disabled = true;
   } else {
-    dom.nextStep.textContent = "Klart för nu";
-    dom.nextStep.disabled = true;
+    const nextMove = recommendedNextMove();
+    dom.nextStep.textContent = nextMove ? nextMove.button : "Klart för nu";
+    dom.nextStep.disabled = !nextMove;
   }
 
   dom.lessonTitle.textContent = currentLessonTitle();
@@ -2156,6 +2275,11 @@ function bindEvents() {
       return;
     }
 
+    if (event.target.closest("#beta-go-next-moment")) {
+      moveToRecommendedNext();
+      return;
+    }
+
   });
 
   dom.overlayShell.addEventListener("click", (event) => {
@@ -2165,6 +2289,11 @@ function bindEvents() {
 
     if (event.target.closest("#beta-submit-listen-answer")) {
       submitListenAnswer();
+      return;
+    }
+
+    if (event.target.closest("#beta-replay-listen-segment")) {
+      replayCheckpointSegment();
       return;
     }
 
@@ -2200,6 +2329,10 @@ function bindEvents() {
 
   dom.nextStep.addEventListener("click", () => {
     if (dom.nextStep.disabled) {
+      return;
+    }
+    if (appState.currentStep >= stepSets[appState.mode].length - 1) {
+      moveToRecommendedNext();
       return;
     }
     const nextStep = Math.min(appState.currentStep + 1, stepSets[appState.mode].length - 1);

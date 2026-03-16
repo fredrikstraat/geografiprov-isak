@@ -843,6 +843,16 @@ h3 {
   gap: 0.8rem;
 }
 
+.beta-next-moment-card {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.beta-next-moment-card .beta-button {
+  justify-self: start;
+}
+
 .beta-coach-section {
   display: grid;
   gap: 0.45rem;
@@ -1074,6 +1084,16 @@ h3 {
   gap: 0.75rem;
 }
 
+.beta-popup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.beta-popup-actions .beta-button {
+  flex: 1 1 220px;
+}
+
 .beta-popup > * {
   position: relative;
   z-index: 1;
@@ -1258,6 +1278,10 @@ h3 {
     bottom: 0;
     padding-top: 0.4rem;
     background: linear-gradient(180deg, rgba(11, 16, 40, 0), rgba(11, 16, 40, 0.96) 34%, rgba(11, 16, 40, 1) 100%);
+  }
+
+  .beta-popup-actions {
+    flex-direction: column;
   }
 
   .beta-popup-textarea {
