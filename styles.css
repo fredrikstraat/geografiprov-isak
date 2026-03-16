@@ -1,14 +1,16 @@
 :root {
-  --beta-bg: #0a0f2f;
+  --beta-bg: #090b24;
   --beta-bg-soft: #151a48;
-  --beta-panel: rgba(18, 21, 58, 0.92);
-  --beta-panel-strong: rgba(20, 24, 68, 0.98);
+  --beta-bg-deep: #06071a;
+  --beta-panel: rgba(12, 16, 46, 0.92);
+  --beta-panel-strong: rgba(14, 19, 58, 0.98);
   --beta-panel-glow: rgba(78, 217, 194, 0.08);
   --beta-purple: #8160ff;
   --beta-purple-soft: rgba(141, 92, 255, 0.16);
   --beta-pink: #ff77c8;
   --beta-pink-soft: rgba(255, 119, 200, 0.18);
   --beta-blue: #62d7ff;
+  --beta-electric: #6dffb5;
   --beta-ink: #eef6fb;
   --beta-muted: #9eb3c2;
   --beta-muted-strong: #c8d9e4;
@@ -42,12 +44,13 @@ body {
   font-weight: 400;
   color: var(--beta-ink);
   background:
-    radial-gradient(circle at 18% 10%, rgba(129, 96, 255, 0.28), transparent 22%),
-    radial-gradient(circle at 82% 14%, rgba(255, 119, 200, 0.2), transparent 24%),
-    radial-gradient(circle at 52% 90%, rgba(98, 215, 255, 0.12), transparent 30%),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 96px),
-    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.018) 0, rgba(255, 255, 255, 0.018) 1px, transparent 1px, transparent 96px),
-    linear-gradient(180deg, #070a22 0%, #0c1240 54%, #151b57 100%);
+    radial-gradient(circle at 16% 8%, rgba(129, 96, 255, 0.34), transparent 20%),
+    radial-gradient(circle at 84% 12%, rgba(255, 119, 200, 0.24), transparent 22%),
+    radial-gradient(circle at 50% 88%, rgba(98, 215, 255, 0.14), transparent 28%),
+    linear-gradient(145deg, rgba(211, 255, 88, 0.045), transparent 16%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 1px, transparent 1px, transparent 82px),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.018) 0, rgba(255, 255, 255, 0.018) 1px, transparent 1px, transparent 82px),
+    linear-gradient(180deg, var(--beta-bg-deep) 0%, #0c1140 52%, #171e61 100%);
   overflow: auto;
 }
 
@@ -79,8 +82,8 @@ textarea {
 .beta-lesson-card {
   position: relative;
   background:
-    linear-gradient(180deg, rgba(16, 20, 54, 0.98), rgba(11, 16, 40, 0.96)),
-    radial-gradient(circle at top right, rgba(98, 215, 255, 0.08), transparent 45%);
+    linear-gradient(180deg, rgba(13, 17, 52, 0.98), rgba(8, 12, 34, 0.96)),
+    radial-gradient(circle at top right, rgba(98, 215, 255, 0.1), transparent 45%);
   border: 1px solid var(--beta-line);
   box-shadow: var(--beta-shadow);
   border-radius: var(--beta-radius-xl);
@@ -101,7 +104,7 @@ textarea {
   inset: 0 auto auto 0;
   width: 44%;
   height: 44%;
-  background: radial-gradient(circle, rgba(129, 96, 255, 0.24), transparent 68%);
+  background: radial-gradient(circle, rgba(129, 96, 255, 0.28), transparent 68%);
   pointer-events: none;
 }
 
@@ -115,7 +118,7 @@ textarea {
   pointer-events: none;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-    inset 0 -24px 60px rgba(0, 0, 0, 0.12);
+    inset 0 -24px 60px rgba(0, 0, 0, 0.16);
 }
 
 .beta-lesson-card::after {
@@ -125,7 +128,7 @@ textarea {
   width: 280px;
   height: 280px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(255, 119, 200, 0.16), transparent 64%);
+  background: radial-gradient(circle, rgba(255, 119, 200, 0.18), transparent 64%);
   pointer-events: none;
   box-shadow: none;
 }
@@ -133,6 +136,21 @@ textarea {
 .beta-header {
   grid-column: 1 / -1;
   grid-row: 1;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+  padding: 1.05rem 1.15rem 1rem;
+}
+
+.beta-header::before {
+  width: 42%;
+  height: 58%;
+}
+
+.beta-header-copy {
+  position: relative;
+  z-index: 1;
 }
 
 .beta-mode-card {
@@ -149,6 +167,10 @@ textarea {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   min-height: 0;
+}
+
+.beta-footer-links {
+  grid-column: 1 / -1;
 }
 
 .beta-back {
@@ -177,11 +199,11 @@ textarea {
 }
 
 .beta-header-orb {
-  width: 84px;
-  height: 84px;
+  width: 88px;
+  height: 88px;
   right: 1rem;
-  top: 1rem;
-  opacity: 0.92;
+  top: 0.9rem;
+  opacity: 0.46;
 }
 
 .beta-back::before {
@@ -192,7 +214,7 @@ textarea {
 .beta-label {
   margin: 0 0 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--beta-lime);
@@ -210,12 +232,11 @@ h3 {
 
 h1 {
   font-size: clamp(1.9rem, 3.9vw, 3.2rem);
-  line-height: 0.94;
+  line-height: 0.92;
   max-width: none;
   overflow-wrap: anywhere;
-  text-shadow:
-    0 2px 0 rgba(4, 6, 20, 0.8),
-    0 0 24px rgba(129, 96, 255, 0.16);
+  color: #f4f7ff;
+  text-shadow: none;
 }
 
 h2 {
@@ -240,7 +261,7 @@ h3 {
 
 .beta-intro {
   margin: 0.75rem 0 0;
-  max-width: 42ch;
+  max-width: 52ch;
 }
 
 .beta-mode-grid {
@@ -266,6 +287,17 @@ h3 {
   text-align: left;
   cursor: pointer;
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.beta-mode-button::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 5px;
+  background: linear-gradient(90deg, rgba(129, 96, 255, 0.8), rgba(255, 119, 200, 0.8), rgba(98, 215, 255, 0.8), rgba(211, 255, 88, 0.88));
+  opacity: 0.42;
 }
 
 .beta-mode-button strong {
@@ -288,7 +320,7 @@ h3 {
 
 .beta-mode-button:hover,
 .beta-button:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1px) scale(1.004);
 }
 
 .beta-lesson-top {
@@ -314,11 +346,12 @@ h3 {
   display: grid;
   gap: 0.55rem;
   margin: 0 0 0.9rem;
-  padding: 0.85rem 0.95rem;
+  padding: 0.95rem 1rem;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
-    radial-gradient(circle at 85% 20%, rgba(255, 119, 200, 0.12), transparent 28%),
+    radial-gradient(circle at 85% 20%, rgba(255, 119, 200, 0.14), transparent 28%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 16%, transparent 84%, rgba(255, 255, 255, 0.03)),
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
 }
 
@@ -339,9 +372,11 @@ h3 {
 
 .beta-progress-track {
   width: 100%;
-  height: 12px;
+  height: 14px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0, rgba(255, 255, 255, 0.06) 12px, rgba(255, 255, 255, 0.03) 12px, rgba(255, 255, 255, 0.03) 24px),
+    rgba(255, 255, 255, 0.08);
   overflow: hidden;
   box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.28);
 }
@@ -352,10 +387,10 @@ h3 {
   width: 0;
   border-radius: inherit;
   background:
-    linear-gradient(90deg, var(--beta-purple) 0%, var(--beta-pink) 34%, var(--beta-blue) 62%, var(--beta-teal) 82%, var(--beta-lime) 100%);
+    linear-gradient(90deg, var(--beta-purple) 0%, var(--beta-pink) 24%, var(--beta-blue) 54%, var(--beta-teal) 76%, var(--beta-electric) 90%, var(--beta-lime) 100%);
   box-shadow:
     0 0 18px rgba(141, 92, 255, 0.36),
-    0 0 30px rgba(211, 255, 88, 0.12);
+    0 0 30px rgba(211, 255, 88, 0.14);
   transition: width 220ms ease;
 }
 
@@ -379,6 +414,18 @@ h3 {
   display: grid;
   gap: 0.25rem;
   align-content: start;
+  position: relative;
+  overflow: hidden;
+}
+
+.beta-stepper li::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(129, 96, 255, 0.9), rgba(255, 119, 200, 0.9), rgba(98, 215, 255, 0.88), rgba(211, 255, 88, 0.9));
+  opacity: 0.28;
 }
 
 .beta-stepper li.is-current {
@@ -386,10 +433,13 @@ h3 {
   background:
     radial-gradient(circle at 75% 22%, rgba(255, 119, 200, 0.18), transparent 34%),
     linear-gradient(180deg, rgba(141, 92, 255, 0.2), rgba(255, 255, 255, 0.03));
+  box-shadow: 0 12px 24px rgba(18, 26, 78, 0.28);
 }
 
 .beta-stepper li.is-done {
-  background: rgba(78, 217, 194, 0.08);
+  background:
+    linear-gradient(180deg, rgba(78, 217, 194, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(78, 217, 194, 0.06);
 }
 
 .beta-step-number {
@@ -421,6 +471,7 @@ h3 {
   border-radius: var(--beta-radius-lg);
   background:
     radial-gradient(circle at top right, rgba(121, 197, 255, 0.08), transparent 30%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02), transparent 12%, transparent 88%, rgba(255, 255, 255, 0.02)),
     linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.018));
   border: 1px solid var(--beta-line);
   padding: 0.95rem;
@@ -469,6 +520,7 @@ h3 {
     radial-gradient(circle at top right, rgba(121, 197, 255, 0.06), transparent 40%),
     rgba(255, 255, 255, 0.03);
   padding: 0.95rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .beta-mode-button strong,
@@ -507,6 +559,10 @@ h3 {
   background:
     radial-gradient(circle at 86% 16%, rgba(255, 119, 200, 0.22), transparent 26%),
     linear-gradient(135deg, rgba(98, 215, 255, 0.14), rgba(129, 96, 255, 0.24));
+}
+
+.beta-start-band .beta-button-primary {
+  min-height: 54px;
 }
 
 .beta-helper strong,
@@ -560,7 +616,37 @@ h3 {
   display: grid;
   gap: 0.55rem;
   margin-top: 0.15rem;
-  padding-top: 0.25rem;
+  padding: 0.95rem 1rem;
+  border-radius: var(--beta-radius-xl);
+  border: 1px solid var(--beta-line);
+  background:
+    linear-gradient(180deg, rgba(13, 17, 52, 0.98), rgba(8, 12, 34, 0.96)),
+    radial-gradient(circle at top right, rgba(98, 215, 255, 0.1), transparent 45%);
+  box-shadow: var(--beta-shadow);
+  position: relative;
+  overflow: clip;
+}
+
+.beta-link-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+    inset 0 -24px 60px rgba(0, 0, 0, 0.16);
+}
+
+.beta-link-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.beta-link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
 }
 
 .beta-link-button {
@@ -573,8 +659,19 @@ h3 {
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
   color: var(--beta-ink);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.beta-link-button::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 4px;
+  background: linear-gradient(90deg, rgba(98, 215, 255, 0.9), rgba(211, 255, 88, 0.9));
+  opacity: 0.42;
 }
 
 .beta-link-button:hover {
@@ -643,7 +740,8 @@ h3 {
   border-color: var(--beta-line-strong);
   background:
     radial-gradient(circle at top right, rgba(255, 119, 200, 0.14), transparent 28%),
-    rgba(141, 92, 255, 0.12);
+    rgba(141, 92, 255, 0.14);
+  box-shadow: 0 12px 22px rgba(19, 28, 80, 0.22);
 }
 
 .beta-segment.is-done,
@@ -699,6 +797,7 @@ h3 {
   border: 1px solid var(--beta-line);
   background:
     radial-gradient(circle at 82% 18%, rgba(121, 197, 255, 0.12), transparent 24%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025), transparent 10%, transparent 90%, rgba(255, 255, 255, 0.025)),
     rgba(255, 255, 255, 0.03);
 }
 
@@ -726,10 +825,13 @@ h3 {
   padding: 0.75rem 1rem;
   border-radius: 999px;
   border: 1px solid rgba(211, 255, 88, 0.2);
-  background: rgba(211, 255, 88, 0.08);
+  background:
+    linear-gradient(135deg, rgba(211, 255, 88, 0.16), rgba(98, 215, 255, 0.08)),
+    rgba(211, 255, 88, 0.08);
   color: #eaffb0;
   font-weight: 700;
   text-align: center;
+  box-shadow: 0 10px 18px rgba(14, 22, 52, 0.24);
 }
 
 .beta-exam-textarea {
@@ -780,7 +882,9 @@ h3 {
   padding: 0.8rem 0.85rem;
   border-radius: 16px;
   border: 1px solid var(--beta-line);
-  background: rgba(255, 255, 255, 0.025);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015)),
+    rgba(255, 255, 255, 0.025);
 }
 
 .beta-mini-step p {
@@ -853,21 +957,24 @@ h3 {
   padding: 0.78rem 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease, filter 160ms ease;
 }
 
 .beta-button-primary {
   background:
     radial-gradient(circle at 80% 28%, rgba(255, 255, 255, 0.24), transparent 24%),
-    linear-gradient(135deg, #5d37f6 0%, #9a52ff 28%, #2bc7ff 58%, #7cf36c 82%, #d3ff58 100%);
+    linear-gradient(135deg, #5d37f6 0%, #9a52ff 22%, #ff77c8 44%, #2bc7ff 66%, #7cf36c 84%, #d3ff58 100%);
   color: #fbfff6;
   box-shadow:
     0 14px 28px rgba(93, 55, 246, 0.28),
-    0 0 20px rgba(211, 255, 88, 0.12);
+    0 0 20px rgba(211, 255, 88, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18);
 }
 
 .beta-button-secondary {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+    rgba(13, 18, 47, 0.7);
   color: var(--beta-ink);
   border: 1px solid var(--beta-line);
 }
@@ -938,6 +1045,7 @@ h3 {
   background:
     radial-gradient(circle at 78% 18%, rgba(255, 119, 200, 0.18), transparent 26%),
     radial-gradient(circle at 22% 10%, rgba(129, 96, 255, 0.18), transparent 28%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0, rgba(255, 255, 255, 0.022) 1px, transparent 1px, transparent 42px),
     linear-gradient(180deg, rgba(18, 24, 58, 0.98), rgba(11, 16, 40, 0.98));
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
   position: relative;
@@ -992,7 +1100,8 @@ h3 {
 
   .beta-header,
   .beta-mode-card,
-  .beta-lesson-card {
+  .beta-lesson-card,
+  .beta-footer-links {
     grid-column: auto;
     grid-row: auto;
   }
@@ -1003,6 +1112,10 @@ h3 {
 }
 
 @media (max-width: 900px) {
+  .beta-mode-card {
+    gap: 0.55rem;
+  }
+
   .beta-grid,
   .beta-writing-layout,
   .beta-feedback-grid,
@@ -1020,6 +1133,37 @@ h3 {
     padding-bottom: 0.2rem;
   }
 
+  .beta-mode-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.55rem;
+    overflow-x: auto;
+    padding-bottom: 0.1rem;
+    margin-inline: -0.1rem;
+    scroll-snap-type: x proximity;
+  }
+
+  .beta-mode-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .beta-mode-button {
+    flex: 0 0 auto;
+    min-width: 190px;
+    max-width: 240px;
+    padding: 0.78rem 0.85rem 0.72rem;
+    scroll-snap-align: start;
+  }
+
+  .beta-mode-button strong {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+  }
+
+  .beta-mode-button span {
+    display: none;
+  }
+
   .beta-stepper li {
     min-width: 120px;
     min-height: 0;
@@ -1027,6 +1171,10 @@ h3 {
 
   .beta-segment-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .beta-link-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1044,6 +1192,7 @@ h3 {
   .beta-header,
   .beta-mode-card,
   .beta-lesson-card,
+  .beta-link-card,
   .beta-stage,
   .beta-popup {
     padding: 0.9rem;
@@ -1113,5 +1262,20 @@ h3 {
 
   .beta-popup-textarea {
     min-height: 126px;
+  }
+
+  .beta-mode-card > .beta-small {
+    display: none;
+  }
+
+  .beta-mode-button {
+    min-width: 168px;
+    max-width: 210px;
+    min-height: 54px;
+    padding: 0.72rem 0.78rem;
+  }
+
+  .beta-link-button {
+    padding: 0.78rem 0.88rem;
   }
 }
