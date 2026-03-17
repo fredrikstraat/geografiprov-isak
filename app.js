@@ -1432,6 +1432,23 @@ function formatExamTime(ms) {
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
+function syncExamTimerDom() {
+  const timeEl = document.querySelector("#beta-exam-time");
+  if (timeEl) {
+    timeEl.textContent = formatExamTime(appState.examRemainingMs);
+    timeEl.classList.toggle("is-expired", appState.examExpired);
+  }
+
+  const stateEl = document.querySelector("#beta-exam-state-pill");
+  if (stateEl) {
+    stateEl.textContent = appState.examExpired
+      ? "Tiden är ute"
+      : appState.mode === "practiceExam"
+        ? "Övningsprovet är igång"
+        : "Provet är igång";
+  }
+}
+
 function startExamTimer() {
   resetExamState();
   appState.examStarted = true;
@@ -1448,12 +1465,15 @@ function startExamTimer() {
         examTimerId = 0;
       }
       appState.examExpired = true;
+      render();
+      return;
     }
 
-    render();
+    syncExamTimerDom();
   };
 
-  tick();
+  render();
+  syncExamTimerDom();
   examTimerId = window.setInterval(tick, 1000);
 }
 
@@ -2152,9 +2172,9 @@ function renderExamStep() {
         <div class="beta-exam-bar">
           <div>
             <p class="beta-label">Tid kvar</p>
-            <h3 class="beta-exam-time ${appState.examExpired ? "is-expired" : ""}">${formatExamTime(appState.examRemainingMs)}</h3>
+            <h3 class="beta-exam-time ${appState.examExpired ? "is-expired" : ""}" id="beta-exam-time">${formatExamTime(appState.examRemainingMs)}</h3>
           </div>
-          <div class="beta-exam-state-pill">
+          <div class="beta-exam-state-pill" id="beta-exam-state-pill">
             ${appState.examExpired ? "Tiden är ute" : "Provet är igång"}
           </div>
         </div>
@@ -2202,9 +2222,9 @@ function renderPracticeExamStep() {
         <div class="beta-exam-bar">
           <div>
             <p class="beta-label">Tid kvar</p>
-            <h3 class="beta-exam-time ${appState.examExpired ? "is-expired" : ""}">${formatExamTime(appState.examRemainingMs)}</h3>
+            <h3 class="beta-exam-time ${appState.examExpired ? "is-expired" : ""}" id="beta-exam-time">${formatExamTime(appState.examRemainingMs)}</h3>
           </div>
-          <div class="beta-exam-state-pill">
+          <div class="beta-exam-state-pill" id="beta-exam-state-pill">
             ${appState.examExpired ? "Tiden är ute" : "Övningsprovet är igång"}
           </div>
         </div>
