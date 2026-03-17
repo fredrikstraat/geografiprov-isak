@@ -290,6 +290,69 @@ const stepSets = {
   exam: ["Välj", "Slutprov", "Bedömning"]
 };
 
+const achievementDefinitions = [
+  {
+    id: "listen-first",
+    title: "Första checkpointen",
+    description: "Du lyssnade klart din första del och stämde av att den satt.",
+    when: (stats) => stats.listenedSegments >= 1
+  },
+  {
+    id: "listen-five",
+    title: "Fem delar inne",
+    description: "Du har lyssnat klart fem delområden. Fin rytm.",
+    when: (stats) => stats.listenedSegments >= 5
+  },
+  {
+    id: "listen-twelve",
+    title: "Lyssningsflow",
+    description: "Du har tagit dig igenom tolv lyssningsdelar. Det märks.",
+    when: (stats) => stats.listenedSegments >= 12
+  },
+  {
+    id: "continent-finished",
+    title: "Världsdel klar",
+    description: "Du tog en hel världsdel från lyssna till återkoppling.",
+    when: (stats) => stats.continentRounds >= 1
+  },
+  {
+    id: "compare-finished",
+    title: "Jämförelsen sitter",
+    description: "Du har tagit dig igenom en hel jämförelse och fått feedback.",
+    when: (stats) => stats.compareRounds >= 1
+  },
+  {
+    id: "facts-on-point",
+    title: "Fakta på plats",
+    description: "Du fick med tydliga fakta i ett eget svar.",
+    when: (stats) => stats.goodFacts >= 1
+  },
+  {
+    id: "why-explainer",
+    title: "Varför-byggare",
+    description: "Du förklarade varför i ett svar. Det lyfter direkt.",
+    when: (stats) => stats.goodWhy >= 1
+  },
+  {
+    id: "example-drop",
+    title: "Exempel på plats",
+    description: "Du fick med exempel i ett svar. Nice.",
+    when: (stats) => stats.goodExamples >= 1
+  },
+  {
+    id: "c-level",
+    title: "C på gång",
+    description: "Du nådde ett svar på C-nivå eller högre.",
+    when: (stats) => stats.highestLevelRank >= 2
+  },
+  {
+    id: "a-level",
+    title: "A-känsla",
+    description: "Du nådde ett svar på A-nivå. Starkt jobbat.",
+    when: (stats) => stats.highestLevelRank >= 3
+  }
+];
+
 const appState = {
   mode: "continent",
   selectedA: "europa",
@@ -313,6 +376,9 @@ const appState = {
   gradingResult: null,
   coachingLoading: false,
   coachingResult: null,
+  modelAnswerOpen: false,
+  modelAnswerLevel: "c",
+  achievements: null,
   examStarted: false,
   examExpired: false,
   examRemainingMs: 30 * 60 * 1000
@@ -321,6 +387,8 @@ const appState = {
 const dom = {};
 let examTimerId = 0;
 let popupReplayAudio = null;
+const resumeStorageKey = "geografi-resume";
+const achievementStorageKey = "geografi-achievements";
 
 appState.audio.preload = "none";
 
@@ -337,6 +405,110 @@ function saveJson(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
+function defaultAchievements() {
+  return {
+    listenedKeys: [],
+    listenedSegments: 0,
+    continentRounds: 0,
+    compareRounds: 0,
+    goodFacts: 0,
+    goodWhy: 0,
+    goodExamples: 0,
+    highestLevelRank: 0,
+    unlocked: [],
+    latestUnlocked: null
+  };
+}
+
+function loadAchievements() {
+  const loaded = loadJson(achievementStorageKey, {});
+  return { ...defaultAchievements(), ...(loaded || {}) };
+}
+
+function saveAchievements() {
+  saveJson(achievementStorageKey, appState.achievements);
+}
+
+function levelRank(levelEstimate = "") {
+  const text = String(levelEstimate).toLowerCase();
+  if (/\ba\b|a-nivå|a nivå/.test(text)) {
+    return 3;
+  }
+  if (/\bc\b|c-nivå|c nivå/.test(text)) {
+    return 2;
+  }
+  if (/\be\b|e-nivå|e nivå/.test(text)) {
+    return 1;
+  }
+  return 0;
+}
+
+function unlockAchievementsIfNeeded() {
+  const unlockedNow = [];
+
+  achievementDefinitions.forEach((achievement) => {
+    if (!appState.achievements.unlocked.includes(achievement.id) && achievement.when(appState.achievements)) {
+      appState.achievements.unlocked.push(achievement.id);
+      unlockedNow.push(achievement.id);
+    }
+  });
+
+  if (unlockedNow.length) {
+    appState.achievements.latestUnlocked = unlockedNow[unlockedNow.length - 1];
+    saveAchievements();
+  }
+
+  return unlockedNow;
+}
+
+function markListenedSegment(trackKey, segmentIndex) {
+  if (!trackKey || segmentIndex < 0) {
+    return;
+  }
+
+  const key = `${trackKey}::${segmentIndex}`;
+  if (appState.achievements.listenedKeys.includes(key)) {
+    return;
+  }
+
+  appState.achievements.listenedKeys.push(key);
+  appState.achievements.listenedSegments += 1;
+  unlockAchievementsIfNeeded();
+  saveAchievements();
+}
+
+function recordGradedAnswer(result) {
+  if (!result) {
+    return;
+  }
+
+  if (result.checks?.usesFacts) {
+    appState.achievements.goodFacts += 1;
+  }
+  if (result.checks?.explainsWhy) {
+    appState.achievements.goodWhy += 1;
+  }
+  if (result.checks?.givesExamples) {
+    appState.achievements.goodExamples += 1;
+  }
+
+  appState.achievements.highestLevelRank = Math.max(
+    appState.achievements.highestLevelRank,
+    levelRank(result.levelEstimate)
+  );
+
+  if (appState.mode === "continent") {
+    appState.achievements.continentRounds += 1;
+  }
+
+  if (appState.mode === "compare") {
+    appState.achievements.compareRounds += 1;
+  }
+
+  unlockAchievementsIfNeeded();
+  saveAchievements();
+}
+
 function humanJoin(items = []) {
   if (!items.length) {
     return "";
@@ -350,6 +522,14 @@ function humanJoin(items = []) {
   return `${items.slice(0, -1).join(", ")} och ${items[items.length - 1]}`;
 }
 
+function loadResumeSnapshot() {
+  return loadJson(resumeStorageKey, null);
+}
+
+function saveResumeSnapshot(snapshot) {
+  saveJson(resumeStorageKey, snapshot);
+}
+
 function continentById(continentId) {
   return continents.find((continent) => continent.id === continentId) || null;
 }
@@ -358,6 +538,10 @@ function activeSelectionReady() {
   return appState.mode === "continent"
     ? Boolean(continentById(appState.selectedA))
     : Boolean(continentById(appState.selectedA) && continentById(appState.selectedB) && appState.selectedA !== appState.selectedB);
+}
+
+function areaToneClass(areaKey) {
+  return `tone-${areaKey}`;
 }
 
 function currentLessonTitle() {
@@ -410,6 +594,84 @@ function currentLessonSubtitle() {
   }
 
   return "Jämförelsen är upplagd för att hjälpa dig få med vad, varför och exempel utan att det blir rörigt.";
+}
+
+function snapshotCanResume(snapshot) {
+  return Boolean(
+    snapshot &&
+    (snapshot.mode === "continent" || snapshot.mode === "compare") &&
+    snapshot.currentStep > 0 &&
+    snapshot.selectedA
+  );
+}
+
+function currentResumeSnapshot() {
+  const current = loadResumeSnapshot();
+  return snapshotCanResume(current) ? current : null;
+}
+
+function resumeSummary(snapshot) {
+  if (!snapshotCanResume(snapshot)) {
+    return null;
+  }
+
+  const first = continentById(snapshot.selectedA);
+  const second = continentById(snapshot.selectedB);
+  const area = guideAreas[Math.min(snapshot.currentSegmentIndex || 0, guideAreas.length - 1)];
+
+  if (snapshot.mode === "continent") {
+    if (snapshot.currentStep === 1 && first && area) {
+      return `Senast jobbade du med ${area.label.toLowerCase()} i ${first.name}.`;
+    }
+    if (snapshot.currentStep === 2 && first) {
+      return `Senast kollade du nyckelorden för ${first.name}.`;
+    }
+    if (snapshot.currentStep === 3 && first) {
+      return `Senast skrev du om ${first.name}.`;
+    }
+    if (snapshot.currentStep >= 4 && first) {
+      return `Senast tittade du på återkopplingen för ${first.name}.`;
+    }
+  }
+
+  if (snapshot.mode === "compare" && first && second) {
+    if (snapshot.currentStep === 1 && area) {
+      return `Senast jobbade du med ${area.label.toLowerCase()} i jämförelsen mellan ${first.name} och ${second.name}.`;
+    }
+    if (snapshot.currentStep === 2) {
+      return `Senast kollade du jämförelsen mellan ${first.name} och ${second.name}.`;
+    }
+    if (snapshot.currentStep === 3) {
+      return `Senast skrev du jämförelsen mellan ${first.name} och ${second.name}.`;
+    }
+    if (snapshot.currentStep >= 4) {
+      return `Senast tittade du på återkopplingen för ${first.name} och ${second.name}.`;
+    }
+  }
+
+  return null;
+}
+
+function resumeActionLabel(snapshot) {
+  if (!snapshotCanResume(snapshot)) {
+    return "Fortsätt";
+  }
+
+  const area = guideAreas[Math.min(snapshot.currentSegmentIndex || 0, guideAreas.length - 1)];
+
+  if (snapshot.currentStep === 1 && area) {
+    return `Fortsätt med ${area.label.toLowerCase()}`;
+  }
+
+  if (snapshot.currentStep === 2) {
+    return "Till nyckelorden";
+  }
+
+  if (snapshot.currentStep === 3) {
+    return "Fortsätt skriva";
+  }
+
+  return "Öppna återkopplingen";
 }
 
 function currentTrackKey() {
@@ -616,9 +878,243 @@ function recommendedNextMove() {
   return null;
 }
 
+function currentFocusGuide() {
+  if (appState.currentStep === 0) {
+    return {
+      now: "Välj det som ska tränas",
+      next: appState.mode === "continent" ? "Lyssna" : appState.mode === "compare" ? "Lyssna på jämförelsen" : "Starta provet",
+      after: "Ta en liten bit i taget"
+    };
+  }
+
+  if (appState.mode === "exam") {
+    return {
+      now: "Skriv ditt provsvar",
+      next: "Lämna in för bedömning",
+      after: "Se vad som redan sitter"
+    };
+  }
+
+  if (appState.mode === "practiceExam") {
+    return {
+      now: "Skriv ditt övningsprov",
+      next: "Coacha eller lämna in",
+      after: "Få tydlig bedömning"
+    };
+  }
+
+  if (appState.currentStep === 1) {
+    return {
+      now: "Lyssna på nästa del",
+      next: "Svara kort i popupen",
+      after: "Fortsätt till nästa område"
+    };
+  }
+
+  if (appState.currentStep === 2) {
+    return {
+      now: "Kolla nyckelorden",
+      next: "Plocka ut det viktigaste",
+      after: "Gå vidare till skrivdelen"
+    };
+  }
+
+  if (appState.currentStep === 3) {
+    return {
+      now: "Skriv i små steg",
+      next: "Få med vad, varför och exempel",
+      after: "Skicka in och få feedback"
+    };
+  }
+
+  return {
+    now: "Ta in återkopplingen",
+    next: "Se nästa moment",
+    after: "Fortsätt medan det sitter"
+  };
+}
+
+function checkpointSuccessText() {
+  const area = listenArea(appState.listenQuestionSegmentIndex);
+  const track = currentTrack();
+  const nextSegment = track?.segments?.[appState.listenQuestionSegmentIndex + 1];
+  const currentLabel = area?.label?.toLowerCase() || "den här delen";
+
+  if (nextSegment?.label) {
+    return `Bra. Nu sitter ${currentLabel}. Nästa är ${nextSegment.label.toLowerCase()}.`;
+  }
+
+  if (appState.mode === "continent") {
+    const first = continentById(appState.selectedA);
+    return `Bra. Nu sitter ${currentLabel}. ${first ? `${first.name} är klar för nästa steg.` : "Den här världsdelen är klar för nästa steg."}`;
+  }
+
+  return `Bra. Nu sitter ${currentLabel}. Den här jämförelsen är klar för nästa steg.`;
+}
+
+function microFeedbackLists(result) {
+  const gotNow = [];
+  const needsNow = [];
+
+  if (result.checks?.usesFacts) {
+    gotNow.push("Du fick med fakta.");
+  } else {
+    needsNow.push("Lägg till tydliga fakta.");
+  }
+
+  if (result.checks?.explainsWhy) {
+    gotNow.push("Du förklarade varför.");
+  } else {
+    needsNow.push("Skriv varför det blir så.");
+  }
+
+  if (result.checks?.givesExamples) {
+    gotNow.push("Du gav exempel.");
+  } else {
+    needsNow.push("Lägg till minst ett tydligt exempel.");
+  }
+
+  if (result.checks?.onTask) {
+    gotNow.push("Du höll dig till uppgiften.");
+  } else {
+    needsNow.push("Håll dig närmare själva uppgiften.");
+  }
+
+  if (!gotNow.length) {
+    gotNow.push("Du är igång och har ett svar att jobba vidare med.");
+  }
+
+  if (!needsNow.length) {
+    needsNow.push("Inget akut saknas just nu. Vässa svaret med ett ännu tydligare exempel.");
+  }
+
+  return { gotNow, needsNow };
+}
+
+function achievementById(id) {
+  return achievementDefinitions.find((achievement) => achievement.id === id) || null;
+}
+
+function nextListeningMilestone() {
+  const milestones = [1, 5, 12];
+  return milestones.find((milestone) => appState.achievements.listenedSegments < milestone) || null;
+}
+
+function totalXp() {
+  const stats = appState.achievements;
+  return (
+    stats.listenedSegments * 12 +
+    stats.continentRounds * 60 +
+    stats.compareRounds * 90 +
+    stats.goodFacts * 18 +
+    stats.goodWhy * 24 +
+    stats.goodExamples * 24 +
+    (stats.highestLevelRank >= 2 ? 80 : 0) +
+    (stats.highestLevelRank >= 3 ? 120 : 0)
+  );
+}
+
+function levelInfoFromXp(xp) {
+  let level = 1;
+  let spent = 0;
+  let requirement = 120;
+
+  while (xp >= spent + requirement) {
+    spent += requirement;
+    level += 1;
+    requirement += 60;
+  }
+
+  return {
+    level,
+    currentXp: xp - spent,
+    nextXp: requirement,
+    percent: Math.max(4, Math.min(100, Math.round(((xp - spent) / requirement) * 100)))
+  };
+}
+
+function renderAchievementsPanel() {
+  const unlocked = appState.achievements.unlocked.map(achievementById).filter(Boolean);
+  const latest = achievementById(appState.achievements.latestUnlocked);
+  const xp = totalXp();
+  const level = levelInfoFromXp(xp);
+  const nextMilestone = nextListeningMilestone();
+  const remainingToNext = nextMilestone ? nextMilestone - appState.achievements.listenedSegments : 0;
+
+  dom.achievementContent.innerHTML = `
+    <div class="beta-xp-head">
+      <div>
+        <p class="beta-label">XP</p>
+        <h3>Level ${level.level}</h3>
+      </div>
+      <div class="beta-xp-badge">
+        <strong>${xp} XP</strong>
+      </div>
+    </div>
+    <div class="beta-xp-track">
+      <span class="beta-xp-fill" style="width:${level.percent}%"></span>
+    </div>
+    <div class="beta-xp-meta">
+      <span>${level.currentXp}/${level.nextXp} XP till nästa level</span>
+      <span>${unlocked.length} unlocks</span>
+    </div>
+    <div class="beta-xp-foot">
+      <span class="beta-xp-latest">${
+        latest ? `Senast: ${latest.title}` : "Första boost: lyssna klart första delen"
+      }</span>
+      <span class="beta-xp-next">${
+        nextMilestone ? `${remainingToNext} delar till nästa boost` : "Alla lyssningsboostar klara"
+      }</span>
+    </div>
+  `;
+}
+
+function renderFocusStrip() {
+  if (appState.currentStep === 0) {
+    return "";
+  }
+
+  const guide = currentFocusGuide();
+  return `
+    <section class="beta-focus-strip">
+      <div class="beta-focus-item is-now">
+        <p class="beta-label">Nu</p>
+        <strong>${guide.now}</strong>
+      </div>
+      <div class="beta-focus-item">
+        <p class="beta-label">Sen</p>
+        <strong>${guide.next}</strong>
+      </div>
+      <div class="beta-focus-item">
+        <p class="beta-label">Efter det</p>
+        <strong>${guide.after}</strong>
+      </div>
+    </section>
+  `;
+}
+
+function shouldShowModelAnswer() {
+  return appState.mode === "compare" && activeSelectionReady();
+}
+
+function openModelAnswer(level = "c") {
+  if (!shouldShowModelAnswer()) {
+    return;
+  }
+  appState.modelAnswerLevel = level;
+  appState.modelAnswerOpen = true;
+  render();
+}
+
+function closeModelAnswer() {
+  appState.modelAnswerOpen = false;
+  render();
+}
+
 function moveToRecommendedNext() {
   stopAudio();
   resetListenCheckpointState();
+  appState.modelAnswerOpen = false;
   appState.currentSegmentIndex = 0;
   appState.currentTrackKey = "";
   appState.gradingResult = null;
@@ -643,6 +1139,214 @@ function moveToRecommendedNext() {
     appState.currentStep = 0;
     render();
   }
+}
+
+function startCurrentSelection() {
+  if (!activeSelectionReady()) {
+    return;
+  }
+
+  const nextStep = 1;
+  const shouldAutoplayListen = appState.mode !== "exam" && appState.mode !== "practiceExam";
+
+  appState.currentStep = nextStep;
+
+  if (appState.mode === "exam" || appState.mode === "practiceExam") {
+    resetExamState();
+    appState.coachingResult = null;
+    startExamTimer();
+  }
+
+  if (shouldAutoplayListen) {
+    stopAudio();
+    appState.currentSegmentIndex = 0;
+    appState.currentTrackKey = "";
+    resetListenCheckpointState();
+  }
+
+  render();
+
+  if (shouldAutoplayListen) {
+    playCurrentTrack();
+  }
+}
+
+function lineForLabel(text, label) {
+  return text
+    .split("\n")
+    .find((line) => line.trim().startsWith(`${label}:`))
+    ?.trim() || "";
+}
+
+function sectionEdited(label) {
+  const starterLine = lineForLabel(currentStarterText(), label);
+  const draftLine = lineForLabel(currentDraft(), label);
+  return Boolean(draftLine) && draftLine !== starterLine;
+}
+
+function continentWritingSteps() {
+  return [
+    {
+      tone: "location",
+      title: "Börja",
+      hint: "Fyll på läge och klimat först.",
+      done: sectionEdited("Läge") || sectionEdited("Klimat")
+    },
+    {
+      tone: "vegetation",
+      title: "Fortsätt",
+      hint: "Ta vegetation och befolkning sen.",
+      done: sectionEdited("Vegetation") || sectionEdited("Befolkning")
+    },
+    {
+      tone: "livelihoods",
+      title: "Avsluta",
+      hint: "Runda av med försörjning och naturresurser.",
+      done: sectionEdited("Försörjning") || sectionEdited("Naturresurser")
+    }
+  ];
+}
+
+function comparisonWritingSteps() {
+  const first = continentById(appState.selectedA);
+  const second = continentById(appState.selectedB);
+  return [
+    {
+      tone: "location",
+      title: "Vad",
+      hint: "Skriv vad som är lika eller olika.",
+      done: sectionEdited("Vad")
+    },
+    {
+      tone: "climate",
+      title: "Varför",
+      hint: "Förklara varför det blir så.",
+      done: sectionEdited("Varför")
+    },
+    {
+      tone: "resources",
+      title: "Exempel",
+      hint: "Ge ett exempel från båda världsdelarna.",
+      done:
+        (first ? sectionEdited(`Exempel från ${first.name}`) : false) ||
+        (second ? sectionEdited(`Exempel från ${second.name}`) : false)
+    }
+  ];
+}
+
+function writingStepsForCurrentMode() {
+  return appState.mode === "continent" ? continentWritingSteps() : comparisonWritingSteps();
+}
+
+function renderWritingMiniSteps() {
+  return `
+    <div class="beta-writing-steps">
+      ${writingStepsForCurrentMode()
+        .map(
+          (step, index) => `
+            <article class="beta-writing-step ${areaToneClass(step.tone || "location")} ${step.done ? "is-done" : ""}">
+              <span class="beta-writing-step-number">${index + 1}</span>
+              <div>
+                <strong>${step.title}</strong>
+                <p class="beta-small">${step.hint}</p>
+              </div>
+            </article>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function modelAnswerForLevel(level) {
+  const first = continentById(appState.selectedA);
+  const second = continentById(appState.selectedB);
+  const rows = buildCompareRows();
+
+  if (!first || !second || !rows.length) {
+    return null;
+  }
+
+  const byKey = (key) => rows.find((row) => row.key === key);
+  const location = byKey("location");
+  const climate = byKey("climate");
+  const vegetation = byKey("vegetation");
+  const population = byKey("population");
+  const livelihoods = byKey("livelihoods");
+  const resources = byKey("resources");
+
+  const copy = {
+    e: {
+      title: "E-nivå",
+      kicker: "Grundläggande jämförelse",
+      hint: "Här räcker det att få med tydliga fakta och några enkla skillnader.",
+      text: [
+        `${first.name} och ${second.name} är två olika världsdelar. När det gäller läge ser man att ${first.name}: ${location.firstSummary} ${second.name}: ${location.secondSummary}`,
+        `Klimatet skiljer sig också. ${first.name}: ${climate.firstSummary} ${second.name}: ${climate.secondSummary} Det påverkar växtligheten. ${first.name}: ${vegetation.firstSummary} ${second.name}: ${vegetation.secondSummary}`,
+        `Befolkning, naturresurser och försörjning skiljer sig också. ${first.name}: ${population.firstSummary} och ${livelihoods.firstSummary} ${resources.firstSummary} ${second.name}: ${population.secondSummary} och ${livelihoods.secondSummary} ${resources.secondSummary}`
+      ]
+    },
+    c: {
+      title: "C-nivå",
+      kicker: "Jämför och förklara",
+      hint: "Här behöver svaret både jämföra och förklara varför det ser ut så.",
+      text: [
+        `${first.name} och ${second.name} skiljer sig åt i läge, klimat, vegetation, befolkning, naturresurser och försörjning. När det gäller läge ser man att ${first.name}: ${location.firstSummary} ${second.name}: ${location.secondSummary} Det påverkar klimatet i de två världsdelarna.`,
+        `${first.name}: ${climate.firstSummary} ${second.name}: ${climate.secondSummary} Skillnaderna beror på att ${first.name.toLowerCase()}: ${climate.firstReason} ${second.name}: ${climate.secondReason} Därför ser växtligheten också olika ut. ${first.name}: ${vegetation.firstSummary} ${second.name}: ${vegetation.secondSummary}`,
+        `Befolkningen påverkas också av natur och klimat. ${first.name}: ${population.firstSummary} ${second.name}: ${population.secondSummary} Naturresurserna och försörjningen ser också olika ut. ${first.name}: ${resources.firstSummary} och ${livelihoods.firstSummary} ${second.name}: ${resources.secondSummary} och ${livelihoods.secondSummary} Därför påverkar naturen hur människor bor och arbetar i de två världsdelarna.`
+      ]
+    },
+    a: {
+      title: "A-nivå",
+      kicker: "Jämför, förklara och dra slutsats",
+      hint: "Här märks det att svaret binder ihop natur, människor och orsaker på ett tydligt sätt.",
+      text: [
+        `${first.name} och ${second.name} är både lika och olika när man jämför läge, klimat, vegetation, befolkning, naturresurser och försörjning. När det gäller läge ser man att ${first.name}: ${location.firstSummary} ${second.name}: ${location.secondSummary} Det gör att naturförhållandena skiljer sig tydligt mellan världsdelarna.`,
+        `Klimatet är en viktig skillnad. ${first.name}: ${climate.firstSummary} ${second.name}: ${climate.secondSummary} Det här hänger ihop med läget eftersom ${first.name.toLowerCase()}: ${climate.firstReason} ${second.name}: ${climate.secondReason} Därför blir också växtligheten olika. ${first.name}: ${vegetation.firstSummary} ${second.name}: ${vegetation.secondSummary}`,
+        `Skillnaderna märks också i hur människor lever. ${first.name}: ${population.firstSummary} ${second.name}: ${population.secondSummary} Näringar och försörjning påverkas av vilka resurser som finns. ${first.name}: ${resources.firstSummary} Därför är ${livelihoods.firstSummary.toLowerCase()} ${second.name}: ${resources.secondSummary} Därför är ${livelihoods.secondSummary.toLowerCase()}`,
+        `Samtidigt finns en likhet: i båda världsdelarna påverkar naturen hur människor bor och arbetar. Sammanfattningsvis kan man säga att läge och klimat påverkar vegetation, befolkning, naturresurser och försörjning, och därför utvecklas ${first.name} och ${second.name} på olika sätt.`
+      ]
+    }
+  };
+
+  return copy[level] || copy.c;
+}
+
+function renderModelAnswerPopup() {
+  const content = modelAnswerForLevel(appState.modelAnswerLevel);
+  if (!content) {
+    dom.overlayShell.innerHTML = "";
+    return;
+  }
+
+  dom.overlayShell.innerHTML = `
+    <div class="beta-overlay-backdrop">
+      <section class="beta-popup beta-model-popup" role="dialog" aria-modal="true" aria-labelledby="beta-model-answer-title">
+        <p class="beta-label">Modellsvar</p>
+        <h3 id="beta-model-answer-title">${content.title}: ${currentLessonTitle()}</h3>
+        <p class="beta-small">${content.hint}</p>
+        <div class="beta-model-levels">
+          <button class="beta-button ${appState.modelAnswerLevel === "e" ? "beta-button-primary" : "beta-button-secondary"}" id="beta-model-level-e">E-nivå</button>
+          <button class="beta-button ${appState.modelAnswerLevel === "c" ? "beta-button-primary" : "beta-button-secondary"}" id="beta-model-level-c">C-nivå</button>
+          <button class="beta-button ${appState.modelAnswerLevel === "a" ? "beta-button-primary" : "beta-button-secondary"}" id="beta-model-level-a">A-nivå</button>
+        </div>
+        <div class="beta-support-card beta-model-summary-card">
+          <p class="beta-label">${content.kicker}</p>
+          <div class="beta-model-answer-copy">
+            ${content.text.map((paragraph) => `<p>${paragraph}</p>`).join("")}
+          </div>
+        </div>
+        <div class="beta-popup-footer">
+          <p class="beta-status is-ready">Använd det här som förebild: först vad, sedan varför, och till sist tydliga exempel.</p>
+          <div class="beta-popup-actions">
+            <button class="beta-button beta-button-primary" id="beta-close-model-answer">
+              Stäng
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+  `;
 }
 
 function promptPayload() {
@@ -828,7 +1532,7 @@ function listenQuestionSpec(segmentIndex) {
     const info = continent.dimensions[area.key];
     return {
       title: `${area.label}: ${continent.name}`,
-      prompt: `Skriv 1-2 meningar om ${area.label.toLowerCase()} i ${continent.name}. Försök få med det viktigaste du just hörde.`,
+      prompt: `Vad är viktigast om ${area.label.toLowerCase()} i ${continent.name}? Skriv 1-2 meningar.`,
       placeholder: `${area.label}: I ${continent.name} ...`,
       referenceFacts: [
         `${area.label}. ${info.summary}`,
@@ -845,7 +1549,7 @@ function listenQuestionSpec(segmentIndex) {
 
   return {
     title: `${area.label}: ${row.firstName} och ${row.secondName}`,
-    prompt: `Skriv 1-2 meningar om ${area.label.toLowerCase()} när du jämför ${row.firstName} och ${row.secondName}. Få gärna med någon skillnad eller likhet.`,
+    prompt: `Vad är viktigast om ${area.label.toLowerCase()} när du jämför ${row.firstName} och ${row.secondName}? Skriv 1-2 meningar.`,
     placeholder: `${area.label}: ${row.firstName} ... medan ${row.secondName} ...`,
     referenceFacts: [
       `${row.firstName}: ${row.firstSummary} Varför: ${row.firstReason}`,
@@ -876,11 +1580,14 @@ function listenStepProgress() {
 function advanceFromCheckpoint() {
   const track = currentTrack();
   const nextIndex = appState.listenQuestionSegmentIndex + 1;
+  const completedTrackKey = currentTrackKey();
+  const completedSegmentIndex = appState.listenQuestionSegmentIndex;
   if (popupReplayAudio) {
     popupReplayAudio.pause();
     popupReplayAudio.currentTime = 0;
     popupReplayAudio = null;
   }
+  markListenedSegment(completedTrackKey, completedSegmentIndex);
   resetListenCheckpointState();
 
   if (!track?.segments?.length || nextIndex >= track.segments.length) {
@@ -940,7 +1647,7 @@ function listenSummaryCards() {
               : "";
 
         return `
-          <article class="beta-summary-card ${stateClass}">
+          <article class="beta-summary-card ${areaToneClass(area.key)} ${stateClass}">
             <p class="beta-label">${area.label}</p>
             <p class="beta-summary-text">${info.summary}</p>
             <div class="beta-chip-row">
@@ -965,7 +1672,7 @@ function listenSummaryCards() {
             : "";
 
       return `
-        <article class="beta-summary-card ${stateClass}">
+        <article class="beta-summary-card ${areaToneClass(row.key)} ${stateClass}">
           <p class="beta-label">${row.label}</p>
           <p class="beta-summary-text"><strong>${row.firstName}:</strong> ${row.firstSummary}</p>
           <p class="beta-summary-text"><strong>${row.secondName}:</strong> ${row.secondSummary}</p>
@@ -980,7 +1687,7 @@ function areaCardsForContinent(continent) {
     .map((area) => {
       const info = continent.dimensions[area.key];
       return `
-        <article class="beta-card">
+        <article class="beta-card ${areaToneClass(area.key)}">
           <p class="beta-label">${area.label}</p>
           <h3 class="beta-area-title">${area.prompt}</h3>
           <p class="beta-area-summary">${info.summary}</p>
@@ -997,7 +1704,7 @@ function areaCardsForComparison() {
   return buildCompareRows()
     .map(
       (row) => `
-        <article class="beta-card beta-comparison-card">
+        <article class="beta-card beta-comparison-card ${areaToneClass(row.key)}">
           <div>
             <p class="beta-label">${row.label}</p>
             <h3>${row.prompt}</h3>
@@ -1160,6 +1867,8 @@ function overallProgress() {
 }
 
 function renderSelectionStep() {
+  const resume = currentResumeSnapshot();
+  const resumeText = resumeSummary(resume);
   const continentOptions = continents
     .map((continent) => `<option value="${continent.id}" ${continent.id === appState.selectedA ? "selected" : ""}>${continent.name}</option>`)
     .join("");
@@ -1176,10 +1885,32 @@ function renderSelectionStep() {
             <strong>Hej.</strong>
             <p class="beta-small">Välj en världsdel först. Sen är det bara att ta nästa steg, ett i taget. Du behöver inte kunna allt direkt.</p>
           </div>
+          ${
+            resume?.mode === "continent" && resumeText
+              ? `
+                <div class="beta-support-card beta-resume-card">
+                  <p class="beta-label">Fortsätt där du var</p>
+                  <div class="beta-resume-row">
+                    <p class="beta-small">${resumeText}</p>
+                    <button class="beta-button beta-button-secondary" id="beta-resume-last-session">
+                      ${resumeActionLabel(resume)}
+                    </button>
+                  </div>
+                </div>
+              `
+              : ""
+          }
           <label class="beta-select-label">
             Välj världsdel
             <select class="beta-select" id="beta-select-a">${continentOptions}</select>
           </label>
+          <div class="beta-start-band beta-start-band-selection">
+            <p class="beta-label">Börja här</p>
+            <p class="beta-small">När du har valt världsdel trycker du här för att starta lyssna direkt.</p>
+            <button class="beta-button beta-button-primary" id="beta-start-continent">
+              Starta lyssna
+            </button>
+          </div>
         </div>
         <div class="beta-support-card">
           <p class="beta-label">Bra att börja med</p>
@@ -1284,6 +2015,21 @@ function renderSelectionStep() {
           <strong>Välj bara två världsdelar här.</strong>
           <p class="beta-small">Resten av lektionen byggs automatiskt och hjälper dig träna på jämförelsen mot C, utan att allt kommer på en gång.</p>
         </div>
+        ${
+          resume?.mode === "compare" && resumeText
+            ? `
+              <div class="beta-support-card beta-resume-card">
+                <p class="beta-label">Fortsätt där du var</p>
+                <div class="beta-resume-row">
+                  <p class="beta-small">${resumeText}</p>
+                  <button class="beta-button beta-button-secondary" id="beta-resume-last-session">
+                    ${resumeActionLabel(resume)}
+                  </button>
+                </div>
+              </div>
+            `
+            : ""
+        }
         <div class="beta-select-grid">
           <label class="beta-select-label">
             Första världsdelen
@@ -1294,6 +2040,13 @@ function renderSelectionStep() {
             <select class="beta-select" id="beta-select-b">${secondOptions}</select>
           </label>
         </div>
+        <div class="beta-start-band beta-start-band-selection">
+          <p class="beta-label">Börja här</p>
+          <p class="beta-small">När du har valt två världsdelar trycker du här för att starta lyssna direkt.</p>
+          <button class="beta-button beta-button-primary" id="beta-start-compare">
+            Starta lyssna
+          </button>
+        </div>
       </div>
       <div class="beta-support-card">
         <p class="beta-label">Fokus i jämförelsen</p>
@@ -1303,6 +2056,9 @@ function renderSelectionStep() {
           <li>Fortsätt med varför det blir så.</li>
           <li>Avsluta med tydliga exempel från båda.</li>
         </ul>
+        <button class="beta-button beta-button-secondary" id="beta-open-model-answer">
+          Se modellsvar E / C / A
+        </button>
       </div>
     </div>
   `;
@@ -1354,7 +2110,7 @@ function renderListenStep() {
             ${track.segments
               .map(
                 (segment, index) => `
-                  <article class="beta-segment ${index === appState.currentSegmentIndex && (appState.isPlaying || appState.listenAwaitingQuestion) ? "is-active" : ""} ${index < completedCount ? "is-done" : ""}">
+                  <article class="beta-segment ${areaToneClass(listenArea(index)?.key || "location")} ${index === appState.currentSegmentIndex && (appState.isPlaying || appState.listenAwaitingQuestion) ? "is-active" : ""} ${index < completedCount ? "is-done" : ""}">
                     <strong>${segment.label}</strong>
                     <p class="beta-small">${segment.durationSeconds} sekunder</p>
                   </article>
@@ -1486,24 +2242,27 @@ function renderPracticeExamStep() {
                 <p class="beta-label">Coachning på vägen</p>
                 <h3>${appState.coachingResult.coachVerdict}</h3>
                 <div class="beta-coach-section">
-                  <strong>Det här sitter redan</strong>
+                  <strong>Du fick med</strong>
                   <ul class="beta-bullet-list">
                     ${appState.coachingResult.whatWorks.map((item) => `<li>${item}</li>`).join("")}
                   </ul>
                 </div>
                 <div class="beta-coach-section">
-                  <strong>Det här saknas just nu</strong>
+                  <strong>Nu saknas</strong>
                   <ul class="beta-bullet-list">
                     ${appState.coachingResult.missingNow.map((item) => `<li>${item}</li>`).join("")}
                   </ul>
                 </div>
                 <div class="beta-coach-section">
-                  <strong>Meningar du kan börja med</strong>
+                  <strong>Testa nu</strong>
+                  <p class="beta-small">${appState.coachingResult.nextStep}</p>
+                </div>
+                <div class="beta-coach-section">
+                  <strong>Börja så här</strong>
                   <ul class="beta-bullet-list">
                     ${appState.coachingResult.sentenceStarters.map((item) => `<li>${item}</li>`).join("")}
                   </ul>
                 </div>
-                <p class="beta-small">${appState.coachingResult.nextStep}</p>
               </div>
             `
             : `
@@ -1542,7 +2301,7 @@ function renderListenPopup() {
       <section class="beta-popup" role="dialog" aria-modal="true" aria-labelledby="beta-popup-title">
         <p class="beta-label">Snabb check</p>
         <h3 id="beta-popup-title">${spec.title}</h3>
-        <p class="beta-small">${spec.prompt}</p>
+        <p class="beta-small ${areaToneClass(listenArea(appState.listenQuestionSegmentIndex)?.key || "location")} beta-question-prompt">${spec.prompt}</p>
         <textarea
           class="beta-textarea beta-popup-textarea"
           id="beta-listen-answer"
@@ -1607,6 +2366,13 @@ function renderReadStep() {
         <strong>Nu ser du jämförelsen enkelt.</strong>
         <p class="beta-small">Kolla bara en rad i taget och lägg märke till vad som skiljer eller liknar. Det räcker långt.</p>
       </div>
+      <div class="beta-support-card beta-inline-support-card">
+        <p class="beta-label">Behöver du en förebild?</p>
+        <p class="beta-small">Öppna ett modellsvar och jämför hur E, C och A skiljer sig åt.</p>
+        <button class="beta-button beta-button-secondary" id="beta-open-model-answer">
+          Se modellsvar E / C / A
+        </button>
+      </div>
       <div class="beta-stack">
         ${areaCardsForComparison()}
       </div>
@@ -1628,6 +2394,7 @@ function renderWritingStep() {
           <strong>${title}</strong>
           <p class="beta-small">Rutan är redan igångskriven så att det blir lättare att komma igång. Bara fyll på där det känns rimligt.</p>
         </div>
+        ${renderWritingMiniSteps()}
         <textarea class="beta-textarea" id="beta-writing-answer">${value}</textarea>
         <button class="beta-button beta-button-primary" id="beta-grade-answer" ${appState.gradingLoading ? "disabled" : ""}>
           ${appState.gradingLoading ? "Bedömer..." : "Skicka till OpenAI"}
@@ -1642,6 +2409,15 @@ function renderWritingStep() {
             .join("")}
         </ul>
         <p class="beta-small">${appState.mode === "continent" ? first.cLevel : "För C behöver svaret jämföra, förklara och ge exempel från båda världsdelarna. Det är exakt det du tränar här."}</p>
+        ${
+          shouldShowModelAnswer()
+            ? `
+              <button class="beta-button beta-button-secondary" id="beta-open-model-answer">
+                Se modellsvar E / C / A
+              </button>
+            `
+            : ""
+        }
       </div>
     </div>
   `;
@@ -1678,6 +2454,8 @@ function renderFeedbackStep() {
   const extraImprovements = result.improvements.slice(2);
   const isExamMode = appState.mode === "exam" || appState.mode === "practiceExam";
   const nextMove = recommendedNextMove();
+  const first = continentById(appState.selectedA);
+  const { gotNow, needsNow } = microFeedbackLists(result);
 
   if (isExamMode) {
     return `
@@ -1721,6 +2499,27 @@ function renderFeedbackStep() {
               .join("")}
           </div>
           <p class="beta-small">${result.nextStep}</p>
+        </div>
+        <div class="beta-feedback-card">
+          <p class="beta-label">Kort feedback</p>
+          <div class="beta-micro-feedback">
+            <div>
+              <strong>Du fick med</strong>
+              <ul class="beta-bullet-list">
+                ${gotNow.slice(0, 3).map((item) => `<li>${item}</li>`).join("")}
+              </ul>
+            </div>
+            <div>
+              <strong>Nu saknas</strong>
+              <ul class="beta-bullet-list">
+                ${needsNow.slice(0, 3).map((item) => `<li>${item}</li>`).join("")}
+              </ul>
+            </div>
+            <div>
+              <strong>Lägg till nu</strong>
+              <p class="beta-small">${result.improvements[0] || result.nextStep}</p>
+            </div>
+          </div>
         </div>
         <div class="beta-feedback-card">
           <p class="beta-label">Det här sitter redan</p>
@@ -1787,6 +2586,27 @@ function renderFeedbackStep() {
         <p class="beta-small">${result.nextStep}</p>
       </div>
       <div class="beta-feedback-card">
+        <p class="beta-label">Kort feedback</p>
+        <div class="beta-micro-feedback">
+          <div>
+            <strong>Du fick med</strong>
+            <ul class="beta-bullet-list">
+              ${gotNow.slice(0, 3).map((item) => `<li>${item}</li>`).join("")}
+            </ul>
+          </div>
+          <div>
+            <strong>Nu saknas</strong>
+            <ul class="beta-bullet-list">
+              ${needsNow.slice(0, 3).map((item) => `<li>${item}</li>`).join("")}
+            </ul>
+          </div>
+          <div>
+            <strong>Lägg till nu</strong>
+            <p class="beta-small">${result.improvements[0] || result.nextStep}</p>
+          </div>
+        </div>
+      </div>
+      <div class="beta-feedback-card">
         <p class="beta-label">Det här fungerar bra</p>
         <ul class="beta-bullet-list">
           ${result.strengths.map((item) => `<li>${item}</li>`).join("")}
@@ -1802,6 +2622,20 @@ function renderFeedbackStep() {
         <p class="beta-label">Exempel på starkare svar</p>
         <p class="beta-feedback-summary">${result.modelAnswer}</p>
       </div>
+      ${
+        appState.mode === "continent" && first
+          ? `
+            <div class="beta-support-card beta-next-moment-card">
+              <p class="beta-label">Checkpoint</p>
+              <h3>${first.name} är klar</h3>
+              <p class="beta-small">Du har nu tränat läge, klimat, vegetation, befolkning, försörjning och naturresurser. Det är en bra grund att bygga vidare på.</p>
+              <div class="beta-chip-row">
+                ${guideAreas.map((area) => `<span class="beta-chip">${area.label}</span>`).join("")}
+              </div>
+            </div>
+          `
+          : ""
+      }
       ${
         nextMove
           ? `
@@ -1832,47 +2666,33 @@ function labelForCheck(key) {
 }
 
 function renderStage() {
+  let content = "";
+
   if (appState.currentStep === 0) {
-    dom.stage.innerHTML = renderSelectionStep();
-    return;
-  }
-
-  if (appState.mode === "practiceExam") {
+    content = renderSelectionStep();
+  } else if (appState.mode === "practiceExam") {
     if (appState.currentStep === 1) {
-      dom.stage.innerHTML = renderPracticeExamStep();
-      return;
+      content = renderPracticeExamStep();
+    } else {
+      content = renderFeedbackStep();
     }
-
-    dom.stage.innerHTML = renderFeedbackStep();
-    return;
-  }
-
-  if (appState.mode === "exam") {
+  } else if (appState.mode === "exam") {
     if (appState.currentStep === 1) {
-      dom.stage.innerHTML = renderExamStep();
-      return;
+      content = renderExamStep();
+    } else {
+      content = renderFeedbackStep();
     }
-
-    dom.stage.innerHTML = renderFeedbackStep();
-    return;
+  } else if (appState.currentStep === 1) {
+    content = renderListenStep();
+  } else if (appState.currentStep === 2) {
+    content = renderReadStep();
+  } else if (appState.currentStep === 3) {
+    content = renderWritingStep();
+  } else {
+    content = renderFeedbackStep();
   }
 
-  if (appState.currentStep === 1) {
-    dom.stage.innerHTML = renderListenStep();
-    return;
-  }
-
-  if (appState.currentStep === 2) {
-    dom.stage.innerHTML = renderReadStep();
-    return;
-  }
-
-  if (appState.currentStep === 3) {
-    dom.stage.innerHTML = renderWritingStep();
-    return;
-  }
-
-  dom.stage.innerHTML = renderFeedbackStep();
+  dom.stage.innerHTML = `${renderFocusStrip()}${content}`;
 }
 
 function updateButtons() {
@@ -1923,12 +2743,30 @@ function updateButtons() {
 }
 
 function render() {
+  if (appState.currentStep > 0 && (appState.mode === "continent" || appState.mode === "compare")) {
+    saveResumeSnapshot({
+      mode: appState.mode,
+      selectedA: appState.selectedA,
+      selectedB: appState.selectedB,
+      currentStep: appState.currentStep,
+      currentSegmentIndex: appState.currentSegmentIndex
+    });
+  }
+
   renderModeButtons();
   renderStepper();
   renderStage();
+  dom.lessonCard.classList.toggle("is-selection-step", appState.currentStep === 0);
+  renderAchievementsPanel();
   dom.stage.classList.toggle("is-selection", appState.currentStep === 0);
   updateButtons();
-  renderListenPopup();
+  if (appState.listenAwaitingQuestion) {
+    renderListenPopup();
+  } else if (appState.modelAnswerOpen) {
+    renderModelAnswerPopup();
+  } else {
+    dom.overlayShell.innerHTML = "";
+  }
 }
 
 async function gradeAnswer() {
@@ -1973,6 +2811,7 @@ async function gradeAnswer() {
     }
 
     appState.gradingResult = await response.json();
+    recordGradedAnswer(appState.gradingResult);
     appState.currentStep = (appState.mode === "exam" || appState.mode === "practiceExam") ? 2 : 4;
   } catch (error) {
     appState.gradingResult = {
@@ -2049,8 +2888,8 @@ async function submitListenAnswer() {
     const result = await response.json();
     appState.listenQuestionAccepted = Boolean(result.accepted);
     appState.listenQuestionFeedback = result.accepted
-      ? `Rätt svar. ${result.feedback || result.matchedFacts?.[0] || "Du fick med kärnan."}`
-      : `Inte riktigt än. ${result.feedback || result.nudge || "Få med lite mer av det viktigaste."}`;
+      ? checkpointSuccessText()
+      : `Bra start. Nu saknas ${result.feedback || result.nudge || "lite mer av det viktigaste."}`;
     renderListenPopup();
   } catch (error) {
     appState.listenQuestionAccepted = false;
@@ -2095,8 +2934,8 @@ async function submitListenAnswerFallback(spec, answer) {
   return {
     accepted,
     feedback: accepted
-      ? `Rätt svar. ${result?.summary || "Du fick med kärnan."}`
-      : `Inte riktigt än. ${result?.nextStep || result?.summary || "Få med lite mer av det viktigaste och testa igen."}`
+      ? checkpointSuccessText()
+      : `Bra start. Nu saknas ${result?.nextStep || result?.summary || "lite mer av det viktigaste. Testa igen."}`
   };
 }
 
@@ -2259,19 +3098,43 @@ function bindEvents() {
       return;
     }
 
-    if (event.target.closest("#beta-enter-exam") || event.target.closest("#beta-enter-practice-exam")) {
-      appState.currentStep = 1;
-      if (appState.mode === "exam" || appState.mode === "practiceExam") {
-        resetExamState();
-        appState.coachingResult = null;
-        startExamTimer();
+    if (
+      event.target.closest("#beta-start-continent") ||
+      event.target.closest("#beta-start-compare") ||
+      event.target.closest("#beta-enter-exam") ||
+      event.target.closest("#beta-enter-practice-exam")
+    ) {
+      startCurrentSelection();
+      return;
+    }
+
+    if (event.target.closest("#beta-resume-last-session")) {
+      const resume = currentResumeSnapshot();
+      if (!resume) {
+        return;
       }
+
+      stopAudio();
+      appState.mode = resume.mode;
+      appState.selectedA = resume.selectedA;
+      appState.selectedB = resume.selectedB || ensureDifferentSecond(resume.selectedA);
+      appState.currentStep = resume.currentStep;
+      appState.currentSegmentIndex = resume.currentSegmentIndex || 0;
+      appState.currentTrackKey = "";
+      resetListenCheckpointState();
+      appState.gradingResult = null;
+      appState.coachingResult = null;
       render();
       return;
     }
 
     if (event.target.closest("#beta-coach-answer")) {
       requestCoachAnswer();
+      return;
+    }
+
+    if (event.target.closest("#beta-open-model-answer")) {
+      openModelAnswer("c");
       return;
     }
 
@@ -2294,6 +3157,29 @@ function bindEvents() {
 
     if (event.target.closest("#beta-replay-listen-segment")) {
       replayCheckpointSegment();
+      return;
+    }
+
+    if (event.target.closest("#beta-model-level-e")) {
+      appState.modelAnswerLevel = "e";
+      render();
+      return;
+    }
+
+    if (event.target.closest("#beta-model-level-c")) {
+      appState.modelAnswerLevel = "c";
+      render();
+      return;
+    }
+
+    if (event.target.closest("#beta-model-level-a")) {
+      appState.modelAnswerLevel = "a";
+      render();
+      return;
+    }
+
+    if (event.target.closest("#beta-close-model-answer")) {
+      closeModelAnswer();
       return;
     }
 
@@ -2401,6 +3287,8 @@ async function loadManifest() {
 
 function cacheDom() {
   dom.modeGrid = document.querySelector("#beta-mode-grid");
+  dom.achievementContent = document.querySelector("#beta-achievement-content");
+  dom.lessonCard = document.querySelector(".beta-lesson-card");
   dom.lessonTitle = document.querySelector("#beta-lesson-title");
   dom.lessonSubtitle = document.querySelector("#beta-lesson-subtitle");
   dom.stepPill = document.querySelector("#beta-step-pill");
@@ -2415,6 +3303,7 @@ function cacheDom() {
 }
 
 function init() {
+  appState.achievements = loadAchievements();
   cacheDom();
   bindEvents();
   render();
