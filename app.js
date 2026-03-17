@@ -2744,7 +2744,35 @@ function updateButtons() {
   dom.progressKicker.textContent = `${progress.percent}% klart`;
 }
 
+function captureWritingSelection() {
+  const active = document.activeElement;
+  if (!(active instanceof HTMLTextAreaElement) || active.id !== "beta-writing-answer") {
+    return null;
+  }
+
+  return {
+    start: active.selectionStart,
+    end: active.selectionEnd
+  };
+}
+
+function restoreWritingSelection(snapshot) {
+  if (!snapshot) {
+    return;
+  }
+
+  const textarea = document.querySelector("#beta-writing-answer");
+  if (!(textarea instanceof HTMLTextAreaElement)) {
+    return;
+  }
+
+  textarea.focus({ preventScroll: true });
+  textarea.setSelectionRange(snapshot.start, snapshot.end);
+}
+
 function render() {
+  const writingSelection = captureWritingSelection();
+
   if (appState.currentStep > 0 && (appState.mode === "continent" || appState.mode === "compare")) {
     saveResumeSnapshot({
       mode: appState.mode,
@@ -2762,6 +2790,7 @@ function render() {
   renderAchievementsPanel();
   dom.stage.classList.toggle("is-selection", appState.currentStep === 0);
   updateButtons();
+  restoreWritingSelection(writingSelection);
   if (appState.listenAwaitingQuestion) {
     renderListenPopup();
   } else if (appState.modelAnswerOpen) {
