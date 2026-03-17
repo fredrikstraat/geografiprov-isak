@@ -141,7 +141,8 @@ textarea {
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
   position: relative;
-  padding: 0.95rem 15.2rem 0.9rem 1.05rem;
+  padding: 0.92rem 21rem 0.82rem 1.05rem;
+  min-height: 116px;
 }
 
 .beta-header::before {
@@ -165,8 +166,8 @@ textarea {
 
 .beta-achievement-card {
   display: grid;
-  gap: 0.45rem;
-  padding: 0.72rem 0.76rem;
+  gap: 0.32rem;
+  padding: 0.62rem 0.72rem;
   border-radius: var(--beta-radius-lg);
   border: 1px solid var(--beta-line);
   background:
@@ -181,9 +182,9 @@ textarea {
   top: 0.78rem;
   right: 0.95rem;
   z-index: 2;
-  width: min(230px, calc(100% - 1.9rem));
+  width: min(342px, calc(100% - 1.9rem));
   min-width: 0;
-  max-width: 230px;
+  max-width: 342px;
 }
 
 .beta-lesson-card {
@@ -309,7 +310,7 @@ h3 {
 
 #beta-achievement-content {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.3rem;
 }
 
 .beta-achievement-hero {
@@ -353,18 +354,28 @@ h3 {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.beta-xp-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .beta-xp-head {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 0.55rem;
+  display: grid;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+.beta-xp-head .beta-label {
+  margin-bottom: 0;
 }
 
 .beta-xp-badge {
   display: inline-grid;
   place-items: center;
-  min-height: 36px;
-  padding: 0.38rem 0.65rem;
+  min-height: 34px;
+  padding: 0.32rem 0.62rem;
   border-radius: 999px;
   border: 1px solid rgba(211, 255, 88, 0.22);
   background:
@@ -377,9 +388,15 @@ h3 {
   font-size: 0.82rem;
 }
 
+.beta-xp-progress-block {
+  display: grid;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
 .beta-xp-track {
   width: 100%;
-  height: 10px;
+  height: 8px;
   border-radius: 999px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.08);
@@ -401,20 +418,21 @@ h3 {
   justify-content: space-between;
   gap: 0.45rem;
   color: var(--beta-muted);
-  font-size: 0.75rem;
-  line-height: 1.35;
+  font-size: 0.68rem;
+  line-height: 1.2;
 }
 
 .beta-xp-foot {
-  display: grid;
-  gap: 0.18rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.55rem;
 }
 
 .beta-xp-latest,
 .beta-xp-next {
   color: var(--beta-muted);
-  font-size: 0.7rem;
-  line-height: 1.3;
+  font-size: 0.64rem;
+  line-height: 1.2;
   overflow-wrap: anywhere;
 }
 
@@ -1501,6 +1519,7 @@ h3 {
 
   .beta-header {
     padding-right: 12.6rem;
+    min-height: 118px;
   }
 
   .beta-grid,
@@ -1572,6 +1591,7 @@ h3 {
     align-items: start;
     column-gap: 0.7rem;
     padding: 0.88rem 0.9rem 0.8rem;
+    min-height: 0;
   }
 
   .beta-header-copy {
@@ -1583,8 +1603,8 @@ h3 {
     position: static;
     justify-self: end;
     align-self: start;
-    width: 148px;
-    max-width: 148px;
+    width: 124px;
+    max-width: 124px;
   }
 
   .beta-header-orb {
@@ -1601,16 +1621,48 @@ h3 {
   }
 
   .beta-achievement-card {
-    padding: 0.62rem 0.66rem;
+    gap: 0.3rem;
+    padding: 0.52rem 0.56rem;
   }
 
   .beta-xp-badge {
-    min-height: 32px;
-    padding: 0.32rem 0.56rem;
+    min-height: 28px;
+    padding: 0.24rem 0.44rem;
   }
 
   .beta-xp-badge strong {
-    font-size: 0.76rem;
+    font-size: 0.7rem;
+  }
+
+  .beta-xp-head {
+    align-items: center;
+  }
+
+  .beta-xp-head .beta-label {
+    display: none;
+  }
+
+  .beta-xp-head h3 {
+    font-size: 0.88rem;
+  }
+
+  .beta-xp-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.4rem;
+  }
+
+  .beta-xp-progress-block {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
+  .beta-xp-meta {
+    font-size: 0.64rem;
+  }
+
+  .beta-xp-meta span:last-child,
+  .beta-xp-foot {
+    display: none;
   }
 }
 
@@ -1638,6 +1690,7 @@ h3 {
     grid-template-columns: minmax(0, 1fr) auto;
     gap: 0.65rem;
     padding: 0.82rem 0.82rem 0.72rem;
+    min-height: 0;
   }
 
   .beta-overlay-backdrop {
@@ -1658,30 +1711,26 @@ h3 {
   }
 
   .beta-achievement-card-header {
-    width: 136px;
-    max-width: 136px;
+    width: 108px;
+    max-width: 108px;
   }
 
-  .beta-xp-meta,
-  .beta-xp-foot {
-    gap: 0.12rem;
+  .beta-xp-row {
+    grid-template-columns: 1fr auto;
+    gap: 0.3rem;
   }
 
   .beta-xp-meta {
-    flex-direction: column;
-  }
-
-  .beta-xp-latest,
-  .beta-xp-next {
-    font-size: 0.66rem;
+    gap: 0.08rem;
+    font-size: 0.58rem;
   }
 
   .beta-xp-head h3 {
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 
   .beta-xp-track {
-    height: 8px;
+    height: 6px;
   }
 
   .beta-label,
@@ -1765,12 +1814,21 @@ h3 {
 
 @media (max-width: 420px) {
   .beta-header {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem;
   }
 
   .beta-achievement-card-header {
     justify-self: end;
-    width: 132px;
-    max-width: 132px;
+    width: 98px;
+    max-width: 98px;
+  }
+
+  .beta-header {
+    padding: 0.72rem 0.72rem 0.64rem;
+  }
+
+  h1 {
+    font-size: clamp(1.38rem, 7.2vw, 1.8rem);
   }
 }

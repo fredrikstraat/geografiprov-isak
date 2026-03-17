@@ -1042,21 +1042,23 @@ function renderAchievementsPanel() {
   const remainingToNext = nextMilestone ? nextMilestone - appState.achievements.listenedSegments : 0;
 
   dom.achievementContent.innerHTML = `
-    <div class="beta-xp-head">
-      <div>
+    <div class="beta-xp-row">
+      <div class="beta-xp-head">
         <p class="beta-label">XP</p>
         <h3>Level ${level.level}</h3>
+      </div>
+      <div class="beta-xp-progress-block">
+        <div class="beta-xp-track">
+          <span class="beta-xp-fill" style="width:${level.percent}%"></span>
+        </div>
+        <div class="beta-xp-meta">
+          <span>${level.currentXp}/${level.nextXp} XP till nästa level</span>
+          <span>${unlocked.length} unlocks</span>
+        </div>
       </div>
       <div class="beta-xp-badge">
         <strong>${xp} XP</strong>
       </div>
-    </div>
-    <div class="beta-xp-track">
-      <span class="beta-xp-fill" style="width:${level.percent}%"></span>
-    </div>
-    <div class="beta-xp-meta">
-      <span>${level.currentXp}/${level.nextXp} XP till nästa level</span>
-      <span>${unlocked.length} unlocks</span>
     </div>
     <div class="beta-xp-foot">
       <span class="beta-xp-latest">${
