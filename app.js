@@ -381,7 +381,9 @@ const appState = {
   achievements: null,
   examStarted: false,
   examExpired: false,
-  examRemainingMs: 30 * 60 * 1000
+  examPaused: false,
+  examRemainingMs: 30 * 60 * 1000,
+  examEndsAt: 0
 };
 
 const dom = {};
@@ -1421,7 +1423,9 @@ function resetExamState() {
   }
   appState.examStarted = false;
   appState.examExpired = false;
+  appState.examPaused = false;
   appState.examRemainingMs = 30 * 60 * 1000;
+  appState.examEndsAt = 0;
 }
 
 function formatExamTime(ms) {
@@ -1430,6 +1434,139 @@ function formatExamTime(ms) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function clearExamTimer() {
+  if (examTimerId) {
+    window.clearInterval(examTimerId);
+    examTimerId = 0;
+  }
+}
+
+function runExamTimer() {
+  clearExamTimer();
+
+  const tick = () => {
+    appState.examRemainingMs = Math.max(0, appState.examEndsAt - Date.now());
+
+    if (appState.examRemainingMs <= 0) {
+      appState.examRemainingMs = 0;
+      appState.examExpired = true;
+      appState.examPaused = false;
+      clearExamTimer();
+      render();
+      return;
+    }
+
+    syncExamTimerDom();
+  };
+
+  tick();
+  examTimerId = window.setInterval(tick, 1000);
+}
+
+function startExamTimer() {
+  resetExamState();
+  appState.examStarted = true;
+  appState.examPaused = false;
+  appState.examEndsAt = Date.now() + appState.examRemainingMs;
+  render();
+  runExamTimer();
+}
+
+function pauseExamTimer() {
+  if (!appState.examStarted || appState.examExpired || appState.examPaused) {
+    return;
+  }
+
+  appState.examRemainingMs = Math.max(0, appState.examEndsAt - Date.now());
+  appState.examPaused = true;
+  clearExamTimer();
+  render();
+}
+
+function resumeExamTimer() {
+  if (!appState.examStarted || appState.examExpired || !appState.examPaused) {
+    return;
+  }
+
+  appState.examPaused = false;
+  appState.examEndsAt = Date.now() + appState.examRemainingMs;
+  render();
+  runExamTimer();
+}
+
+function toggleExamPause() {
+  if (appState.examPaused) {
+    resumeExamTimer();
+  } else {
+    pauseExamTimer();
+  }
+}
+
+function examPauseButtonLabel() {
+  return appState.examPaused ? "Fortsätt tiden" : "Pausa tiden";
+}
+
+function examSupportText(activeText, expiredText) {
+  if (appState.examExpired) {
+    if (appState.mode === "practiceExam") {
+      return "Tiden är ute, men du kan fortsätta skriva och använda coachningen tills texten känns klar.";
+    }
+    return expiredText;
+  }
+
+  if (appState.examPaused) {
+    return appState.mode === "practiceExam"
+      ? "Tiden är pausad just nu. Du kan fortfarande skriva och använda coachningen. När du är redo trycker du på Fortsätt tiden."
+      : "Tiden är pausad just nu. När du är redo trycker du på Fortsätt tiden så startar nedräkningen igen.";
+  }
+
+  return activeText;
+}
+
+function examStatePillText() {
+  return appState.examExpired
+    ? appState.mode === "practiceExam"
+      ? "Tiden är ute, men du kan fortsätta öva"
+      : "Tiden är ute"
+    : appState.examPaused
+      ? "Tiden är pausad"
+      : appState.mode === "practiceExam"
+        ? "Övningsprovet är igång"
+        : "Provet är igång";
+}
+
+function examTextareaReadonly() {
+  return appState.mode === "exam" && appState.examExpired;
+}
+
+function examCanSubmit() {
+  return appState.examStarted;
+}
+
+function examCanCoach() {
+  if (!appState.examStarted) {
+    return false;
+  }
+
+  if (appState.mode === "practiceExam") {
+    return true;
+  }
+
+  return !appState.examExpired && !appState.examPaused;
+}
+
+function examPauseButton() {
+  if (!appState.examStarted || appState.examExpired) {
+    return "";
+  }
+
+  return `
+    <button class="beta-button beta-button-secondary" id="beta-toggle-exam-pause">
+      ${examPauseButtonLabel()}
+    </button>
+  `;
 }
 
 function syncExamTimerDom() {
@@ -1441,40 +1578,37 @@ function syncExamTimerDom() {
 
   const stateEl = document.querySelector("#beta-exam-state-pill");
   if (stateEl) {
-    stateEl.textContent = appState.examExpired
-      ? "Tiden är ute"
-      : appState.mode === "practiceExam"
-        ? "Övningsprovet är igång"
-        : "Provet är igång";
+    stateEl.textContent = examStatePillText();
   }
-}
 
-function startExamTimer() {
-  resetExamState();
-  appState.examStarted = true;
-  const startedAt = Date.now();
+  const pauseButton = document.querySelector("#beta-toggle-exam-pause");
+  if (pauseButton) {
+    pauseButton.textContent = examPauseButtonLabel();
+  }
 
-  const tick = () => {
-    const elapsed = Date.now() - startedAt;
-    const remaining = Math.max(0, 30 * 60 * 1000 - elapsed);
-    appState.examRemainingMs = remaining;
+  const coachButton = document.querySelector("#beta-coach-answer");
+  if (coachButton instanceof HTMLButtonElement) {
+    coachButton.disabled = appState.coachingLoading || !examCanCoach();
+  }
 
-    if (remaining <= 0) {
-      if (examTimerId) {
-        window.clearInterval(examTimerId);
-        examTimerId = 0;
-      }
-      appState.examExpired = true;
-      render();
-      return;
-    }
+  const supportText = document.querySelector("#beta-exam-support-text");
+  if (supportText) {
+    supportText.textContent =
+      appState.mode === "practiceExam"
+        ? examSupportText(
+            "Timern startade direkt när du valde övningsprovet. Skriv som i ett riktigt prov och använd coachningen om du fastnar.",
+            "Tiden är slut. Nu kan du inte skriva mer, men du kan fortfarande lämna in och få bedömning."
+          )
+        : examSupportText(
+            "Timern startade direkt när du valde provet. Skriv lugnt och få med vad som är lika eller olika, varför det blir så och exempel från båda världsdelarna.",
+            "Tiden är slut. Nu är det bara att lämna in provet för bedömning."
+          );
+  }
 
-    syncExamTimerDom();
-  };
-
-  render();
-  syncExamTimerDom();
-  examTimerId = window.setInterval(tick, 1000);
+  const textarea = document.querySelector("#beta-writing-answer");
+  if (textarea instanceof HTMLTextAreaElement) {
+    textarea.readOnly = examTextareaReadonly();
+  }
 }
 
 async function playCurrentTrack() {
@@ -2160,7 +2294,7 @@ function renderExamStep() {
   const first = continentById(appState.selectedA);
   const second = continentById(appState.selectedB);
   const value = currentDraft();
-  const canSubmit = appState.examStarted;
+  const canSubmit = examCanSubmit();
 
   return `
     <div class="beta-writing-layout">
@@ -2175,22 +2309,24 @@ function renderExamStep() {
             <h3 class="beta-exam-time ${appState.examExpired ? "is-expired" : ""}" id="beta-exam-time">${formatExamTime(appState.examRemainingMs)}</h3>
           </div>
           <div class="beta-exam-state-pill" id="beta-exam-state-pill">
-            ${appState.examExpired ? "Tiden är ute" : "Provet är igång"}
+            ${examStatePillText()}
           </div>
         </div>
         <div class="beta-support-card">
-          <p class="beta-small">
-            ${
-              appState.examExpired
-                ? "Tiden är slut. Nu är det bara att lämna in provet för bedömning."
-                : "Timern startade direkt när du valde provet. Skriv lugnt och få med vad som är lika eller olika, varför det blir så och exempel från båda världsdelarna."
-            }
+          <p class="beta-small" id="beta-exam-support-text">
+            ${examSupportText(
+              "Timern startade direkt när du valde provet. Skriv lugnt och få med vad som är lika eller olika, varför det blir så och exempel från båda världsdelarna.",
+              "Tiden är slut. Nu är det bara att lämna in provet för bedömning."
+            )}
           </p>
         </div>
-        <textarea class="beta-textarea beta-exam-textarea" id="beta-writing-answer" ${appState.examExpired ? "readonly" : ""}>${value}</textarea>
-        <button class="beta-button beta-button-primary" id="beta-grade-answer" ${(appState.gradingLoading || !canSubmit) ? "disabled" : ""}>
-          ${appState.gradingLoading ? "Bedömer..." : "Lämna in provet"}
-        </button>
+        <textarea class="beta-textarea beta-exam-textarea" id="beta-writing-answer" ${examTextareaReadonly() ? "readonly" : ""}>${value}</textarea>
+        <div class="beta-exam-actions beta-exam-actions-single">
+          ${examPauseButton()}
+          <button class="beta-button beta-button-primary" id="beta-grade-answer" ${(appState.gradingLoading || !canSubmit) ? "disabled" : ""}>
+            ${appState.gradingLoading ? "Bedömer..." : "Lämna in provet"}
+          </button>
+        </div>
       </div>
       <div class="beta-support-card">
         <p class="beta-label">Det som bedöms</p>
@@ -2210,7 +2346,7 @@ function renderPracticeExamStep() {
   const first = continentById(appState.selectedA);
   const second = continentById(appState.selectedB);
   const value = currentDraft();
-  const canSubmit = appState.examStarted;
+  const canSubmit = examCanSubmit();
 
   return `
     <div class="beta-writing-layout">
@@ -2225,21 +2361,21 @@ function renderPracticeExamStep() {
             <h3 class="beta-exam-time ${appState.examExpired ? "is-expired" : ""}" id="beta-exam-time">${formatExamTime(appState.examRemainingMs)}</h3>
           </div>
           <div class="beta-exam-state-pill" id="beta-exam-state-pill">
-            ${appState.examExpired ? "Tiden är ute" : "Övningsprovet är igång"}
+            ${examStatePillText()}
           </div>
         </div>
         <div class="beta-support-card">
-          <p class="beta-small">
-            ${
-              appState.examExpired
-                ? "Tiden är slut. Nu kan du inte skriva mer, men du kan fortfarande lämna in och få bedömning."
-                : "Timern startade direkt när du valde övningsprovet. Skriv som i ett riktigt prov och använd coachningen om du fastnar."
-            }
+          <p class="beta-small" id="beta-exam-support-text">
+            ${examSupportText(
+              "Timern startade direkt när du valde övningsprovet. Skriv som i ett riktigt prov och använd coachningen om du fastnar.",
+              "Tiden är slut. Nu kan du inte skriva mer, men du kan fortfarande lämna in och få bedömning."
+            )}
           </p>
         </div>
-        <textarea class="beta-textarea beta-exam-textarea" id="beta-writing-answer" ${appState.examExpired ? "readonly" : ""}>${value}</textarea>
+        <textarea class="beta-textarea beta-exam-textarea" id="beta-writing-answer" ${examTextareaReadonly() ? "readonly" : ""}>${value}</textarea>
         <div class="beta-exam-actions">
-          <button class="beta-button beta-button-secondary" id="beta-coach-answer" ${(appState.coachingLoading || !appState.examStarted || appState.examExpired) ? "disabled" : ""}>
+          ${examPauseButton()}
+          <button class="beta-button beta-button-secondary" id="beta-coach-answer" ${(appState.coachingLoading || !examCanCoach()) ? "disabled" : ""}>
             ${appState.coachingLoading ? "Coachar..." : "Coacha mitt svar"}
           </button>
           <button class="beta-button beta-button-primary" id="beta-grade-answer" ${(appState.gradingLoading || !canSubmit) ? "disabled" : ""}>
@@ -3181,6 +3317,11 @@ function bindEvents() {
 
     if (event.target.closest("#beta-coach-answer")) {
       requestCoachAnswer();
+      return;
+    }
+
+    if (event.target.closest("#beta-toggle-exam-pause")) {
+      toggleExamPause();
       return;
     }
 
